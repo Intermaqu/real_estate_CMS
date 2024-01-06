@@ -10,10 +10,14 @@ CREATE TABLE "address" (
 CREATE TABLE "user" (
   "id" integer PRIMARY KEY,
   "id_address" integer,
-  "username" varchar,
+  "id_broker" integer,
+  "firstName" varchar,
+  "secondName" varchar,
+  "firstSurname" varchar,
+  "secondSurname" varchar,
   "email" varchar,
   "password" varchar,
-  "role" ENUM,
+  "role" user_role,
   "phone_number" varchar,
   "nip" char(10),
   "created_at" timestamp,
@@ -39,14 +43,18 @@ CREATE TABLE "real_estate" (
   "short_description" varchar,
   "description" varchar,
   "price" float,
-  "status" ENUM,
+  "status" real_estate_status,
   "total_rates" integer,
   "no_of_reviews" integer,
   "id_address" integer,
   "created_at" timestamp,
   "no_of_rooms" integer,
+  "no_of_floors" integer,
+  "year_of_construction" integer,
+  "parking_space" varchar,
+  "elevator" bool,
   "square_footage" float,
-  "broker" int,
+  "id_broker" integer,
   "best_seller" bool
 );
 
@@ -60,7 +68,7 @@ CREATE TABLE "category" (
 
 CREATE TABLE "blog_post" (
   "id" integer PRIMARY KEY,
-  "owner" id,
+  "owner" integer,
   "created_at" timestamp,
   "title" varchar,
   "image" varchar,
@@ -73,7 +81,7 @@ CREATE TABLE "banner" (
   "title" varchar,
   "subtitle" varchar,
   "image" varchar,
-  "url" vachar,
+  "url" varchar,
   "active" bool
 );
 
@@ -100,7 +108,7 @@ CREATE TABLE "broker_banner" (
 );
 
 CREATE TABLE "company_info" (
-  "id_address" int,
+  "id_address" integer,
   "email" varchar,
   "phone_number_1" varchar,
   "phone_number_2" varchar,
@@ -127,14 +135,14 @@ CREATE TABLE "section_active_info" (
 
 ALTER TABLE "blog_post" ADD FOREIGN KEY ("owner") REFERENCES "user" ("id");
 
-ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "broker_banner" ("id_broker");
+ALTER TABLE "broker_banner" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("id");
 
-ALTER TABLE "real_estate" ADD FOREIGN KEY ("broker") REFERENCES "user" ("id");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("id");
 
 ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_category") REFERENCES "category" ("id");
 
-ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "user" ("id_address");
+ALTER TABLE "user" ADD FOREIGN KEY ("id_address") REFERENCES "user" ("id");
 
 ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_real_estate_image") REFERENCES "real_estate_image" ("id");
 
-ALTER TABLE "address" ADD FOREIGN KEY ("id") REFERENCES "real_estate" ("id_address");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_address") REFERENCES "address" ("id");
