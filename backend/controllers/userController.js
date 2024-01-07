@@ -4,8 +4,10 @@ const User = require("../models/User");
 module.exports = {
   registerNewUser: async (req, res) => {
     const {
-      name,
-      surname,
+      firstName,
+      firstSurname,
+      secondName,
+      secondSurname,
       email,
       password,
       country,
@@ -21,8 +23,10 @@ module.exports = {
     } = req.body;
 
     if (
-      !name ||
-      !surname ||
+      !firstName ||
+      !firstSurname ||
+      !secondName ||
+      !secondSurname ||
       !email ||
       !password ||
       !country ||
@@ -54,8 +58,10 @@ module.exports = {
     console.log(address);
 
     await User.addNewUser(
-      name,
-      surname,
+      firstName,
+      firstSurname,
+      secondName,
+      secondSurname,
       email,
       password,
       address.ID_ADDRESS,
@@ -95,8 +101,10 @@ module.exports = {
 
     const token = User.generateJWTToken(
       user.ID_USER,
-      user.name,
-      user.surname,
+      user.firstName,
+      user.firstSurname,
+      user.secondName,
+      user.secondSurname,
       user.email,
       "",
       user.address,

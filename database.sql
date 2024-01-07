@@ -61,6 +61,7 @@ CREATE TABLE "real_estate" (
 CREATE TABLE "category" (
   "id" integer PRIMARY KEY,
   "name" varchar,
+  "description" varchar,
   "image" varchar,
   "created_at" timestamp,
   "active" bool
