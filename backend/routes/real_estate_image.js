@@ -5,6 +5,6 @@ var router = express.Router();
 
 router.post("/addRealEstateImage", addRealEstateImage);
 
-router.post("/getRealEstateImageById", getRealEstateImageById);
+router.get("/getRealEstateImageById", getRealEstateImageById);
 
 module.exports = router;

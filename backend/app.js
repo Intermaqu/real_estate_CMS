@@ -8,6 +8,7 @@ var usersRouter = require("./routes/users");
 var addressRouter = require("./routes/address");
 var realEstateImageRouter = require("./routes/real_estate_image");
 var realEstateRouter = require("./routes/real_estate");
+var blogPostRouter = require("./routes/blog_post");
 
 var app = express();
 
@@ -22,5 +23,6 @@ app.use("/users", usersRouter);
 app.use("/address", addressRouter);
 app.use("/real-estate-image", realEstateImageRouter);
 app.use("/real-estate", realEstateRouter);
+app.use("/blog-post", blogPostRouter);
 
 module.exports = app;
