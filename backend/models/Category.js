@@ -2,7 +2,7 @@ const db = require("../db/config");
 
 module.exports = {
 
-  addNewCategory: async ({ name, description }) => {
+  addNewCategory: async ({ name, description, image, active }) => {
     let category = await db.query(
       `CALL NewCategory('${name}','${description},'${image},'${active}')`
     );
