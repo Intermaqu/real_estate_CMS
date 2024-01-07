@@ -2,6 +2,12 @@ const Address = require("../models/Address");
 const User = require("../models/User");
 
 module.exports = {
+
+  getAllUsers: async (req, res) => {
+    const allUsers = await User.getAllUsers();
+    res.status(200).send(allUsers);
+  },
+
   registerNewUser: async (req, res) => {
     const {
       firstName,

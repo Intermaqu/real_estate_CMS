@@ -1,12 +1,7 @@
 var express = require("express");
-const passport = require("passport");
-const { getAddressById2 } = require("../models/Address");
+const { getAllAddresses } = require("../controllers/addressController");
 var router = express.Router();
 
-router.post(
-  "/getAddressById",
-  passport.authenticate("jwt", { session: false }),
-  getAddressById2
-);
+router.get("/", getAllAddresses);
 
 module.exports = router;

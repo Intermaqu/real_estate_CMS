@@ -12,6 +12,12 @@ module.exports = {
     }
   },
 
+  getAllUsers: async () => {
+    const allUsers = await db.query("SELECT * FROM user");
+    console.log(allUsers.rows)
+    return allUsers.rows;
+  },
+
   getUserByEmail: async (email) => {
     let user = await db.query('SELECT * FROM users WHERE "Email" = $1', [
       email,

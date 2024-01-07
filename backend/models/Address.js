@@ -16,6 +16,11 @@ module.exports = {
     return address.rows[0];
   },
 
+  getAllAddresses: async () => {
+    const allAddresses = await db.query("SELECT * FROM address");
+    return allAddresses.rows;
+  },
+
   getAddressById: async (id) => {
     let address = await db.query(
       'SELECT * FROM address WHERE "ID_ADDRESS" = $1',
