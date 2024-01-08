@@ -2,6 +2,7 @@ import "./bootstrap.css";
 import "./style.css";
 import "./fonts.css";
 import Properties from "../components/Properties";
+import Services from "../components/Services";
 
 const Landing = () => {
   return (
@@ -128,68 +129,8 @@ const Landing = () => {
         </section> */}
 
       <Properties />
-      <section className="section novi-background section-lg bg-gray-100">
-        <div className="container">
-          <div className="row row-30">
-            <div className="col-sm-6 col-lg-4 wow-outer">
-              <article className="box-minimal">
-                <div className="box-chloe__icon novi-icon linearicons-user wow fadeIn"></div>
-                <div className="box-minimal-main wow-outer">
-                  <h4 className="box-minimal-title wow slideInDown">
-                    Qualified Employees
-                  </h4>
-                  <p className="wow fadeInUpSmall">
-                    Our team consists of more than 20 qualified and experienced
-                    real estate brokers and property managers ready to help you.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div className="col-sm-6 col-lg-4 wow-outer">
-              <article className="box-minimal">
-                <div
-                  className="box-chloe__icon novi-icon linearicons-bubble-text wow fadeIn"
-                  data-wow-delay=".1s"
-                ></div>
-                <div className="box-minimal-main wow-outer">
-                  <h4
-                    className="box-minimal-title wow slideInDown"
-                    data-wow-delay=".1s"
-                  >
-                    Free Consultations
-                  </h4>
-                  <p className="wow fadeInUpSmall" data-wow-delay=".1s">
-                    Our acquaintance with a client always begins with a free
-                    consultation to find out what kind of property they are
-                    looking for.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div className="col-sm-6 col-lg-4 wow-outer">
-              <article className="box-minimal">
-                <div
-                  className="box-chloe__icon novi-icon linearicons-star wow fadeIn"
-                  data-wow-delay=".2s"
-                ></div>
-                <div className="box-minimal-main wow-outer">
-                  <h4
-                    className="box-minimal-title wow slideInDown"
-                    data-wow-delay=".2s"
-                  >
-                    100% Guaranteed
-                  </h4>
-                  <p className="wow fadeInUpSmall" data-wow-delay=".2s">
-                    All the results that you get from our realtors are 100%
-                    guaranteed to offer you the best choice of properties
-                    throughout the USA.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Services />
+
       <section className="section novi-background section-lg text-center">
         <div className="container">
           <h3 className="text-uppercase">Residential property categories</h3>
