@@ -3,10 +3,14 @@ import "./style.css";
 import "./fonts.css";
 import Properties from "../components/Properties";
 import Services from "../components/Services";
+import Categories from "../components/Categories";
+import OurTeam from "../components/OurTeam";
+import Testimonials from "../components/Testimonials";
+import Footer from "../components/Footer";
 
 const Landing = () => {
   return (
-    <div className="page">
+    <div className="page" style={{ maxWidth: "100%", overflowX: "hidden" }}>
       {/* <section
           className="section swiper-container swiper-slider swiper-slider-minimal"
           data-loop="true"
@@ -130,261 +134,10 @@ const Landing = () => {
 
       <Properties />
       <Services />
-
-      <section className="section novi-background section-lg text-center">
-        <div className="container">
-          <h3 className="text-uppercase">Residential property categories</h3>
-          <p>
-            <span className="text-width-1">
-              At our agency, we work with various types of residential real
-              estate property. You can find out more about our properties by
-              browsing our website.
-            </span>
-          </p>
-          <div className="row row-35 row-xxl-70 offset-top-2">
-            <div className="col-sm-6 col-lg-3">
-              <article className="thumbnail-light">
-                <a className="thumbnail-light-media" href="#">
-                  <img
-                    className="thumbnail-light-image"
-                    src="images/service-thumbnail-1-270x300.jpg"
-                    alt=""
-                    width="270"
-                    height="300"
-                  />
-                </a>
-                <h4 className="thumbnail-light-title">
-                  <a href="#">Single-Family Homes</a>
-                </h4>
-              </article>
-            </div>
-            <div className="col-sm-6 col-lg-3">
-              <article className="thumbnail-light">
-                <a className="thumbnail-light-media" href="#">
-                  <img
-                    className="thumbnail-light-image"
-                    src="images/service-thumbnail-2-270x300.jpg"
-                    alt=""
-                    width="270"
-                    height="300"
-                  />
-                </a>
-                <h4 className="thumbnail-light-title">
-                  <a href="#">Townhouses</a>
-                </h4>
-              </article>
-            </div>
-            <div className="col-sm-6 col-lg-3">
-              <article className="thumbnail-light">
-                <a className="thumbnail-light-media" href="#">
-                  <img
-                    className="thumbnail-light-image"
-                    src="images/service-thumbnail-3-270x300.jpg"
-                    alt=""
-                    width="270"
-                    height="300"
-                  />
-                </a>
-                <h4 className="thumbnail-light-title">
-                  <a href="#">Multi-Family Homes</a>
-                </h4>
-              </article>
-            </div>
-            <div className="col-sm-6 col-lg-3">
-              <article className="thumbnail-light">
-                <a className="thumbnail-light-media" href="#">
-                  <img
-                    className="thumbnail-light-image"
-                    src="images/service-thumbnail-4-270x300.jpg"
-                    alt=""
-                    width="270"
-                    height="300"
-                  />
-                </a>
-                <h4 className="thumbnail-light-title">
-                  <a href="#">Condominiums</a>
-                </h4>
-              </article>
-            </div>
-            <div className="col-md-12 wow-outer">
-              <a
-                className="button button-primary button-winona button-md"
-                href="#"
-              >
-                view all properties
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="section novi-background section-lg text-center bg-gray-100">
-        <div className="container">
-          <h3 className="text-uppercase wow-outer">
-            <span className="wow slideInUp">Our Team</span>
-          </h3>
-          <div className="row row-lg-50 row-35 row-xxl-70 justify-content-center justify-content-lg-start">
-            <div className="col-md-10 col-lg-6 wow-outer">
-              <article className="profile-creative wow slideInLeft">
-                <figure className="profile-creative-figure">
-                  <img
-                    className="profile-creative-image"
-                    src="images/team-1-270x273.jpg"
-                    alt=""
-                    width="270"
-                    height="273"
-                  />
-                </figure>
-                <div className="profile-creative-main">
-                  <h5 className="profile-creative-title">
-                    <a href="#">Nathalie Porter</a>
-                  </h5>
-                  <p className="profile-creative-position">Founder, Broker</p>
-                  <div className="profile-creative-contacts">
-                    <div className="object-inline">
-                      <span className="icon novi-icon icon-md mdi mdi-phone"></span>
-                      <a href="tel:#">1-800-1324-567</a>
-                    </div>
-                  </div>
-                  <p>
-                    Ms. Porter founded our company in 1989 with a vision to help
-                    guests and residents of the USA to easily find and buy or
-                    rent real estate in all 50 states.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div className="col-md-10 col-lg-6 wow-outer">
-              <article
-                className="profile-creative wow slideInLeft"
-                data-wow-delay=".2s"
-              >
-                <figure className="profile-creative-figure">
-                  <img
-                    className="profile-creative-image"
-                    src="images/team-2-270x273.jpg"
-                    alt=""
-                    width="270"
-                    height="273"
-                  />
-                </figure>
-                <div className="profile-creative-main">
-                  <h5 className="profile-creative-title">
-                    <a href="#">John Thompson</a>
-                  </h5>
-                  <p className="profile-creative-position">Sales Associate</p>
-                  <div className="profile-creative-contacts">
-                    <div className="object-inline">
-                      <span className="icon novi-icon icon-md mdi mdi-phone"></span>
-                      <a href="tel:#">1-800-1324-567</a>
-                    </div>
-                  </div>
-                  <p>
-                    John has been in sales and marketing for the past 15 years.
-                    He has excellent knowledge about the local market both
-                    residential and commercial.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div className="col-md-10 col-lg-6 wow-outer">
-              <article className="profile-creative wow slideInLeft">
-                <figure className="profile-creative-figure">
-                  <img
-                    className="profile-creative-image"
-                    src="images/team-3-270x273.jpg"
-                    alt=""
-                    width="270"
-                    height="273"
-                  />
-                </figure>
-                <div className="profile-creative-main">
-                  <h5 className="profile-creative-title">
-                    <a href="#">Brian Payne</a>
-                  </h5>
-                  <p className="profile-creative-position">Realtor</p>
-                  <div className="profile-creative-contacts">
-                    <div className="object-inline">
-                      <span className="icon novi-icon icon-md mdi mdi-phone"></span>
-                      <a href="tel:#">1-800-1324-567</a>
-                    </div>
-                  </div>
-                  <p>
-                    Brian is not only a Licensed Realtor but also holds the
-                    Title Producers and Mortgage Licenses, which makes him a
-                    very knowledgeable real estate expert.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div className="col-md-10 col-lg-6 wow-outer">
-              <article
-                className="profile-creative wow slideInLeft"
-                data-wow-delay=".2s"
-              >
-                <figure className="profile-creative-figure">
-                  <img
-                    className="profile-creative-image"
-                    src="images/team-4-270x273.jpg"
-                    alt=""
-                    width="270"
-                    height="273"
-                  />
-                </figure>
-                <div className="profile-creative-main">
-                  <h5 className="profile-creative-title">
-                    <a href="#">Marie Fernandez</a>
-                  </h5>
-                  <p className="profile-creative-position">Broker</p>
-                  <div className="profile-creative-contacts">
-                    <div className="object-inline">
-                      <span className="icon novi-icon icon-md mdi mdi-phone"></span>
-                      <a href="tel:#">1-800-1324-567</a>
-                    </div>
-                  </div>
-                  <p>
-                    Marie’s goal is to provide clients with the highest level of
-                    marketing expertise and customer service to help them reach
-                    their uppermost real estate goals.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        className="section novi-background section-1 bg-primary-darker text-center"
-        style={{ backgroundImage: "url(images/bg-1-1920-455.jpg)" }}
-      >
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-sm-10 col-lg-7 col-xl-6">
-              <h3 className="wow-outer">
-                <span className="wow slideInDown text-uppercase">
-                  Best offers
-                </span>
-              </h3>
-              <p className="heading-subtitle">of September</p>
-              <p className="wow-outer offset-top-4">
-                <span className="wow slideInDown" data-wow-delay=".05s">
-                  With a variety of accountants available at our company, you
-                  can always choose one that fits your corporate requirements.
-                </span>
-              </p>
-              <div className="wow-outer button-outer">
-                <a
-                  className="button button-primary-white button-winona wow slideInDown"
-                  href="#"
-                  data-wow-delay=".1s"
-                >
-                  Read more
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="section novi-background section-lg text-center">
+      <Categories />
+      <OurTeam />
+      <Testimonials />
+      {/* <section className="section novi-background section-lg text-center">
         <div className="container">
           <h3 className="wow-outer">
             <span className="wow slideInDown text-uppercase">Testimonials</span>
@@ -550,8 +303,8 @@ const Landing = () => {
             </blockquote>
           </div>
         </div>
-      </section>
-      <footer className="section novi-background footer-advanced bg-gray-700">
+      </section> */}
+      {/* <footer className="section novi-background footer-advanced bg-gray-700">
         <div className="footer-advanced-main">
           <div className="container">
             <div className="row row-50">
@@ -803,7 +556,8 @@ const Landing = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
+      <Footer />
     </div>
   );
 };

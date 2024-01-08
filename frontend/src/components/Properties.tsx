@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PropertyCard from "./Property";
+import PropertyCard from "./PropertyCard";
 
 const Properties = () => {
   return (
@@ -94,6 +94,8 @@ const ViewMoreButton = styled.a`
   border-radius: 6px;
   border: 2px solid rgb(0, 123, 255);
   letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 500;
 
   &:hover {
     color: #fff;

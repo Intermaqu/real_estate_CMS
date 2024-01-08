@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ServiceCard from "./Service";
+import ServiceCard from "./ServiceCard";
 
 const Services = () => {
   return (
