@@ -9,11 +9,11 @@ module.exports = {
     description,
     active
   ) => {
-    let user = await db.query(
-      `INSERT INTO users ("owner", "created_at", "title", "image", "description", "active") VALUES ($1, $2, $3, $4, $5, $6)`,
+    let blogPost = await db.query(
+      `INSERT INTO blog_post ("owner", "created_at", "title", "image", "description", "active") VALUES ($1, $2, $3, $4, $5, $6)`,
       [owner, created_at, title, image, description, active]
     );
-    return user;
+    return blogPost;
   },
 
   getAllBlogPosts: async (req, res) => {
@@ -23,7 +23,7 @@ module.exports = {
 
   getBlogPostById: async (req, res) => {
     let blogPost = await db.query(
-      `SELECT * FROM BlogPost WHERE "ID_BLOG_POST" = $1`,
+      `SELECT * FROM blog_post WHERE "ID_BLOG_POST" = $1`,
       [req.body.id]
     );
     res.status(200).send(blogPost.rows[0]);
