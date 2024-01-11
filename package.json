@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "startServer": "cd backend && nodemon app.js",
+    "startFrontend": "cd frontend && npm run dev",
+    "startDashboard": "cd dashboard && npm run dev -- --port 3000"
+  }
+}
