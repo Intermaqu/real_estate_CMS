@@ -4,7 +4,7 @@ const { addNewBanner, getAllBanners, getBannerById, editBannerById, deleteBanner
 var router = express.Router();
 
 router.get("/", getAllBanners);
-router.get("/getBannerById/:id", getBannerById);
+router.get("/getById/:id", getBannerById);
 router.post("/add", addNewBanner);
 router.post("/edit/:id", editBannerById);
 router.delete('/delete/:id', deleteBannerById);

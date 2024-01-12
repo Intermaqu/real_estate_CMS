@@ -8,7 +8,7 @@ module.exports = {
 
   getAddressById: async (id) => {
     let address = await db.query(
-      'SELECT * FROM address WHERE "ID_ADDRESS" = $1',
+      'SELECT * FROM address WHERE "id" = $1',
       [id]
     );
     return address.rows[0];
