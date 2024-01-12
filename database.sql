@@ -109,6 +109,7 @@ CREATE TABLE "broker_banner" (
 );
 
 CREATE TABLE "company_info" (
+  "id" integer PRIMARY KEY,
   "id_address" integer,
   "email" varchar,
   "phone_number_1" varchar,
@@ -125,6 +126,7 @@ CREATE TABLE "company_info" (
 );
 
 CREATE TABLE "section_active_info" (
+  "id" integer PRIMARY KEY,
   "banner_active" bool,
   "best_seller_active" bool,
   "static_content" bool,

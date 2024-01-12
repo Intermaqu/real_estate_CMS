@@ -1,6 +1,19 @@
 const db = require("../db/config");
 
 module.exports = {
+  getAllAddresses: async () => {
+    let allAddresses = await db.query("SELECT * FROM address");
+    return allAddresses.rows;
+  },
+
+  getAddressById: async (id) => {
+    let address = await db.query(
+      'SELECT * FROM address WHERE "ID_ADDRESS" = $1',
+      [id]
+    );
+    return address.rows[0];
+  },
+
   addNewAddress: async (country, city, street, apartmentNum, zipCode) => {
     await db.query(
       `INSERT INTO address ("address_country", "address_city", "address_street", "address_apartment", "address_zip_code") VALUES ($1, $2, $3, $4, $5)`,
@@ -12,19 +25,6 @@ module.exports = {
       [country, city, street, apartmentNum, zipCode]
     );
 
-    return address.rows[0];
-  },
-
-  getAllAddresses: async () => {
-    const allAddresses = await db.query("SELECT * FROM address");
-    return allAddresses.rows;
-  },
-
-  getAddressById: async (id) => {
-    let address = await db.query(
-      'SELECT * FROM address WHERE "ID_ADDRESS" = $1',
-      [id]
-    );
     return address.rows[0];
   },
 
@@ -41,22 +41,22 @@ module.exports = {
          WHERE "id" = $1`,
         [id, country, city, street, apartmentNum, zipCode]
       );
-  
+
       if (result.rowCount === 0) {
         console.log(`Nie znaleziono adresu o id: ${id}`);
         return null;
       }
-  
+
       console.log(`Zaktualizowano adres o id: ${id}`);
-      
+
       let editedAddress = await db.query(
         `SELECT * FROM address WHERE "id" = $1`,
         [id]
       );
-  
+
       return editedAddress.rows[0];
     } catch (error) {
-      console.error('Błąd podczas edycji adresu:', error);
+      console.error("Błąd podczas edycji adresu:", error);
       throw error;
     }
   },
@@ -65,6 +65,6 @@ module.exports = {
     await db.query(`DELETE FROM address WHERE "id" = $1`, [id]);
 
     console.log("Usunięto adres o id:", id);
-    return true; 
+    return true;
   },
 };
