@@ -6,28 +6,27 @@ module.exports = {
     res.status(200).send(allAddresses);
   },
 
-getAddressById: async (req, res) => {
-  const { id } = req.params;
+  getAddressById: async (req, res) => {
+    const { id } = req.params;
 
-  if (!id) {
-    res.status(400).send("Missing ID");
-    return;
-  }
-
-  try {
-    const address = await Address.getAddressById(id);
-
-    if (address) {
-      res.status(200).json(address);
-    } else {
-      res.status(404).send(`Address with ID ${id} not found`);
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
     }
-  } catch (error) {
-    console.error('Błąd podczas pobierania adresu:', error);
-    res.status(500).send("Internal Server Error");
-  }
-},
 
+    try {
+      const address = await Address.getAddressById(id);
+
+      if (address) {
+        res.status(200).json(address);
+      } else {
+        res.status(404).send(`Address with ID ${id} not found`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania adresu:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
 
   addNewAddress: async (req, res) => {
     const body = req.body;

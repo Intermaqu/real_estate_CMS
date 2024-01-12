@@ -4,7 +4,7 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const userRouter = require("./routes/user");
 const addressRouter = require("./routes/address");
 const bannerRouter = require("./routes/banner");
 const realEstateImageRouter = require("./routes/real_estate_image");
@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/", indexRouter);
 app.use("/address", addressRouter);
 app.use("/banner", bannerRouter);
-app.use("/user", usersRouter);
+app.use("/user", userRouter);
 app.use("/real-estate-image", realEstateImageRouter);
 app.use("/real-estate", realEstateRouter);
 app.use("/blog-post", blogPostRouter);

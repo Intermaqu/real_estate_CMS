@@ -1,7 +1,6 @@
 require("dotenv").config();
 const db = require("../db/config");
 const jwt = require("jsonwebtoken");
-const Address = require("./Address");
 
 module.exports = {
   getAllUsers: async () => {
@@ -134,7 +133,15 @@ module.exports = {
     active
   ) => {
     try {
-      const user = await this.getUserById(id);
+      // const user = User.getUserById(id);
+      let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [
+        id,
+      ]);
+
+      if (user.rowCount !== 1) {
+        console.log(`Nie znaleziono użytkownika.`);
+        return null;
+      }
 
       const addressUpdated = await db.query(
         `UPDATE address 
@@ -144,7 +151,12 @@ module.exports = {
            "address_street" = $3,
            "address_apartment" = $4,
            "address_zip_code" = $5
-         WHERE "country" = $6 AND"city" = $7 AND "street" = $8 AND "apartmentNum" = $9 AND "zipCode" = $10'`,
+         WHERE 
+         "address_country" = $6 AND 
+         "address_city" = $7 AND 
+         "address_street" = $8 AND 
+         "address_apartment" = $9 AND 
+         "address_zip_code" = $10`,
         [
           country,
           city,
@@ -160,25 +172,22 @@ module.exports = {
       );
 
       if (addressUpdated.rowCount === 0) {
-        console.log(`Nie znaleziono adresu dla użytkownika.`);
-        return null;
+        console.log(`Nie udało się znaleźć adresu dla użytkownika.`);
       }
 
       const result = await db.query(
-        `UPDATE user 
-         SET 
+        `UPDATE user SET 
          "firstName" = $2,
          "firstSurname" = $3,
          "secondName" = $4,
          "secondSurname" = $5,
          "email" = $6,
          "password" = $7,
-         "address" = $8,
-         "role" = $9,
-         "phoneNumber" = $10,
-         "nip" = $11,
-         "createdAt" = $12,
-         "active" = $13
+         "role" = $8,
+         "phone_number" = $9,
+         "nip" = $10,
+         "created_at" = $11,
+         "active" = $12
          WHERE "id" = $1`,
         [
           id,
@@ -188,11 +197,6 @@ module.exports = {
           secondSurname,
           email,
           password,
-          country,
-          city,
-          street,
-          apartmentNum,
-          zipCode,
           role,
           phoneNumber,
           nip,

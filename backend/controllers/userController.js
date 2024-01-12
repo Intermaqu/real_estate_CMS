@@ -173,7 +173,6 @@ module.exports = {
 
   editUserById: async (req, res) => {
     const { id } = req.params;
-    const body = req.body;
 
     if (!id) {
       res.status(400).send("Missing ID");
@@ -242,10 +241,10 @@ module.exports = {
       if (editedUser) {
         res.status(200).json(editedUser);
       } else {
-        res.status(404).send(`User with ID ${id} not found`);
+        res.status(404).send(`Edycja użytkownika ${id} nie powiodła się.`);
       }
     } catch (error) {
-      console.error("Błąd podczas edycji adresu:", error);
+      console.error("Błąd podczas edycji użytkownika:", error);
       res.status(500).send("Internal Server Error");
     }
   },
@@ -272,9 +271,6 @@ module.exports = {
 };
 
 // {
-//   "id": 1,
-//   "id_address": 123,
-//   "id_broker": 456,
 //   "firstName": "John",
 //   "secondName": "Doe",
 //   "firstSurname": "Smith",
@@ -285,6 +281,11 @@ module.exports = {
 //   "phone_number": "123456789",
 //   "nip": "1234567890",
 //   "created_at": "2022-01-11T12:34:56Z",
-//   "active": true
+//   "active": true,
+//   "country": "Polska",
+//     "city": "Radom",
+//     "street": "Wiśniowa",
+//     "apartmentNum": "12",
+//     "zipCode": "61-125"
 // }
 
