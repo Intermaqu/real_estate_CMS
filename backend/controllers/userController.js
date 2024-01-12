@@ -2,10 +2,53 @@ const Address = require("../models/Address");
 const User = require("../models/User");
 
 module.exports = {
-
   getAllUsers: async (req, res) => {
     const allUsers = await User.getAllUsers();
     res.status(200).send(allUsers);
+  },
+
+  getUserById: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    try {
+      const user = await User.getUserById(id);
+
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).send(`User with ID ${id} not found`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania adresu:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  getUserByEmail: async (req, res) => {
+    const { email } = req.params;
+
+    if (!email) {
+      res.status(400).send("Missing email");
+      return;
+    }
+
+    try {
+      const user = await User.getUserByEmail(email);
+
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).send(`User with e-mail ${email} not found`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania użytkownika:", error);
+      res.status(500).send("Internal Server Error");
+    }
   },
 
   registerNewUser: async (req, res) => {
@@ -20,7 +63,7 @@ module.exports = {
       city,
       street,
       apartmentNum,
-      postCode,
+      zipCode,
       role,
       phoneNumber,
       nip,
@@ -31,24 +74,22 @@ module.exports = {
     if (
       !firstName ||
       !firstSurname ||
-      !secondName ||
-      !secondSurname ||
       !email ||
       !password ||
+      !role ||
+      !phoneNumber ||
+      !createdAt ||
+      !active ||
       !country ||
       !city ||
       !street ||
       !apartmentNum ||
-      !postCode ||
-      !role ||
-      !phoneNumber ||
-      !nip ||
-      !createdAt ||
-      !active
+      !zipCode
     ) {
       res.status(400).send("Missing data!");
       return 0;
     }
+
     if (await User.getUserByEmail(email)) {
       res.status(401).send("Email exists");
       return 0;
@@ -59,9 +100,8 @@ module.exports = {
       city,
       street,
       apartmentNum,
-      postCode
+      zipCode
     );
-    console.log(address);
 
     await User.addNewUser(
       firstName,
@@ -95,18 +135,20 @@ module.exports = {
       return 0;
     }
 
-    if (password !== user.Password) {
+    console.log(user);
+
+    if (password !== user.password) {
       res.status(401).send("Wrong password");
       return 0;
     }
 
-    let address = await Address.getAddressById(user.ID_ADDRESS);
+    let address = await Address.getAddressById(user.id_address);
 
     console.log(address);
     console.log(user);
 
     const token = User.generateJWTToken(
-      user.ID_USER,
+      user.id,
       user.firstName,
       user.firstSurname,
       user.secondName,
@@ -128,4 +170,121 @@ module.exports = {
       token: "Bearer " + token,
     });
   },
+
+  editUserById: async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    const {
+      firstName,
+      firstSurname,
+      secondName,
+      secondSurname,
+      email,
+      password,
+      country,
+      city,
+      street,
+      apartmentNum,
+      zipCode,
+      role,
+      phoneNumber,
+      nip,
+      createdAt,
+      active,
+    } = req.body;
+
+    if (
+      !firstName ||
+      !firstSurname ||
+      !email ||
+      !password ||
+      !role ||
+      !phoneNumber ||
+      !createdAt ||
+      !active ||
+      !country ||
+      !city ||
+      !street ||
+      !apartmentNum ||
+      !zipCode
+    ) {
+      res.status(400).send("Missing data");
+      return;
+    }
+
+    try {
+      const editedUser = await User.editUserById(
+        id,
+        firstName,
+        firstSurname,
+        secondName,
+        secondSurname,
+        email,
+        password,
+        country,
+        city,
+        street,
+        apartmentNum,
+        zipCode,
+        role,
+        phoneNumber,
+        nip,
+        createdAt,
+        active,
+      );
+
+      if (editedUser) {
+        res.status(200).json(editedUser);
+      } else {
+        res.status(404).send(`User with ID ${id} not found`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas edycji adresu:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  deleteUserById: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    const success = await User.deleteUserById(id).catch((e) => {
+      console.log(e);
+      return false;
+    });
+
+    if (success) {
+      res.status(200).send("User deleted");
+    } else {
+      res.status(400).send("Error");
+    }
+  },
 };
+
+// {
+//   "id": 1,
+//   "id_address": 123,
+//   "id_broker": 456,
+//   "firstName": "John",
+//   "secondName": "Doe",
+//   "firstSurname": "Smith",
+//   "secondSurname": "Johnson",
+//   "email": "john.doe@example.com",
+//   "password": "hashed_password",
+//   "role": "BROKER",
+//   "phone_number": "123456789",
+//   "nip": "1234567890",
+//   "created_at": "2022-01-11T12:34:56Z",
+//   "active": true
+// }
+

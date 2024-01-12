@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/", indexRouter);
 app.use("/address", addressRouter);
 app.use("/banner", bannerRouter);
-app.use("/users", usersRouter);
+app.use("/user", usersRouter);
 app.use("/real-estate-image", realEstateImageRouter);
 app.use("/real-estate", realEstateRouter);
 app.use("/blog-post", blogPostRouter);
