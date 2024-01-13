@@ -108,4 +108,24 @@ module.exports = {
       res.status(400).send("Error");
     }
   },
+
+  deleteRealEstateById: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    const success = await RealEstate.deleteRealEstateById(id).catch((e) => {
+      console.log(e);
+      return false;
+    });
+
+    if (success) {
+      res.status(200).send("Real estate deleted");
+    } else {
+      res.status(400).send("Error");
+    }
+  },
 };
