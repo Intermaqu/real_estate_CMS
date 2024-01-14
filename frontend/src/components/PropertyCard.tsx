@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 type PropertyProps = {
@@ -7,6 +8,7 @@ type PropertyProps = {
   bedrooms: string;
   description: string;
   imageSrc: string;
+  id: string;
 };
 
 // title = "5619 Walnut Hill Ln, Dallas, TX 75229";
@@ -23,26 +25,31 @@ const PropertyCard = ({
   bedrooms,
   description,
   imageSrc,
-}: PropertyProps) => (
-  <PropertyWrapper>
-    <PropertyBody>
-      <PropertyLink href="#">
-        <PropertyImage src={imageSrc} alt="" />
-      </PropertyLink>
-      <PropertyTitle>
-        <a href="#">{title}</a>
-      </PropertyTitle>
-      <PropertyInfo>
-        <li>
-          <StyledPrice href="#">${price}/mon</StyledPrice>
-        </li>
-        <li>{size} Sq. Ft.</li>
-        <li>{bedrooms} Bedrooms</li>
-      </PropertyInfo>
-      <PropertyDescription>{description}</PropertyDescription>
-    </PropertyBody>
-  </PropertyWrapper>
-);
+  id,
+}: PropertyProps) => {
+  const navigate = useNavigate();
+
+  return (
+    <PropertyWrapper>
+      <PropertyBody>
+        <PropertyLink onClick={() => navigate(`/property?id=${id}`)}>
+          <PropertyImage src={imageSrc} alt="" />
+        </PropertyLink>
+        <PropertyTitle>
+          <a href="#">{title}</a>
+        </PropertyTitle>
+        <PropertyInfo>
+          <li>
+            <StyledPrice href="#">${price}/mon</StyledPrice>
+          </li>
+          <li>{size} Sq. Ft.</li>
+          <li>{bedrooms} Bedrooms</li>
+        </PropertyInfo>
+        <PropertyDescription>{description}</PropertyDescription>
+      </PropertyBody>
+    </PropertyWrapper>
+  );
+};
 
 const PropertyWrapper = styled.div`
   flex: 0 0 50%;
@@ -61,7 +68,7 @@ const PropertyBody = styled.article`
   align-items: flex-start;
 `;
 
-const PropertyLink = styled.a`
+const PropertyLink = styled.div`
   display: block;
   position: relative;
 `;

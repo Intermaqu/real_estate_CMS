@@ -7499,7 +7499,7 @@ html:not(.tablet):not(.mobile) .profile-minimal-caption {
 .page {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: calc(100vh - 52px);
   width: 100%;
 }
 

@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import Page1 from "./pages/Page1";
+import PropertyPage from "./pages/PropertyPage";
 import Page2 from "./pages/Page2";
 import Landing from "./pages/Landing";
 import NavBar from "./components/NavBar";
@@ -12,7 +12,7 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/page1" element={<Page1 />} />
+          <Route path="/property" element={<PropertyPage />} />
           <Route path="/page2" element={<Page2 />} />
         </Routes>
       </Router>
