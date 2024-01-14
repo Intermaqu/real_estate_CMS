@@ -35,7 +35,7 @@ interface PropertyDataInterface {
   brokerPhone: string;
 }
 
-interface ResponseDataInterface {
+interface ResponseDataInterface extends PropertyDataInterface {
   data: PropertyDataInterface;
 }
 
@@ -55,12 +55,12 @@ const RealEstatePage = () => {
   const init = () => {
     if (propertyId) {
       axios({
-        method: "POST",
-        url: `http://localhost:3001/real-estate/getById/`,
+        method: "GET",
+        url: `http://localhost:3001/real-estate/getById/${propertyId}`,
         data: { id: propertyId },
       })
         .then((res: AxiosResponse<ResponseDataInterface>) => {
-          const data = res.data.data;
+          const data = res.data;
           console.log(data);
           setPropertyData(data);
           setLoading(false);
