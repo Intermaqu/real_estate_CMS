@@ -18,6 +18,7 @@ module.exports = {
   addNewRealEstate: async (
     id_real_estate_image,
     id_category,
+    id_broker,
     title,
     short_description,
     description,
@@ -33,11 +34,11 @@ module.exports = {
     parking_space,
     elevator,
     square_footage,
-    id_broker,
     best_seller
   ) => {
     let realEstate = await db.query(
       `INSERT INTO real_estate (  
+      "id_category",
       "title",
       "short_description",
       "description",
@@ -53,8 +54,9 @@ module.exports = {
       "parking_space",
       "elevator",
       "square_footage",
-      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
+      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`,
       [
+        id_category,
         title,
         short_description,
         description,
@@ -75,6 +77,13 @@ module.exports = {
     );
 
     return realEstate;
+  },
+
+  deleteRealEstateById: async (id) => {
+    await db.query(`DELETE FROM real_estate WHERE "id" = $1`, [id]);
+
+    console.log("Usunięto nieruchomość o id:", id);
+    return true;
   },
 };
 

@@ -1,13 +1,17 @@
 var express = require("express");
-const { addNewCategory } = require("../controllers/categoryController");
-const { getAllCategory, getCategoryById } = require("../models/Category");
+const {
+  getAllCategories,
+  getCategoryById,
+  addNewCategory,
+  editCategoryById,
+  deleteCategoryById,
+} = require("../controllers/categoryController");
 var router = express.Router();
 
-router.post("/addCategory", addNewCategory);
+router.get("/", getAllCategories);
+router.get("/get/:id", getCategoryById);
+router.post("/add", addNewCategory);
+// router.post("/edit/:id", editCategoryById);
+router.delete("/delete/:id", deleteCategoryById);
 
-router.get("/getCategoryById", getCategoryById);
-
-router.get("/getAllCategory", getAllCategory);
-
-//passport.authenticate("jwt", { session: false }),
 module.exports = router;

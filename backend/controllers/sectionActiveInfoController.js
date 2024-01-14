@@ -10,13 +10,13 @@ module.exports = {
   addNewSectionActiveInfo: async (req, res) => {
     const body = req.body;
     if (
-        !body.banner_active ||
-        !body.best_seller_active ||
-        !body.static_content ||
-        !body.categories ||
-        !body.brokers ||
-        !body.blog ||
-        !body.testimonials
+        body.banner_active === undefined ||
+        body.best_seller_active === undefined ||
+        body.static_content === undefined ||
+        body.categories === undefined ||
+        body.brokers === undefined ||
+        body.blog === undefined ||
+        body.testimonials === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;

@@ -206,7 +206,7 @@ module.exports = {
       !role ||
       !phoneNumber ||
       !createdAt ||
-      !active ||
+      active === undefined ||
       !country ||
       !city ||
       !street ||
