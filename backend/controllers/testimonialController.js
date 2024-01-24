@@ -13,7 +13,7 @@ module.exports = {
         !body.position || 
         !body.comment || 
         !body.created_at || 
-        !body.active
+        body.active === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;

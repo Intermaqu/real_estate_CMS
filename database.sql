@@ -1,5 +1,8 @@
+CREATE TYPE real_estate_status AS ENUM ('AVAILABLE', 'BOOKED', 'SOLD', 'INACTIVE');
+CREATE TYPE user_role AS ENUM ('ADMIN', 'BROKER', 'AUTHORIZED_USER', 'UNAUTHORIZED_USER');
+
 CREATE TABLE "address" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "address_country" varchar,
   "address_city" varchar,
   "address_street" varchar,
@@ -8,9 +11,9 @@ CREATE TABLE "address" (
 );
 
 CREATE TABLE "user" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "id_address" integer,
-  "id_broker" integer,
+  -- "id_broker" integer,
   "firstName" varchar,
   "secondName" varchar,
   "firstSurname" varchar,
@@ -25,18 +28,18 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "real_estate_image" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "image_1" varchar,
   "image_2" varchar,
   "image_3" varchar,
   "image_4" varchar,
-  "image_5" varchar,
-  "image_6" varchar,
+  -- "image_5" varchar,
+  -- "image_6" varchar,
   "created_at" timestamp
 );
 
 CREATE TABLE "real_estate" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "id_real_estate_image" integer,
   "id_category" integer,
   "title" varchar,
@@ -59,7 +62,7 @@ CREATE TABLE "real_estate" (
 );
 
 CREATE TABLE "category" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "description" varchar,
   "image" varchar,
@@ -68,7 +71,7 @@ CREATE TABLE "category" (
 );
 
 CREATE TABLE "blog_post" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "owner" integer,
   "created_at" timestamp,
   "title" varchar,
@@ -78,7 +81,7 @@ CREATE TABLE "blog_post" (
 );
 
 CREATE TABLE "banner" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "title" varchar,
   "subtitle" varchar,
   "image" varchar,
@@ -87,13 +90,13 @@ CREATE TABLE "banner" (
 );
 
 CREATE TABLE "faq" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "question" varchar,
   "answer" varchar
 );
 
 CREATE TABLE "testimonial" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "full_name" varchar,
   "position" varchar,
   "comment" varchar,
@@ -102,14 +105,14 @@ CREATE TABLE "testimonial" (
 );
 
 CREATE TABLE "broker_banner" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "id_broker" integer,
   "comment" varchar,
   "active" bool
 );
 
 CREATE TABLE "company_info" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "id_address" integer,
   "email" varchar,
   "phone_number_1" varchar,
@@ -126,7 +129,7 @@ CREATE TABLE "company_info" (
 );
 
 CREATE TABLE "section_active_info" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "banner_active" bool,
   "best_seller_active" bool,
   "static_content" bool,
@@ -136,16 +139,16 @@ CREATE TABLE "section_active_info" (
   "testimonials" bool
 );
 
-ALTER TABLE "blog_post" ADD FOREIGN KEY ("owner") REFERENCES "user" ("id");
+ALTER TABLE "blog_post" ADD FOREIGN KEY ("owner") REFERENCES "user" ("idSERIAL
 
-ALTER TABLE "broker_banner" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("id");
+ALTER TABLE "broker_banner" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("idSERIAL
 
-ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("id");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_broker") REFERENCES "user" ("idSERIAL
 
-ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_category") REFERENCES "category" ("id");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_category") REFERENCES "category" ("idSERIAL
 
-ALTER TABLE "user" ADD FOREIGN KEY ("id_address") REFERENCES "user" ("id");
+ALTER TABLE "user" ADD FOREIGN KEY ("id_address") REFERENCES "user" ("idSERIAL
 
-ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_real_estate_image") REFERENCES "real_estate_image" ("id");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_real_estate_image") REFERENCES "real_estate_image" ("idSERIAL
 
-ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_address") REFERENCES "address" ("id");
+ALTER TABLE "real_estate" ADD FOREIGN KEY ("id_address") REFERENCES "address" ("idSERIAL

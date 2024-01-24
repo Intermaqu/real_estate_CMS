@@ -3,7 +3,7 @@ const db = require("../db/config");
 module.exports = {
   addNewFaq: async (question, answer) => {
     let user = await db.query(
-      `INSERT INTO users ("question", "answer) VALUES ($1, $2)`,
+      `INSERT INTO faqs ("question", "answer) VALUES ($1, $2)`,
       [question, answer]
     );
     return user;

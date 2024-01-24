@@ -14,7 +14,7 @@ module.exports = {
       !body.title ||
       !body.image ||
       !body.description ||
-      !body.active
+      body.active === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;

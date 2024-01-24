@@ -1,11 +1,17 @@
 var express = require("express");
 const {
   getAllRealEstateOffers,
+  getRealEstateById,
   addNewRealEstate,
+  editRealEstateById,
+  deleteRealEstateById
 } = require("../controllers/realEstateController");
 var router = express.Router();
 
 router.get("/", getAllRealEstateOffers);
-router.post("/newRealEstate", addNewRealEstate);
+router.get("/getById/:id", getRealEstateById);
+router.post("/add", addNewRealEstate);
+// router.post("/edit/:id", editRealEstateById);
+router.delete('/delete/:id', deleteRealEstateById);
 
 module.exports = router;

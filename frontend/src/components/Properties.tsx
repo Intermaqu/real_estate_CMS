@@ -14,6 +14,7 @@ const Properties = () => {
             bedrooms="3"
             description="A comfortable residential property located in a quiet and cozy area."
             imageSrc="images/grid-blog-1-571x353.jpg"
+            id="1"
           />
           <PropertyCard
             title="1808 Bolingbroke Pl, Fort Worth, TX 76140"
@@ -22,6 +23,7 @@ const Properties = () => {
             bedrooms="2"
             description="Perfect for those who love both city life and the countryside."
             imageSrc="images/grid-blog-2-571x353.jpg"
+            id="2"
           />
           <PropertyCard
             title="924 Bel Air Rd, Los Angeles, CA 90077"
@@ -30,6 +32,7 @@ const Properties = () => {
             bedrooms="4"
             description="Located in 5 mins from downtown, this property is great for anyone."
             imageSrc="images/grid-blog-3-571x353.jpg"
+            id="3"
           />
           <PropertyCard
             title="13510 W Cheery Lynn Rd, Avondale, AZ 85392"
@@ -38,6 +41,7 @@ const Properties = () => {
             bedrooms="2"
             description="A luxury mansion for people who enjoy the high-end amenities."
             imageSrc="images/grid-blog-4-571x353.jpg"
+            id="4"
           />
 
           <ViewMoreButtonWrapper>

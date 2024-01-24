@@ -11,7 +11,7 @@ module.exports = {
     if (
         !body.id_broker || 
         !body.comment || 
-        !body.active
+        body.active === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;
