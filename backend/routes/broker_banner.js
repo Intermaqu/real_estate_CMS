@@ -1,9 +1,14 @@
 var express = require("express");
 
-const { addNewBrokerBanner, getAllBrokerBanners } = require("../controllers/brokerBannerController");
+const {
+  addNewBrokerBanner,
+  getAllBrokerBanners,
+  getAllWithBrokerData,
+} = require("../controllers/brokerBannerController");
 var router = express.Router();
 
-router.post("/addNewBrokerBanner", addNewBrokerBanner);
-router.get("/getAllBrokerBanners", getAllBrokerBanners);
+router.get("/", getAllBrokerBanners);
+router.get("/getAllWithBrokerData", getAllWithBrokerData);
+router.post("/add", addNewBrokerBanner);
 
 module.exports = router;

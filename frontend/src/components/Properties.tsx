@@ -12,9 +12,8 @@ const Properties = () => {
       url: `http://localhost:3001/real-estate`,
     })
       .then((res) => {
-        console.log(res);
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setProperties(data);
       })
       .catch((err: AxiosError) => {

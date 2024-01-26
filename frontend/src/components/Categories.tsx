@@ -12,9 +12,8 @@ const Categories = () => {
       url: `http://localhost:3001/category`,
     })
       .then((res) => {
-        console.log(res);
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setCategories(data);
         
       })

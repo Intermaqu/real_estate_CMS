@@ -3,14 +3,14 @@ import styled from "styled-components";
 
 type BrokerCardProps = {
   brokerName: string;
-  brokerPosition: string;
+  brokerEmail: string;
   brokerPhone: string;
   brokerDescription: string;
 };
 
 const BrokerCard = ({
   brokerName,
-  brokerPosition,
+  brokerEmail,
   brokerPhone,
   brokerDescription,
 }: BrokerCardProps) => {
@@ -23,7 +23,7 @@ const BrokerCard = ({
             <a href="#">{brokerName}</a>
           </BrokerName>
           <BrokerPosition className="profile-creative-position">
-            {brokerPosition}
+            {brokerEmail}
           </BrokerPosition>
           <BrokerContacts className="profile-creative-contacts">
             <div className="object-inline">

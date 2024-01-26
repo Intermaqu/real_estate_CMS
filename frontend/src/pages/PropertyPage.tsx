@@ -61,7 +61,7 @@ const RealEstatePage = () => {
       })
         .then((res: AxiosResponse<ResponseDataInterface>) => {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           setPropertyData(data);
           setLoading(false);
         })

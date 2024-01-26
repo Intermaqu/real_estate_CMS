@@ -1,37 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import BrokerCard from "./BrokerCard";
 import styled from "styled-components";
 
 const OurTeam = () => {
+  const [brokerBanners, setBrokerBanners] = useState([]);
+
+  const init = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:3001/broker-banner/getAllWithBrokerData`,
+    })
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        setBrokerBanners(data);
+      })
+      .catch((err: AxiosError) => {
+        console.log(err?.response?.data);
+      });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <OurTeamWrapper className="section-lg text-center bg-gray-100">
       <OurTeamBody>
-        <OurTeamTitle>Our Team</OurTeamTitle>
+        <OurTeamTitle>NASZ ZESPÓŁ</OurTeamTitle>
         <OurTeamGridWrapper>
-          <BrokerCard
-            brokerName="Nathalie Porter"
-            brokerPosition="Founder, Broker"
-            brokerPhone="1-800-1324-567"
-            brokerDescription="Ms. Porter founded our company in 1989 with a vision to help guests and residents of the USA to easily find and buy or rent real estate in all 50 states."
-          />
-          <BrokerCard
-            brokerName="John Thompson"
-            brokerPosition="Sales Associate"
-            brokerPhone="1-800-1324-567"
-            brokerDescription="John has been in sales and marketing for the past 15 years. He has excellent knowledge about the local market both residential and commercial."
-          />
-          <BrokerCard
-            brokerName="Brian Payne"
-            brokerPosition="Realtor"
-            brokerPhone="1-800-1324-567"
-            brokerDescription="Brian is not only a Licensed Realtor but also holds the Title Producers and Mortgage Licenses, which makes him a very knowledgeable real estate expert."
-          />
-          <BrokerCard
-            brokerName="Marie Fernandez"
-            brokerPosition="Broker"
-            brokerPhone="1-800-1324-567"
-            brokerDescription="Marie's goal is to provide clients with the highest level of marketing expertise and customer service to help them reach their uppermost real estate goals."
-          />
+          {brokerBanners.slice(0, 4).map((broker_banner) => (
+            <BrokerCard
+              brokerName={broker_banner.firstName + ' ' + broker_banner.firstSurname}
+              brokerEmail={broker_banner.email}
+              brokerPhone={broker_banner.phone_number}
+              brokerDescription={broker_banner.comment}
+            />
+          ))}
         </OurTeamGridWrapper>
       </OurTeamBody>
     </OurTeamWrapper>
