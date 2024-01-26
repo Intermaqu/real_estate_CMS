@@ -31,7 +31,10 @@ const OurTeam = () => {
         <OurTeamGridWrapper>
           {brokerBanners.slice(0, 4).map((broker_banner) => (
             <BrokerCard
-              brokerName={broker_banner.firstName + ' ' + broker_banner.firstSurname}
+              key={broker_banner.id}
+              brokerName={
+                broker_banner.firstName + " " + broker_banner.firstSurname
+              }
               brokerEmail={broker_banner.email}
               brokerPhone={broker_banner.phone_number}
               brokerDescription={broker_banner.comment}

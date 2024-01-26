@@ -15,7 +15,6 @@ const Categories = () => {
         const data = res.data;
         // console.log(data);
         setCategories(data);
-        
       })
       .catch((err: AxiosError) => {
         console.log(err?.response?.data);
@@ -40,6 +39,7 @@ const Categories = () => {
         <CategoriesGridWrapper>
           {categories.slice(0, 4).map((category) => (
             <CategoryCard
+              key={category.id}
               title={category.name}
               imageSrc={`images/category/${category.image}`}
             />

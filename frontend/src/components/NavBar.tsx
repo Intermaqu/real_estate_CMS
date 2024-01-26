@@ -9,10 +9,10 @@ const NavBar = () => {
         <CustomLink onClick={() => navigate("/")}>
           <CustomLinkText>STRONA GŁÓWNA</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/about-us")}>
+        <CustomLink onClick={() => navigate("/o-nas")}>
           <CustomLinkText>O NAS</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/contact")}>
+        <CustomLink onClick={() => navigate("/kontakt")}>
           <CustomLinkText>KONTAKT</CustomLinkText>
         </CustomLink>
         <CustomLink onClick={() => navigate("/login")}>

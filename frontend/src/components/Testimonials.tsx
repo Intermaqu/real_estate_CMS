@@ -13,7 +13,7 @@ const Testimonials = () => {
     })
       .then((res) => {
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setTestimonials(data);
       })
       .catch((err: AxiosError) => {
