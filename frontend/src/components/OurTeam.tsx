@@ -13,7 +13,7 @@ const OurTeam = () => {
     })
       .then((res) => {
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setBrokerBanners(data);
       })
       .catch((err: AxiosError) => {

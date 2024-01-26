@@ -13,6 +13,7 @@ const realEstateImageRouter = require("./routes/real_estate_image");
 const realEstateRouter = require("./routes/real_estate");
 const blogPostRouter = require("./routes/blog_post");
 const sectionActiveInfoRouter = require("./routes/section_active_info");
+const testimonialRouter = require("./routes/testimonial");
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.use("/real-estate-image", realEstateImageRouter);
 app.use("/real-estate", realEstateRouter);
 app.use("/blog-post", blogPostRouter);
 app.use("/section-active-info", sectionActiveInfoRouter);
+app.use("/testimonial", testimonialRouter);
 
 module.exports = app;
