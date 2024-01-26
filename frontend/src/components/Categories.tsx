@@ -1,39 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
 
 const Categories = () => {
+  const [categories, setCategories] = useState([]);
+
+  const init = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:3001/category`,
+    })
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+        console.log(data);
+        setCategories(data);
+        
+      })
+      .catch((err: AxiosError) => {
+        console.log(err?.response?.data);
+      });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <CategoriesSection>
       <CategoriesContainer>
-        <CategoriesTitle>Residential property categories</CategoriesTitle>
+        <CategoriesTitle>Kategorie nieruchomości mieszkalnych</CategoriesTitle>
         <CategoriesDescriptionWrapper>
           <CategoriesDescription>
-            At our agency, we work with various types of residential real estate
-            property. You can find out more about our properties by browsing our
-            website.
+            W naszym biurze współpracujemy z różnymi rodzajami nieruchomości
+            mieszkalnych. Więcej informacji na temat naszych nieruchomości
+            znajdziesz, przeglądając naszą stronę internetową.
           </CategoriesDescription>
         </CategoriesDescriptionWrapper>
         <CategoriesGridWrapper>
-          <CategoryCard
-            title="Single-Family Homes"
-            imageSrc="images/service-thumbnail-1-270x300.jpg"
-          />
-          <CategoryCard
-            title="Townhouses"
-            imageSrc="images/service-thumbnail-2-270x300.jpg"
-          />
-          <CategoryCard
-            title="Multi-Family Homes"
-            imageSrc="images/service-thumbnail-3-270x300.jpg"
-          />
-          <CategoryCard
-            title="Condominiums"
-            imageSrc="images/service-thumbnail-4-270x300.jpg"
-          />
+          {categories.slice(0, 4).map((category) => (
+            <CategoryCard
+              title={category.name}
+              imageSrc={`images/category/${category.image}`}
+            />
+          ))}
         </CategoriesGridWrapper>
         <ViewMoreButtonWrapper>
-          <ViewMoreButton>view More properties</ViewMoreButton>
+          <ViewMoreButton>ZOBACZ WIĘCEJ KATEGORII</ViewMoreButton>
         </ViewMoreButtonWrapper>
       </CategoriesContainer>
     </CategoriesSection>

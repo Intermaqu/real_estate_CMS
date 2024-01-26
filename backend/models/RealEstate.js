@@ -17,7 +17,7 @@ module.exports = {
   
   getRealEstateForDataInterfaceById: async (id) => {
     let real_estate_info = await db.query(
-      'SELECT re.title, re.price, re.description, re.status, re.total_rates, re.square_footage, re.no_of_rooms, re.no_of_floors, re.year_of_construction, re.parking_space, re.elevator, re.square_footage, re.best_seller, "user"."firstName" as broker_first_name, "user"."firstSurname" as broker_first_surname, "user".phone_number as broker_phone_number, c.name as category_name, a.address_city, a.address_street, a.address_apartment, a.address_zip_code, a.address_country FROM real_estate as re LEFT JOIN "user" ON re.id_broker = "user".id LEFT JOIN category c ON re.id_category = c.id LEFT JOIN address a ON re.id_address = a.id WHERE re.id = $1;',
+      'SELECT re.title, re.price, re.description, re.status, re.total_rates, re.square_footage, re.no_of_rooms, re.no_of_floors, re.year_of_construction, re.parking_space, re.elevator, re.square_footage, re.best_seller, "user"."firstName" as broker_first_name, "user"."firstSurname" as broker_first_surname, "user".phone_number as broker_phone_number, c.name as category_name, a.address_city, a.address_street, a.address_apartment, a.address_zip_code, a.address_country, rei.image_1, rei.image_2, rei.image_3, rei.image_4 FROM real_estate as re LEFT JOIN "user" ON re.id_broker = "user".id LEFT JOIN category c ON re.id_category = c.id LEFT JOIN address a ON re.id_address = a.id  LEFT JOIN real_estate_image rei ON re.id_real_estate_image = rei.id WHERE re.id = $1;',
     [id]);
 
     return real_estate_info.rows[0];

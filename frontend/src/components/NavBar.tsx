@@ -7,13 +7,16 @@ const NavBar = () => {
     <CustomNav>
       <CustomList>
         <CustomLink onClick={() => navigate("/")}>
-          <CustomLinkText>Home</CustomLinkText>
+          <CustomLinkText>STRONA GŁÓWNA</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/page1")}>
-          <CustomLinkText>About us</CustomLinkText>
+        <CustomLink onClick={() => navigate("/about-us")}>
+          <CustomLinkText>O NAS</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/page2")}>
-          <CustomLinkText>Contact</CustomLinkText>
+        <CustomLink onClick={() => navigate("/contact")}>
+          <CustomLinkText>KONTAKT</CustomLinkText>
+        </CustomLink>
+        <CustomLink onClick={() => navigate("/login")}>
+          <CustomLinkText>ZALOGUJ/ZAJERESTRUJ SIĘ</CustomLinkText>
         </CustomLink>
       </CustomList>
     </CustomNav>

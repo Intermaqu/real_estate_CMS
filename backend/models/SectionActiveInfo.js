@@ -10,8 +10,9 @@ module.exports = {
     blog,
     testimonials
   ) => {
+
     let banner = await db.query(
-      `INSERT INTO banner (
+      `INSERT INTO section_active_info (
         "banner_active",
         "best_seller_active",
         "static_content",
@@ -19,7 +20,7 @@ module.exports = {
         "brokers",
         "blog",
         "testimonials"
-      ) VALUES ($1, $2, $3, $4, $5)`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [
         banner_active,
         best_seller_active,
@@ -30,6 +31,7 @@ module.exports = {
         testimonials,
       ]
     );
+
     return banner;
   },
 

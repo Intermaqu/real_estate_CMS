@@ -1,4 +1,4 @@
-const sectionActiveInfo = require("../models/sectionActiveInfo");
+const SectionActiveInfo = require("../models/sectionActiveInfo");
 
 module.exports = {
   getAllSectionActiveInfo: async (req, res) => {
@@ -8,20 +8,45 @@ module.exports = {
   },
 
   addNewSectionActiveInfo: async (req, res) => {
-    const body = req.body;
+    const {
+      banner_active,
+      best_seller_active,
+      static_content,
+      categories,
+      brokers,
+      blog,
+      testimonials
+    } = req.body;
+
     if (
-        body.banner_active === undefined ||
-        body.best_seller_active === undefined ||
-        body.static_content === undefined ||
-        body.categories === undefined ||
-        body.brokers === undefined ||
-        body.blog === undefined ||
-        body.testimonials === undefined
+        banner_active === undefined ||
+        best_seller_active === undefined ||
+        static_content === undefined ||
+        categories === undefined ||
+        brokers === undefined ||
+        blog === undefined ||
+        testimonials === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;
     }
 
-    res.status(200).send("Category added");
+    const real_estate = await SectionActiveInfo.addNewSectionActiveInfo(
+      banner_active,
+      best_seller_active,
+      static_content,
+      categories,
+      brokers,
+      blog,
+      testimonials
+    ).catch((e) => {
+      console.log(e);
+    });
+
+    if (real_estate) {
+      res.status(200).send("Section Active added");
+    } else {
+      res.status(400).send("Error");
+    }
   },
 };

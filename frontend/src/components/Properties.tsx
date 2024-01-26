@@ -1,51 +1,50 @@
 import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import PropertyCard from "./PropertyCard";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 const Properties = () => {
+  const [properties, setProperties] = useState([]);
+
+  const init = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:3001/real-estate`,
+    })
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+        console.log(data);
+        setProperties(data);
+      })
+      .catch((err: AxiosError) => {
+        console.log(err?.response?.data);
+      });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <PropertiesSection className="section">
       <PropertiesContainer>
-        <PropertiesTitle>Popular properties</PropertiesTitle>
+        <PropertiesTitle>POPULARNE OFERTY</PropertiesTitle>
         <PropertiesGridWrapper>
-          <PropertyCard
-            title="5619 Walnut Hill Ln, Dallas, TX 75229"
-            price="1500"
-            size="30"
-            bedrooms="3"
-            description="A comfortable residential property located in a quiet and cozy area."
-            imageSrc="images/grid-blog-1-571x353.jpg"
-            id="1"
-          />
-          <PropertyCard
-            title="1808 Bolingbroke Pl, Fort Worth, TX 76140"
-            price="1300"
-            size="40"
-            bedrooms="2"
-            description="Perfect for those who love both city life and the countryside."
-            imageSrc="images/grid-blog-2-571x353.jpg"
-            id="2"
-          />
-          <PropertyCard
-            title="924 Bel Air Rd, Los Angeles, CA 90077"
-            price="1800"
-            size="50"
-            bedrooms="4"
-            description="Located in 5 mins from downtown, this property is great for anyone."
-            imageSrc="images/grid-blog-3-571x353.jpg"
-            id="3"
-          />
-          <PropertyCard
-            title="13510 W Cheery Lynn Rd, Avondale, AZ 85392"
-            price="2700"
-            size="90"
-            bedrooms="2"
-            description="A luxury mansion for people who enjoy the high-end amenities."
-            imageSrc="images/grid-blog-4-571x353.jpg"
-            id="4"
-          />
-
+          {properties.slice(0,10).map((property) => (
+            <PropertyCard
+              key={property.id}
+              title={property.title}
+              price={property.price}
+              size={property.square_footage}
+              bedrooms={property.no_of_rooms}
+              description={property.description}
+              imageSrc="images/real-estate/apartament.jpg"
+              id={property.id}
+            />
+          ))}
           <ViewMoreButtonWrapper>
-            <ViewMoreButton>view More properties</ViewMoreButton>
+            <ViewMoreButton>ZOBACZ WIĘCEJ OFERT</ViewMoreButton>
           </ViewMoreButtonWrapper>
         </PropertiesGridWrapper>
       </PropertiesContainer>
