@@ -1,5 +1,7 @@
 const RealEstate = require("../models/RealEstate");
 const Category = require("../models/Category");
+const User = require("../models/User");
+const Address = require("../models/Address");
 
 module.exports = {
   getAllRealEstateOffers: async (req, res) => {
@@ -38,7 +40,9 @@ module.exports = {
     }
 
     try {
-      const real_estate = await RealEstate.getRealEstateForDataInterfaceById(id);
+      const real_estate = await RealEstate.getRealEstateForDataInterfaceById(
+        id
+      );
 
       if (real_estate) {
         res.status(200).json(real_estate);
@@ -54,13 +58,7 @@ module.exports = {
   addNewRealEstate: async (req, res) => {
     const {
       id_real_estate_image,
-
-      category_name,
-      category_description,
-      category_image,
-      category_created_at,
-      category_active,
-
+      id_category,
       id_broker,
       title,
       short_description,
@@ -80,17 +78,10 @@ module.exports = {
       best_seller,
     } = req.body;
 
-    console.log(req.body);
-
     if (
       !id_real_estate_image ||
-      
-      !category_name ||
-      !category_description ||
-      !category_image ||
-      !category_created_at ||
-      category_active === undefined ||
-
+      !id_category ||
+      !id_broker ||
       !title ||
       !short_description ||
       !description ||
@@ -106,26 +97,30 @@ module.exports = {
       !parking_space ||
       !elevator ||
       !square_footage ||
-      best_seller === undefined ||
-      !id_broker
+      best_seller === undefined
     ) {
       res.status(400).send("Missing data!");
       return 0;
     }
 
-    let category = await Category.addNewCategory(
-      category_name,
-      category_description,
-      category_image,
-      category_created_at,
-      category_active,
-    )
+    let category = await Category.getCategoryById(id_category);
+    if (!category) {
+      res.status(400).send(`Nie znaleziono kategorii o id ${id_category}!`);
+    }
 
-    console.log(category);
+    let broker = await User.getUserById(id_broker);
+    if (!broker) {
+      res.status(400).send(`Nie znaleziono użytkownika o id ${id_broker}!`);
+    }
+
+    let address = await Address.getAddressById(id_address);
+    if (!address) {
+      res.status(400).send(`Nie znaleziono adresu o id ${id_address}!`);
+    }
 
     const real_estate = await RealEstate.addNewRealEstate(
       id_real_estate_image,
-      category.id,
+      id_category,
       id_broker,
       title,
       short_description,

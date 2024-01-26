@@ -47,6 +47,7 @@ module.exports = {
     let realEstate = await db.query(
       `INSERT INTO real_estate (  
       "id_category",
+      "id_broker",
       "title",
       "short_description",
       "description",
@@ -62,9 +63,10 @@ module.exports = {
       "parking_space",
       "elevator",
       "square_footage",
-      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`,
+      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
       [
         id_category,
+        id_broker,
         title,
         short_description,
         description,
@@ -97,7 +99,8 @@ module.exports = {
 
 // {
 //   "id_real_estate_image": 1,
-//   "id_category": 3,
+//   "id_category": 5,
+//   "id_broker": 2,
 //   "title": "Przestronne mieszkanie z widokiem na morze",
 //   "short_description": "Nowoczesne mieszkanie zlokalizowane w centrum miasta",
 //   "description": "Piękne mieszkanie z trzema sypialniami, dużym salonem i nowoczesną kuchnią. Wspaniały widok na morze z balkonu.",
@@ -105,7 +108,7 @@ module.exports = {
 //   "status": "AVAILABLE",
 //   "total_rates": 4,
 //   "no_of_reviews": 2,
-//   "id_address": 123,
+//   "id_address": 16,
 //   "created_at": "2022-01-12T14:30:00Z",
 //   "no_of_rooms": 3,
 //   "no_of_floors": 5,
@@ -113,6 +116,5 @@ module.exports = {
 //   "parking_space": "Garage",
 //   "elevator": true,
 //   "square_footage": 120.5,
-//   "id_broker": 456,
 //   "best_seller": false
 // }

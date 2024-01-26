@@ -6,4 +6,5 @@ Aby uruchomić server należy przejść do folderu /backend i wykonać polecenie
 `nodemon www/bin`
 
 Aby uruchomić frontend należy przejść do folderu /frontend i wykonać polecenie:
-`npm run dev` i przejść do adresu `http://localhost:5173/`.
+`npm run dev` 
+i przejść do adresu http://localhost:5173/.
