@@ -29,6 +29,28 @@ module.exports = {
     }
   },
 
+  getRealEstateForDataInterfaceById: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    try {
+      const real_estate = await RealEstate.getRealEstateForDataInterfaceById(id);
+
+      if (real_estate) {
+        res.status(200).json(real_estate);
+      } else {
+        res.status(404).send(`Nieruchomość o ID ${id} nie została znaleziona.`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania oferty nieruchomości:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
   addNewRealEstate: async (req, res) => {
     const {
       id_real_estate_image,
