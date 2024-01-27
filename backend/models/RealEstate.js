@@ -14,11 +14,44 @@ module.exports = {
     );
     return real_estate.rows[0];
   },
-  
+
   getRealEstateForDataInterfaceById: async (id) => {
     let real_estate_info = await db.query(
-      'SELECT re.title, re.price, re.description, re.status, re.total_rates, re.square_footage, re.no_of_rooms, re.no_of_floors, re.year_of_construction, re.parking_space, re.elevator, re.square_footage, re.best_seller, "user"."firstName" as broker_first_name, "user"."firstSurname" as broker_first_surname, "user".phone_number as broker_phone_number, c.name as category_name, a.address_city, a.address_street, a.address_apartment, a.address_zip_code, a.address_country, rei.image_1, rei.image_2, rei.image_3, rei.image_4 FROM real_estate as re LEFT JOIN "user" ON re.id_broker = "user".id LEFT JOIN category c ON re.id_category = c.id LEFT JOIN address a ON re.id_address = a.id  LEFT JOIN real_estate_image rei ON re.id_real_estate_image = rei.id WHERE re.id = $1;',
-    [id]);
+      `SELECT 
+        re.title, 
+        re.price, 
+        re.description, 
+        re.status, 
+        re.total_rates, 
+        re.square_footage, 
+        re.no_of_rooms, 
+        re.no_of_floors, 
+        re.year_of_construction, 
+        re.parking_space, 
+        re.elevator, 
+        re.square_footage, 
+        re.best_seller, 
+        "user"."firstName" as broker_first_name, 
+        "user"."firstSurname" as broker_first_surname, 
+        "user".phone_number as broker_phone_number, 
+        c.name as category_name, 
+        a.address_city, 
+        a.address_street, 
+        a.address_apartment, 
+        a.address_zip_code, 
+        a.address_country, 
+        rei.image_1, 
+        rei.image_2, 
+        rei.image_3, 
+        rei.image_4 
+        FROM real_estate as re 
+        LEFT JOIN "user" ON re.id_broker = "user".id 
+        LEFT JOIN category c ON re.id_category = c.id 
+        LEFT JOIN address a ON re.id_address = a.id  
+        LEFT JOIN real_estate_image rei ON re.id_real_estate_image = rei.id 
+        WHERE re.id = $1;`,
+      [id]
+    );
 
     return real_estate_info.rows[0];
   },
@@ -83,6 +116,75 @@ module.exports = {
         elevator,
         square_footage,
         best_seller,
+      ]
+    );
+
+    return realEstate;
+  },
+
+  editById: async (
+    id_real_estate_image,
+    id_category,
+    id_broker,
+    title,
+    short_description,
+    description,
+    price,
+    status,
+    total_rates,
+    no_of_reviews,
+    id_address,
+    created_at,
+    no_of_rooms,
+    no_of_floors,
+    year_of_construction,
+    parking_space,
+    elevator,
+    square_footage,
+    best_seller,
+    id
+  ) => {
+    let realEstate = await db.query(
+      `UPDATE real_estate SET
+        "id_category" = $1,
+        "id_broker" = $2,
+        "title" = $3,
+        "short_description" = $4,
+        "description" = $5,
+        "price" = $6,
+        "status" = $7,
+        "total_rates" = $8,
+        "no_of_reviews" = $9,
+        "id_address" = $10,
+        "created_at" = $11,
+        "no_of_rooms" = $12,
+        "no_of_floors" = $13,
+        "year_of_construction" = $14,
+        "parking_space" = $15,
+        "elevator" = $16,
+        "square_footage" = $17,
+        "best_seller" = $18
+      WHERE "id" = $19`,
+      [
+        id_category,
+        id_broker,
+        title,
+        short_description,
+        description,
+        price,
+        status,
+        total_rates,
+        no_of_reviews,
+        id_address,
+        created_at,
+        no_of_rooms,
+        no_of_floors,
+        year_of_construction,
+        parking_space,
+        elevator,
+        square_footage,
+        best_seller,
+        id
       ]
     );
 

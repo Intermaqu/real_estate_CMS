@@ -4,12 +4,12 @@ const User = require("../models/User");
 const Address = require("../models/Address");
 
 module.exports = {
-  getAllRealEstateOffers: async (req, res) => {
+  getAll: async (req, res) => {
     const allRealEstateOffers = await RealEstate.getAllRealEstateOffers();
     res.status(200).send(allRealEstateOffers);
   },
 
-  getRealEstateById: async (req, res) => {
+  getById: async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
@@ -31,7 +31,7 @@ module.exports = {
     }
   },
 
-  getRealEstateForDataInterfaceById: async (req, res) => {
+  getForDataInterfaceById: async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
@@ -55,7 +55,7 @@ module.exports = {
     }
   },
 
-  addNewRealEstate: async (req, res) => {
+  add: async (req, res) => {
     const {
       id_real_estate_image,
       id_category,
@@ -149,7 +149,109 @@ module.exports = {
     }
   },
 
-  deleteRealEstateById: async (req, res) => {
+  editById: async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(400).send("Missing ID");
+      return;
+    }
+
+    const {
+      id_real_estate_image,
+      id_category,
+      id_broker,
+      title,
+      short_description,
+      description,
+      price,
+      status,
+      total_rates,
+      no_of_reviews,
+      id_address,
+      created_at,
+      no_of_rooms,
+      no_of_floors,
+      year_of_construction,
+      parking_space,
+      elevator,
+      square_footage,
+      best_seller
+    } = req.body;
+
+    if (
+      !id_real_estate_image ||
+      !id_category ||
+      !id_broker ||
+      !title ||
+      !short_description ||
+      !description ||
+      !price ||
+      !status ||
+      !total_rates ||
+      !no_of_reviews ||
+      !id_address ||
+      !created_at ||
+      !no_of_rooms ||
+      !no_of_floors ||
+      !year_of_construction ||
+      !parking_space ||
+      !elevator ||
+      !square_footage ||
+      best_seller === undefined
+    ) {
+      res.status(400).send("Missing data!");
+      return 0;
+    }
+
+    let category = await Category.getCategoryById(id_category);
+    if (!category) {
+      res.status(400).send(`Nie znaleziono kategorii o id ${id_category}!`);
+    }
+
+    let broker = await User.getUserById(id_broker);
+    if (!broker) {
+      res.status(400).send(`Nie znaleziono użytkownika o id ${id_broker}!`);
+    }
+
+    let address = await Address.getAddressById(id_address);
+    if (!address) {
+      res.status(400).send(`Nie znaleziono adresu o id ${id_address}!`);
+    }
+
+    const real_estate = await RealEstate.editById(
+      id_real_estate_image,
+      id_category,
+      id_broker,
+      title,
+      short_description,
+      description,
+      price,
+      status,
+      total_rates,
+      no_of_reviews,
+      id_address,
+      created_at,
+      no_of_rooms,
+      no_of_floors,
+      year_of_construction,
+      parking_space,
+      elevator,
+      square_footage,
+      best_seller,
+      id
+    ).catch((e) => {
+      console.log(e);
+    });
+
+    if (real_estate) {
+      res.status(200).send("Real estate edited");
+    } else {
+      res.status(400).send("Error");
+    }
+  },
+
+  deleteById: async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
