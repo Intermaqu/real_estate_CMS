@@ -56,12 +56,12 @@ const RealEstatePage = () => {
     if (propertyId) {
       axios({
         method: "GET",
-        url: `http://localhost:3001/real-estate/getById/${propertyId}`,
+        url: `http://localhost:3001/real-estate/getForDataInterfaceById/${propertyId}`,
         data: { id: propertyId },
       })
         .then((res: AxiosResponse<ResponseDataInterface>) => {
           const data = res.data;
-          console.log(`Data: `, data);
+          // console.log(data);
           setPropertyData(data);
           setLoading(false);
         })
@@ -102,7 +102,7 @@ const RealEstatePage = () => {
         <Container component="section" maxWidth={"lg"}>
           <section className="core">
             <Gallery />
-            <Description />
+            <Description propertyData={propertyData} />
           </section>
         </Container>
       </main>

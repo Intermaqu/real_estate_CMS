@@ -1,10 +1,16 @@
 var express = require("express");
+const passport = require("passport");
+require("./../config/passport")(passport);
 
-const { addNewTestimonial, getAllTestimonials, getTestimonialById } = require("../controllers/testimonialController");
+const {
+  getAll,
+  add,
+  getById,
+} = require("../controllers/testimonialController");
 var router = express.Router();
 
-router.post("/addNewTestimonial", addNewTestimonial);
-router.get("/getAllTestimonials", getAllTestimonials);
-// router.get("/getTestimonialById", getTestimonialById);
+router.get("/", getAll);
+router.get("/getById", getById);
+router.post("/add", passport.authenticate("jwt", { session: false }), add);
 
 module.exports = router;

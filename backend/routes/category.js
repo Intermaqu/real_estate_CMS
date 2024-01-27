@@ -1,4 +1,7 @@
 var express = require("express");
+const passport = require("passport");
+require("./../config/passport")(passport);
+
 const {
   getAllCategories,
   getCategoryById,
@@ -10,8 +13,8 @@ var router = express.Router();
 
 router.get("/", getAllCategories);
 router.get("/get/:id", getCategoryById);
-router.post("/add", addNewCategory);
-// router.post("/edit/:id", editCategoryById);
-router.delete("/delete/:id", deleteCategoryById);
+router.post("/add", passport.authenticate("jwt", { session: false }), addNewCategory);
+// router.post("/edit/:id", passport.authenticate("jwt", { session: false }), editCategoryById);
+router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), deleteCategoryById);
 
 module.exports = router;

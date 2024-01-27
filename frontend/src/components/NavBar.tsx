@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthenticationService from "../services/AuthenticationService";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -7,13 +8,20 @@ const NavBar = () => {
     <CustomNav>
       <CustomList>
         <CustomLink onClick={() => navigate("/")}>
-          <CustomLinkText>Home</CustomLinkText>
+          <CustomLinkText>STRONA GŁÓWNA</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/page1")}>
-          <CustomLinkText>About us</CustomLinkText>
+        <CustomLink onClick={() => navigate("/o-nas")}>
+          <CustomLinkText>O NAS</CustomLinkText>
         </CustomLink>
-        <CustomLink onClick={() => navigate("/page2")}>
-          <CustomLinkText>Contact</CustomLinkText>
+        <CustomLink onClick={() => navigate("/kontakt")}>
+          <CustomLinkText>KONTAKT</CustomLinkText>
+        </CustomLink>
+        <CustomLink onClick={() => navigate("/login")}>
+          <CustomLinkText>
+            {AuthenticationService.isUserLoggedIn()
+              ? "WYLOGUJ SIĘ"
+              : "ZALOGUJ/ZAREJESTRUJ SIĘ"}
+          </CustomLinkText>
         </CustomLink>
       </CustomList>
     </CustomNav>

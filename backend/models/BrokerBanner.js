@@ -1,17 +1,24 @@
 const db = require("../db/config");
 
 module.exports = {
+  getAllBrokerBanners: async () => {
+    let banners = await db.query("SELECT * FROM broker_banner");
+    return banners.rows;
+  },
+
+  getAllWithBrokerData: async () => {
+    let banners = await db.query(
+      'SELECT * FROM broker_banner LEFT JOIN "user" on broker_banner.id_broker = "user".id'
+    );
+    return banners.rows;
+  },
+
   addNewBrokerBanner: async (id_broker, comment, active) => {
     let brokerBanner = await db.query(
-      `INSERT INTO banner ("id_broker", "comment", "active") VALUES ($1, $2, $3)`,
+      `INSERT INTO broker_banner ("id_broker", "comment", "active") VALUES ($1, $2, $3)`,
       [id_broker, comment, active]
     );
     return brokerBanner;
-  },
-
-  getAllBrokerBanners: async (req, res) => {
-    let banners = await db.query("SELECT * FROM broker_banner");
-    res.status(200).send(banners.rows);
   },
 
   getBrokerBannerById: async (req, res) => {

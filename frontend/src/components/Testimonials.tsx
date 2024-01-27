@@ -1,31 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import styled from "styled-components";
 import TestimonialCard from "./TestimonialCard";
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+
+  const init = () => {
+    axios({
+      method: "GET",
+      url: `http://localhost:3001/testimonial`,
+    })
+      .then((res) => {
+        const data = res.data;
+        // console.log(data);
+        setTestimonials(data);
+      })
+      .catch((err: AxiosError) => {
+        console.log(err?.response?.data);
+      });
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <TestimonialsSection>
       <TestimonialsContainer>
-        <TestimonialsTitle>Testimonials</TestimonialsTitle>
+        <TestimonialsTitle>OPINIE</TestimonialsTitle>
         <TestimonialsRow>
-          <TestimonialCard
-            icon="testimonials-person-1-96x96.jpg"
-            name="Albert Webb"
-            position="Regular Client"
-            review="I have just bought an apartment in LA thanks to you and your brokers. Everything went smooth and easy, the price was quite affordable, and I'm sure I will use your services again in the future."
-          />
-          <TestimonialCard
-            icon="testimonials-person-1-96x96.jpg"
-            name="Bill Warner"
-            position="Regular Client"
-            review="I have just sold a property with inHouse and I can't thank them enough. Their team has great communication skills and they have regularly communicated with me throughout the whole process."
-          />
-          <TestimonialCard
-            icon="testimonials-person-1-96x96.jpg"
-            name="Kelly McMillan"
-            position="Regular Client"
-            review="I have recently sold my rental property in Nelson via inHouse. Everything about the sale was made seamless by your team. You gave me great advice about what was necessary to expedite the sale."
-          />
+          {testimonials.slice(0, 3).map((testimonial) => (
+            <TestimonialCard
+              key={testimonial.id}
+              icon="testimonials-person-1-96x96.jpg"
+              name={testimonial.full_name}
+              position={testimonial.position}
+              review={testimonial.comment}
+            />
+          ))}
         </TestimonialsRow>
       </TestimonialsContainer>
     </TestimonialsSection>

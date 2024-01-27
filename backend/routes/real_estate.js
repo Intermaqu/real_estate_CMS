@@ -1,17 +1,22 @@
 var express = require("express");
+const passport = require("passport");
+require("./../config/passport")(passport);
+
 const {
-  getAllRealEstateOffers,
-  getRealEstateById,
-  addNewRealEstate,
-  editRealEstateById,
-  deleteRealEstateById
+  getAll,
+  getById,
+  getForDataInterfaceById,
+  add,
+  editById,
+  deleteById,
 } = require("../controllers/realEstateController");
 var router = express.Router();
 
-router.get("/", getAllRealEstateOffers);
-router.get("/getById/:id", getRealEstateById);
-router.post("/add", addNewRealEstate);
-// router.post("/edit/:id", editRealEstateById);
-router.delete('/delete/:id', deleteRealEstateById);
+router.get("/", getAll);
+router.get("/getById/:id", getById);
+router.get("/getForDataInterfaceById/:id", getForDataInterfaceById);
+router.post("/add", passport.authenticate("jwt", { session: false }), add);
+router.post("/edit/:id", passport.authenticate("jwt", { session: false }), editById);
+router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), deleteById);
 
 module.exports = router;

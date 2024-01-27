@@ -1,24 +1,43 @@
 const Testimonial = require("../models/Testimonial");
 
 module.exports = {
-  getAllTestimonial: async (req, res) => {
-    const allTestimonial = await Testimonial.getAllTestimonials();
+  getAll: async (req, res) => {
+    const allTestimonial = await Testimonial.getAll();
     res.status(200).send(allTestimonial);
   },
 
-  addNewTestimonial: async (req, res) => {
-    const body = req.body;
+  getById: async (req, res) => {
+    const testimonial = await Testimonial.getById();
+    res.status(200).send(testimonial);
+  },
+
+  add: async (req, res) => {
+    const { full_name, position, comment, created_at, active } = req.body;
     if (
-        !body.full_name || 
-        !body.position || 
-        !body.comment || 
-        !body.created_at || 
-        body.active === undefined
+      !full_name ||
+      !position ||
+      !comment ||
+      !created_at ||
+      active === undefined
     ) {
       res.status(400).send("Missing data");
       return 0;
     }
 
-    res.status(200).send("Category added");
+    const testimonial = await Testimonial.add(
+      full_name,
+      position,
+      comment,
+      created_at,
+      active
+    ).catch((e) => {
+      console.log(e);
+    });
+
+    if (testimonial) {
+      res.status(200).send("Testimonial added");
+    } else {
+      res.status(400).send("Error");
+    }
   },
 };

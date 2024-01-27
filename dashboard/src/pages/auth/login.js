@@ -32,13 +32,13 @@ const Page = () => {
     validationSchema: Yup.object({
       email: Yup
         .string()
-        .email('Must be a valid email')
+        .email('Nieprawidłowy adres e-mail')
         .max(255)
-        .required('Email is required'),
+        .required('Email jest wymagany!'),
       password: Yup
         .string()
         .max(255)
-        .required('Password is required')
+        .required('Hasło jest wymagane!')
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -103,7 +103,7 @@ const Page = () => {
                 color="text.secondary"
                 variant="body2"
               >
-                Don&apos;t have an account?
+                {/* Don&apos;t have an account?
                 &nbsp;
                 <Link
                   component={NextLink}
@@ -112,7 +112,7 @@ const Page = () => {
                   variant="subtitle2"
                 >
                   Register
-                </Link>
+                </Link> */}
               </Typography>
             </Stack>
             <Tabs
@@ -124,10 +124,10 @@ const Page = () => {
                 label="Email"
                 value="email"
               />
-              <Tab
+              {/* <Tab
                 label="Phone Number"
                 value="phoneNumber"
-              />
+              /> */}
             </Tabs>
             {method === 'email' && (
               <form
@@ -139,7 +139,7 @@ const Page = () => {
                     error={!!(formik.touched.email && formik.errors.email)}
                     fullWidth
                     helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
+                    label="Email"
                     name="email"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -150,7 +150,7 @@ const Page = () => {
                     error={!!(formik.touched.password && formik.errors.password)}
                     fullWidth
                     helperText={formik.touched.password && formik.errors.password}
-                    label="Password"
+                    label="Hasło"
                     name="password"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -158,9 +158,9 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
+                {/* <FormHelperText sx={{ mt: 1 }}>
                   Optionally you can skip.
-                </FormHelperText>
+                </FormHelperText> */}
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -177,23 +177,26 @@ const Page = () => {
                   type="submit"
                   variant="contained"
                 >
-                  Continue
+                  Zaloguj
                 </Button>
-                <Button
+                {/* <Button
                   fullWidth
                   size="large"
                   sx={{ mt: 3 }}
                   onClick={handleSkip}
                 >
                   Skip authentication
-                </Button>
+                </Button> */}
                 <Alert
                   color="primary"
                   severity="info"
                   sx={{ mt: 3 }}
                 >
-                  <div>
+                  {/* <div>
                     You can use <b>demo@devias.io</b> and password <b>Password123!</b>
+                  </div> */}
+                  <div>
+                    Hasło powinno mieć przynajmniej 8 znaków.
                   </div>
                 </Alert>
               </form>
