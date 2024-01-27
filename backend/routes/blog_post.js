@@ -1,4 +1,6 @@
 var express = require("express");
+const passport = require("passport");
+require("./../config/passport")(passport);
 
 const { addNewBlogPost, getAllBlogPosts } = require("../controllers/blogPostController");
 var router = express.Router();
