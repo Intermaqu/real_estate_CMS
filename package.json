@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "startServer": "cd backend && nodemon app.js",
+    "startServer": "cd backend && nodemon ./bin/www",
     "startFrontend": "cd frontend && npm run dev",
     "startDashboard": "cd dashboard && npm run dev"
   }

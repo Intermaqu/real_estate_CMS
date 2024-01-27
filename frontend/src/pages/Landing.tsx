@@ -1,6 +1,6 @@
-import "./bootstrap.css";
-import "./style.css";
-import "./fonts.css";
+import "../styles/bootstrap.css";
+import "../styles/style.css";
+import "../styles/fonts.css";
 import Properties from "../components/Properties";
 import Services from "../components/Services";
 import Categories from "../components/Categories";

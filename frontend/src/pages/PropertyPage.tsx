@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import "./real_estate_page.css";
+import "../styles/real_estate_page.css";
 import { Container } from "@mui/material";
 import Description from "../components/real_estate/Description";
 import Gallery from "../components/real_estate/Gallery";
@@ -40,7 +40,7 @@ interface ResponseDataInterface extends PropertyDataInterface {
 }
 
 const RealEstatePage = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [propertyId, setPropertyId] = useState(undefined as string | undefined);
   const [propertyData, setPropertyData] = useState({} as PropertyDataInterface);
 
@@ -61,12 +61,12 @@ const RealEstatePage = () => {
       })
         .then((res: AxiosResponse<ResponseDataInterface>) => {
           const data = res.data;
-          console.log(data);
+          console.log(`Data: `, data);
           setPropertyData(data);
           setLoading(false);
         })
         .catch((err: AxiosError) => {
-          console.log(err?.response?.data);
+          console.log("Error", err);
         });
     }
   };

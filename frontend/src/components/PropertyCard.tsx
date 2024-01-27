@@ -71,6 +71,7 @@ const PropertyBody = styled.article`
 const PropertyLink = styled.div`
   display: block;
   position: relative;
+  cursor: pointer;
 `;
 
 const PropertyImage = styled.img`

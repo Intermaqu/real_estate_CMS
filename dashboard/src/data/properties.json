@@ -1,0 +1,164 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "address": {
+        "city": "Cleveland",
+        "country": "USA",
+        "state": "Ohio",
+        "street": "2849 Fulton Street"
+      },
+      "avatar": "/assets/avatars/avatar-carson-darrin.png",
+      "createdAt": "26/01/2024",
+      "email": "carson.darrin@devias.io",
+      "name": "Carson Darrin",
+      "phone": "304-428-3097",
+      "status": "FREE",
+      "price": 12000000
+    },
+    {
+      "id": "2",
+      "address": {
+        "city": "Atlanta",
+        "country": "USA",
+        "state": "Georgia",
+        "street": "1865  Pleasant Hill Road"
+      },
+      "avatar": "/assets/avatars/avatar-fran-perez.png",
+      "createdAt": "26/01/2024",
+      "email": "fran.perez@devias.io",
+      "name": "Fran Perez",
+      "phone": "712-351-5711",
+      "status": "SOLD",
+      "price": 12000000
+    },
+    {
+      "id": "3",
+      "address": {
+        "city": "North Canton",
+        "country": "USA",
+        "state": "Ohio",
+        "street": "4894  Lakeland Park Drive"
+      },
+      "avatar": "/assets/avatars/avatar-jie-yan-song.png",
+      "createdAt": "26/01/2024",
+      "email": "jie.yan.song@devias.io",
+      "name": "Jie Yan Song",
+      "phone": "770-635-2682",
+      "status": "FREE",
+      "price": 11000000
+    },
+    {
+      "id": "4",
+      "address": {
+        "city": "Madrid",
+        "country": "Spain",
+        "name": "Anika Visser",
+        "street": "4158  Hedge Street"
+      },
+      "avatar": "/assets/avatars/avatar-anika-visser.png",
+      "createdAt": "26/01/2024",
+      "email": "anika.visser@devias.io",
+      "name": "Anika Visser",
+      "phone": "908-691-3242",
+      "status": "FREE",
+      "price": 3000000
+    },
+    {
+      "id": "5",
+      "address": {
+        "city": "San Diego",
+        "country": "USA",
+        "state": "California",
+        "street": "75247"
+      },
+      "avatar": "/assets/avatars/avatar-miron-vitold.png",
+      "createdAt": "26/01/2024",
+      "email": "miron.vitold@devias.io",
+      "name": "Miron Vitold",
+      "phone": "972-333-4106",
+      "status": "SOLD",
+      "price": 7000000
+    },
+    {
+      "id": "6",
+      "address": {
+        "city": "Berkeley",
+        "country": "USA",
+        "state": "California",
+        "street": "317 Angus Road"
+      },
+      "avatar": "/assets/avatars/avatar-penjani-inyene.png",
+      "createdAt": "26/01/2024",
+      "email": "penjani.inyene@devias.io",
+      "name": "Penjani Inyene",
+      "phone": "858-602-3409",
+      "status": "RESERVED",
+      "price": 6000000
+    },
+    {
+      "id": "7",
+      "address": {
+        "city": "Carson City",
+        "country": "USA",
+        "state": "Nevada",
+        "street": "2188  Armbrester Drive"
+      },
+      "avatar": "/assets/avatars/avatar-omar-darboe.png",
+      "createdAt": "26/01/2024",
+      "email": "omar.darobe@devias.io",
+      "name": "Omar Darobe",
+      "phone": "415-907-2647",
+      "status": "SOLD",
+      "price": 5000000
+    },
+    {
+      "id": "8",
+      "address": {
+        "city": "Los Angeles",
+        "country": "USA",
+        "state": "California",
+        "street": "1798  Hickory Ridge Drive"
+      },
+      "avatar": "/assets/avatars/avatar-siegbert-gottfried.png",
+      "createdAt": "26/01/2024",
+      "email": "siegbert.gottfried@devias.io",
+      "name": "Siegbert Gottfried",
+      "phone": "702-661-1654",
+      "status": "RESERVED",
+      "price": 2500000
+    },
+    {
+      "id": "9",
+      "address": {
+        "city": "Murray",
+        "country": "USA",
+        "state": "Utah",
+        "street": "3934  Wildrose Lane"
+      },
+      "avatar": "/assets/avatars/avatar-iulia-albu.png",
+      "createdAt": "26/01/2024",
+      "email": "iulia.albu@devias.io",
+      "name": "Iulia Albu",
+      "phone": "313-812-8947",
+      "status": "FREE",
+      "price": 1700000
+    },
+    {
+      "id": "10",
+      "address": {
+        "city": "Salt Lake City",
+        "country": "USA",
+        "state": "Utah",
+        "street": "368 Lamberts Branch Road"
+      },
+      "avatar": "/assets/avatars/avatar-nasimiyu-danai.png",
+      "createdAt": "26/01/2024",
+      "email": "nasimiyu.danai@devias.io",
+      "name": "Nasimiyu Danai",
+      "phone": "801-301-7894",
+      "status": "RESERVED",
+      "price": 600000
+    }
+  ]
+}
