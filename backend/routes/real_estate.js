@@ -12,8 +12,8 @@ var router = express.Router();
 router.get("/", getAll);
 router.get("/getById/:id", getById);
 router.get("/getForDataInterfaceById/:id", getForDataInterfaceById);
-router.post("/add", add);
-router.post("/edit/:id", editById);
-router.delete("/delete/:id", deleteById);
+router.post("/add", passport.authenticate("jwt", { session: false }), add);
+router.post("/edit/:id", passport.authenticate("jwt", { session: false }), editById);
+router.delete("/delete/:id", passport.authenticate("jwt", { session: false }), deleteById);
 
 module.exports = router;

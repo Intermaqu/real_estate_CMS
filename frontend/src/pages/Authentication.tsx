@@ -31,6 +31,9 @@ const LoginRegisterPage = () => {
       const response = await axios.post('http://localhost:3001/user/login', loginData);
 
       if (response.status === 200) {
+        const { userData, token } = response.data;
+        axios.defaults.headers.common['Authorization'] = token;
+        
         console.log('Logowanie udane!', response.data);
         window.location.href = '/';
       } else {

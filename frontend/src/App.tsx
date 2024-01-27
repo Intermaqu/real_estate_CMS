@@ -2,7 +2,7 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import PropertyPage from "./pages/PropertyPage";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
+import Authentication from "./pages/Authentication";
 import Landing from "./pages/Landing";
 import NavBar from "./components/NavBar";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/property" element={<PropertyPage />} />
           <Route path="/o-nas" element={<AboutUs />} />
           <Route path="/kontakt" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Authentication />} />
         </Routes>
       </Router>
     </AppContainer>
