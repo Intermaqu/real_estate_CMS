@@ -1,64 +1,78 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { URL } from "../services/URL";
+import AuthenticationService from "../services/AuthenticationService";
 
 const LoginRegisterPage = () => {
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [registerData, setRegisterData] = useState({
-    country: '',
-    city: '',
-    street: '',
-    zipCode: '',
-    apartmentNum: '',
-    firstName: '',
-    secondName: '',
-    firstSurname: '',
-    secondSurname: '',
-    email: '',
-    password: '',
-    phoneNumber: '',
-    nip: '',
+    country: "",
+    city: "",
+    street: "",
+    zipCode: "",
+    apartmentNum: "",
+    firstName: "",
+    secondName: "",
+    firstSurname: "",
+    secondSurname: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    nip: "",
     active: true,
     createdAt: new Date().toISOString(),
-    role: "USER"
+    role: "USER",
   });
+
+  if (AuthenticationService.isUserLoggedIn()) {
+    localStorage.clear();
+    window.location.href = window.location.href;
+  }
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     // Wysyłanie danych logowania na backend
-    console.log('Logowanie:', loginData);
+    console.log("Logowanie:", loginData);
     try {
-      const response = await axios.post('http://localhost:3001/user/login', loginData);
+      const response = await axios.post(`${URL}/user/login`, loginData);
 
       if (response.status === 200) {
-        const { userData, token } = response.data;
-        axios.defaults.headers.common['Authorization'] = token;
-        
-        console.log('Logowanie udane!', response.data);
+        AuthenticationService.registerSuccessfulLogin(
+          response.data.userData,
+          response.data.token
+        );
+
+        console.log("Logowanie udane!", response.data);
         window.location.href = '/';
       } else {
-        console.log('Błąd podczas logowania:', response.data);
+        console.log("Błąd podczas logowania:", response.data);
       }
     } catch (error) {
-      console.error('Błąd podczas wysyłania danych logowania:', error);
+      console.error("Błąd podczas wysyłania danych logowania:", error);
     }
   };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Rejestracja:', registerData);
+    console.log("Rejestracja:", registerData);
     try {
-      const response = await axios.post('http://localhost:3001/user/register', registerData);
+      const response = await axios.post(`${URL}/user/register`, registerData);
 
       if (response.status === 200) {
-        console.log('Rejestracja udana!', response.data);
-        window.location.href = '/';
+        console.log("Rejestracja udana!", response.data);
+        AuthenticationService.registerSuccessfulLogin(
+          response.data.userData,
+          response.data.token
+        );
+
+        window.location.href = "/";
       } else {
-        console.log('Błąd podczas rejestracji:', response.data);
+        console.log("Błąd podczas rejestracji:", response.data);
       }
     } catch (error) {
-      console.error('Błąd podczas wysyłania danych rejestracji:', error);
+      console.error("Błąd podczas wysyłania danych rejestracji:", error);
     }
   };
 
@@ -71,14 +85,18 @@ const LoginRegisterPage = () => {
           <Input
             type="text"
             value={loginData.email}
-            onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+            onChange={(e) =>
+              setLoginData({ ...loginData, email: e.target.value })
+            }
           />
 
           <Label>Hasło:</Label>
           <Input
             type="password"
             value={loginData.password}
-            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+            onChange={(e) =>
+              setLoginData({ ...loginData, password: e.target.value })
+            }
           />
 
           <Button type="submit">Zaloguj</Button>
@@ -92,96 +110,126 @@ const LoginRegisterPage = () => {
           <Input
             type="text"
             value={registerData.country}
-            onChange={(e) => setRegisterData({ ...registerData, country: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, country: e.target.value })
+            }
           />
 
           <Label>Miasto:</Label>
           <Input
             type="text"
             value={registerData.city}
-            onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, city: e.target.value })
+            }
           />
 
           <Label>Ulica:</Label>
           <Input
             type="text"
             value={registerData.street}
-            onChange={(e) => setRegisterData({ ...registerData, street: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, street: e.target.value })
+            }
           />
 
           <Label>Kod pocztowy:</Label>
           <Input
             type="text"
             value={registerData.zipCode}
-            onChange={(e) => setRegisterData({ ...registerData, zipCode: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, zipCode: e.target.value })
+            }
           />
 
           <Label>Numer mieszkania:</Label>
           <Input
             type="text"
             value={registerData.apartmentNum}
-            onChange={(e) => setRegisterData({ ...registerData, apartmentNum: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, apartmentNum: e.target.value })
+            }
           />
 
           <Label>Imię:</Label>
           <Input
             type="text"
             value={registerData.firstName}
-            onChange={(e) => setRegisterData({ ...registerData, firstName: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, firstName: e.target.value })
+            }
           />
 
           <Label>Drugie imię:</Label>
           <Input
             type="text"
             value={registerData.secondName}
-            onChange={(e) => setRegisterData({ ...registerData, secondName: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, secondName: e.target.value })
+            }
           />
 
           <Label>Nazwisko:</Label>
           <Input
             type="text"
             value={registerData.firstSurname}
-            onChange={(e) => setRegisterData({ ...registerData, firstSurname: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, firstSurname: e.target.value })
+            }
           />
 
           <Label>Drugie nazwisko:</Label>
           <Input
             type="text"
             value={registerData.secondSurname}
-            onChange={(e) => setRegisterData({ ...registerData, secondSurname: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                secondSurname: e.target.value,
+              })
+            }
           />
 
           <Label>Email:</Label>
           <Input
             type="email"
             value={registerData.email}
-            onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, email: e.target.value })
+            }
           />
 
           <Label>Hasło:</Label>
           <Input
             type="password"
             value={registerData.password}
-            onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, password: e.target.value })
+            }
           />
 
           <Label>Numer telefonu:</Label>
           <Input
             type="text"
             value={registerData.phoneNumber}
-            onChange={(e) => setRegisterData({ ...registerData, phoneNumber: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, phoneNumber: e.target.value })
+            }
           />
 
           <Label>NIP (opcjonalny):</Label>
           <Input
             type="text"
             value={registerData.nip}
-            onChange={(e) => setRegisterData({ ...registerData, nip: e.target.value })}
+            onChange={(e) =>
+              setRegisterData({ ...registerData, nip: e.target.value })
+            }
           />
 
           <Button type="submit">Zarejestruj</Button>
           <RegistrationText>
-            Zarejestruj się i dołącz do naszej społeczności! Odkryj pełen zakres naszych usług i możliwości.
+            Zarejestruj się i dołącz do naszej społeczności! Odkryj pełen zakres
+            naszych usług i możliwości.
           </RegistrationText>
         </Form>
       </LoginRegisterForm>

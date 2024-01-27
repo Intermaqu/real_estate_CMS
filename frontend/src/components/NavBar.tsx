@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthenticationService from "../services/AuthenticationService";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -16,7 +17,11 @@ const NavBar = () => {
           <CustomLinkText>KONTAKT</CustomLinkText>
         </CustomLink>
         <CustomLink onClick={() => navigate("/login")}>
-          <CustomLinkText>ZALOGUJ/ZAJERESTRUJ SIĘ</CustomLinkText>
+          <CustomLinkText>
+            {AuthenticationService.isUserLoggedIn()
+              ? "WYLOGUJ SIĘ"
+              : "ZALOGUJ/ZAREJESTRUJ SIĘ"}
+          </CustomLinkText>
         </CustomLink>
       </CustomList>
     </CustomNav>

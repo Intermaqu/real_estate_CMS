@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/", indexRouter);
+app.use("/user", userRouter);
 app.use(
   "/address",
   passport.authenticate("jwt", { session: false }),
@@ -45,7 +46,6 @@ app.use(
   "/category",
   categoryRouter
 );
-app.use("/user", passport.authenticate("jwt", { session: false }), userRouter);
 app.use(
   "/real-estate-image",
   passport.authenticate("jwt", { session: false }),
