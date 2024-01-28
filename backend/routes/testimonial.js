@@ -11,6 +11,8 @@ var router = express.Router();
 
 router.get("/", getAll);
 router.get("/getById", getById);
-router.post("/add", passport.authenticate("jwt", { session: false }), add);
+router.post("/add", 
+// passport.authenticate("jwt", { session: false }), 
+add);
 
 module.exports = router;

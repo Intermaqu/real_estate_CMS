@@ -30,12 +30,12 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use(
   "/address",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   addressRouter
 );
 app.use(
   "/banner",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   bannerRouter
 );
 app.use(
@@ -48,18 +48,18 @@ app.use(
 );
 app.use(
   "/real-estate-image",
-  passport.authenticate("jwt", { session: false }),
+  //passport.authenticate("jwt", { session: false }),
   realEstateImageRouter
 );
 app.use("/real-estate", realEstateRouter);
 app.use(
   "/blog-post",
-  passport.authenticate("jwt", { session: false }),
+  //passport.authenticate("jwt", { session: false }),
   blogPostRouter
 );
 app.use(
   "/section-active-info",
-  passport.authenticate("jwt", { session: false }),
+  //passport.authenticate("jwt", { session: false }),
   sectionActiveInfoRouter
 );
 app.use("/testimonial", testimonialRouter);
