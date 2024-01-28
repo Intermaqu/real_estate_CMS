@@ -12,6 +12,7 @@ import { PropertiesSearch } from "src/sections/properties/properties-search";
 import { applyPagination } from "src/utils/apply-pagination";
 import propertiesDataJSON from "src/data/properties";
 import { set } from "nprogress";
+import { Link } from "next/link";
 
 const now = new Date();
 
@@ -252,9 +253,27 @@ const Page = () => {
         <Container maxWidth="xl">
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
-              <Stack spacing={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Typography variant="h4">Properties</Typography>
-              </Stack>
+                <Button
+                  color="primary"
+                  startIcon={<PlusIcon fontSize="small" />}
+                  variant="contained"
+                  sx={{
+                    width: "fit-content",
+                  }}
+                  component={Link}
+                  href={`/property`}
+                >
+                  + New Property
+                </Button>
+              </Box>
             </Stack>
             <PropertiesSearch
               handleFilter={handleFilter}

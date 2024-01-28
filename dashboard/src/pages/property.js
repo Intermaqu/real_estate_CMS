@@ -51,8 +51,32 @@ const Page = () => {
   const init = () => {
     const newState = id ? "edit" : "add";
     setState(newState);
-    //getAllCategories
-    //getProperyById
+    if (id) {
+      // EDIT
+      //getPropertyById
+      // axios({
+      //   method: "post",
+      //   url: "http://localhost:3000/properties/getPropertyById",
+      //   headers: {
+      //     jwt,
+      //   },
+      //   data: {
+      //     id: id,
+      //   },
+      // })
+      //   .then((res) => {
+      //     setProperty(res.data.property);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err.response.data.message);
+      //   });
+      //Temporarly
+      setProperty({ ...DefaultPropertyData, id: id, title: "Test" });
+    } else {
+      // ADD
+
+      setProperty(DefaultPropertyData);
+    }
 
     console.log(newState);
   };
@@ -142,7 +166,7 @@ const Page = () => {
     init();
   }, []);
 
-  if (state === "loading")
+  if (state === "loading") {
     return (
       <Box
         component="main"
@@ -156,6 +180,7 @@ const Page = () => {
         <Typography variant="h4">Loading...</Typography>
       </Box>
     );
+  }
 
   return (
     <>
@@ -457,7 +482,9 @@ const Page = () => {
               onClick={() => handleValidate()}
               variant="contained"
             >
-              <Typography variant="h6">Validate</Typography>
+              <Typography variant="h6">
+                {state === "add" ? "Add New Property" : "Save changes"}
+              </Typography>
             </Button>
           </Box>
         </Container>

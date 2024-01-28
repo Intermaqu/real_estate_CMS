@@ -48,11 +48,6 @@ export const PropertiesTable = (props) => {
     }
   };
 
-  const linkProps = {
-    component: Link,
-    href: "/editProperty?a=1",
-  };
-
   return (
     <Card>
       <Scrollbar>
