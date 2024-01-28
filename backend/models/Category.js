@@ -22,7 +22,7 @@ module.exports = {
     return category;
   },
 
-  editCategoryById: async (
+  editById: async (
     id,
     name,
     description,
@@ -48,7 +48,7 @@ module.exports = {
         return null;
       }
 
-      console.log(`Zaktualizowano kategorii o id: ${id}`);
+      console.log(`Zaktualizowano kategorię o id: ${id}`);
 
       let editedCategory = await db.query(
         `SELECT * FROM category WHERE "id" = $1`,

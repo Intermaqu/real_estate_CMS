@@ -30,7 +30,7 @@ const LoginRegisterPage = () => {
     window.location.href = window.location.href;
   }
 
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Wysyłanie danych logowania na backend
     console.log("Logowanie:", loginData);
@@ -44,7 +44,7 @@ const LoginRegisterPage = () => {
         );
 
         console.log("Logowanie udane!", response.data);
-        window.location.href = '/';
+        window.location.href = "/";
       } else {
         console.log("Błąd podczas logowania:", response.data);
       }

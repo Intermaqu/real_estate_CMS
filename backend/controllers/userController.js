@@ -135,17 +135,12 @@ module.exports = {
       return 0;
     }
 
-    console.log(user);
-
     if (password !== user.password) {
       res.status(401).send("Wrong password");
       return 0;
     }
 
     let address = await Address.getAddressById(user.id_address);
-
-    console.log(address);
-    console.log(user);
 
     const token = User.generateJWTToken(
       user.id,
