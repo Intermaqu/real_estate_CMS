@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import AuthenticationService from "../services/AuthenticationService";
+import { URL } from "../services/URL";
 import {
   Box,
   Button,
@@ -53,25 +56,44 @@ const Page = () => {
     setState(newState);
     if (id) {
       // EDIT
-      //getPropertyById
-      // axios({
-      //   method: "post",
-      //   url: "http://localhost:3000/properties/getPropertyById",
-      //   headers: {
-      //     jwt,
-      //   },
-      //   data: {
-      //     id: id,
-      //   },
-      // })
-      //   .then((res) => {
-      //     setProperty(res.data.property);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.response.data.message);
-      //   });
-      //Temporarly
-      setProperty({ ...DefaultPropertyData, id: id, title: "Test" });
+      axios({
+        method: "get",
+        url: `${URL}/real-estate/getForDataInterfaceById/${id}`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          id: id,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          setProperty({ ...DefaultPropertyData, 
+            id: res.data.id,
+            image1: res.data.image_1,
+            image2: res.data.image_2,
+            image3: res.data.image_3,
+            image4: res.data.image_4,
+            category: res.data.categoryName,
+            title: res.data.title,
+            price: res.data.price,
+            description: res.data.description,
+            addressCountry: res.data.address_country,
+            addressCity: res.data.address_country,
+            addressStreet: res.data.address_street,
+            addressAppartment: res.data.address_apartment,
+            addressZipCode: res.data.address_zip_code,
+            parking: res.data.parking_space,
+            elevator: res.data.elevator,
+            squareFootage: res.data.square_footage,
+            numberOfRooms: res.data.no_of_rooms,
+            numberOfFloors: res.data.no_of_floors,
+            yearOfConstruction: res.data.year_of_construction,
+          });
+        })
+        .catch((err) => {
+          console.log(err)
+        });
     } else {
       // ADD
 
@@ -95,15 +117,101 @@ const Page = () => {
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
+    let now = new Date;
+
     // Add Property
     if (state === "add") {
-      //addProperty
+      axios({
+        method: "post",
+        url: `${URL}/real-estate/add`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          image1: property.image1,
+          image2: property.image2,
+          image3: property.image3,
+          image4: property.image4,
+          id_category: 5,
+          id_broker: 2,
+          title: property.title,
+          short_description: ``,
+          description: property.description,
+          price: property.price,
+          status: `AVAILABLE`,
+          total_rates: 0,
+          no_of_reviews: 0,
+          address_country: property.addressCountry,
+          address_city: property.addressCity,
+          address_street: property.addressStreet,
+          address_zip_code: property.addressZipCode,
+          address_apartment: property.addressAppartment,
+          created_at: new Date,
+          no_of_rooms: property.numberOfRooms,
+          no_of_floors: property.numberOfFloors,
+          year_of_construction: property.yearOfConstruction,
+          parking_space: property.parking,
+          elevator: property.elevator,
+          square_footage: property.squareFootage,
+          best_seller: false
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          // TODO: komunikat o zapisaniu + redirect do /properties
+          // setProperty(res.data.property);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       return;
     }
 
     // Edit Property
     if (state === "edit") {
-      //editProperty
+      axios({
+        method: "post",
+        url: `${URL}/real-estate/editById/${id}`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          image1: property.image1,
+          image2: property.image2,
+          image3: property.image3,
+          image4: property.image4,
+          id_category: 5,
+          id_broker: 2,
+          title: property.title,
+          short_description: ``,
+          description: property.description,
+          price: property.price,
+          status: `AVAILABLE`,
+          total_rates: 0,
+          no_of_reviews: 0,
+          address_country: property.addressCountry,
+          address_city: property.addressCity,
+          address_street: property.addressStreet,
+          address_zip_code: property.addressZipCode,
+          address_apartment: property.addressAppartment,
+          created_at: new Date,
+          no_of_rooms: property.numberOfRooms,
+          no_of_floors: property.numberOfFloors,
+          year_of_construction: property.yearOfConstruction,
+          parking_space: property.parking,
+          elevator: property.elevator,
+          square_footage: property.squareFootage,
+          best_seller: false
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          // TODO: komunikat o zapisaniu + redirect do /properties
+          // setProperty(res.data.property);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       return;
     }
   };

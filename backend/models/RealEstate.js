@@ -79,6 +79,7 @@ module.exports = {
   ) => {
     let realEstate = await db.query(
       `INSERT INTO real_estate (  
+      "id_real_estate_image",
       "id_category",
       "id_broker",
       "title",
@@ -96,8 +97,9 @@ module.exports = {
       "parking_space",
       "elevator",
       "square_footage",
-      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)`,
+      "best_seller") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
       [
+        id_real_estate_image,
         id_category,
         id_broker,
         title,
@@ -163,8 +165,9 @@ module.exports = {
         "parking_space" = $15,
         "elevator" = $16,
         "square_footage" = $17,
-        "best_seller" = $18
-      WHERE "id" = $19`,
+        "best_seller" = $18,
+        "id_real_estate_image" = $19
+      WHERE "id" = $20`,
       [
         id_category,
         id_broker,
@@ -184,7 +187,8 @@ module.exports = {
         elevator,
         square_footage,
         best_seller,
-        id
+        id_real_estate_image,
+        id,
       ]
     );
 

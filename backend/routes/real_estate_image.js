@@ -1,10 +1,12 @@
 var express = require("express");
 
-const { addRealEstateImage, getRealEstateImageById } = require("../models/RealEstateImage");
+const { getById, add, editById, deleteById } = require("../models/RealEstateImage");
 var router = express.Router();
 
-router.post("/addRealEstateImage", addRealEstateImage);
+router.get("/getById/:id", getById);
+router.post("/add", add);
+router.post("/editById/:id", editById);
+router.post("/deleteById/:id", deleteById);
 
-router.get("/getRealEstateImageById", getRealEstateImageById);
 
 module.exports = router;

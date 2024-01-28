@@ -2,6 +2,7 @@ const RealEstate = require("../models/RealEstate");
 const Category = require("../models/Category");
 const User = require("../models/User");
 const Address = require("../models/Address");
+const RealEstateImage = require("../models/RealEstateImage");
 
 module.exports = {
   getAll: async (req, res) => {
@@ -57,7 +58,10 @@ module.exports = {
 
   add: async (req, res) => {
     const {
-      id_real_estate_image,
+      image1,
+      image2,
+      image3,
+      image4,
       id_category,
       id_broker,
       title,
@@ -67,7 +71,11 @@ module.exports = {
       status,
       total_rates,
       no_of_reviews,
-      id_address,
+      address_country,
+      address_city,
+      address_street,
+      address_zip_code,
+      address_apartment,
       created_at,
       no_of_rooms,
       no_of_floors,
@@ -79,28 +87,43 @@ module.exports = {
     } = req.body;
 
     if (
-      !id_real_estate_image ||
+      !image1 ||
+      !image2 ||
+      !image3 ||
+      !image4 ||
       !id_category ||
       !id_broker ||
       !title ||
-      !short_description ||
       !description ||
       !price ||
-      !status ||
-      !total_rates ||
-      !no_of_reviews ||
-      !id_address ||
-      !created_at ||
+      !address_country ||
+      !address_city ||
+      !address_street ||
+      !address_zip_code ||
+      !address_apartment ||
       !no_of_rooms ||
       !no_of_floors ||
       !year_of_construction ||
       !parking_space ||
-      !elevator ||
+      elevator === undefined ||
       !square_footage ||
       best_seller === undefined
     ) {
       res.status(400).send("Missing data!");
       return 0;
+    }
+
+    let realEstateImage = RealEstateImage.addRealEstateImage(
+      image1,
+      image2,
+      image3,
+      image4,
+      null,
+      null,
+      new Date()
+    );
+    if (!realEstateImage) {
+      res.status(400).send(`Nie udało się utworzyć zdjęcia!`);
     }
 
     let category = await Category.getCategoryById(id_category);
@@ -113,13 +136,19 @@ module.exports = {
       res.status(400).send(`Nie znaleziono użytkownika o id ${id_broker}!`);
     }
 
-    let address = await Address.getAddressById(id_address);
+    let address = Address.addNewAddress(
+      address_country,
+      address_city,
+      address_street,
+      address_apartment,
+      address_zip_code
+    );
     if (!address) {
-      res.status(400).send(`Nie znaleziono adresu o id ${id_address}!`);
+      res.status(400).send(`Nie udało się utworzyć adresu!`);
     }
 
     const real_estate = await RealEstate.addNewRealEstate(
-      id_real_estate_image,
+      realEstateImage.id,
       id_category,
       id_broker,
       title,
@@ -129,7 +158,7 @@ module.exports = {
       status,
       total_rates,
       no_of_reviews,
-      id_address,
+      address.id,
       created_at,
       no_of_rooms,
       no_of_floors,
@@ -158,7 +187,10 @@ module.exports = {
     }
 
     const {
-      id_real_estate_image,
+      image1,
+      image2,
+      image3,
+      image4,
       id_category,
       id_broker,
       title,
@@ -168,7 +200,11 @@ module.exports = {
       status,
       total_rates,
       no_of_reviews,
-      id_address,
+      address_country,
+      address_city,
+      address_street,
+      address_zip_code,
+      address_apartment,
       created_at,
       no_of_rooms,
       no_of_floors,
@@ -176,32 +212,76 @@ module.exports = {
       parking_space,
       elevator,
       square_footage,
-      best_seller
+      best_seller,
     } = req.body;
 
     if (
-      !id_real_estate_image ||
+      !image1 ||
+      !image2 ||
+      !image3 ||
+      !image4 ||
       !id_category ||
       !id_broker ||
       !title ||
-      !short_description ||
       !description ||
       !price ||
-      !status ||
-      !total_rates ||
-      !no_of_reviews ||
-      !id_address ||
-      !created_at ||
+      !address_country ||
+      !address_city ||
+      !address_street ||
+      !address_zip_code ||
+      !address_apartment ||
       !no_of_rooms ||
       !no_of_floors ||
       !year_of_construction ||
       !parking_space ||
-      !elevator ||
+      elevator === undefined ||
       !square_footage ||
       best_seller === undefined
     ) {
       res.status(400).send("Missing data!");
       return 0;
+    }
+
+    let realEstate = await RealEstate.getRealEstateById(id);
+    if (!realEstate) {
+      res.status(400).send(`Nie znaleziono oferty nieruchomości o id ${id}!`);
+    }
+
+    console.log(realEstate);
+
+    let realEstateImage = RealEstateImage.editById(
+      image1,
+      image2,
+      image3,
+      image4,
+      null,
+      null,
+      realEstate.id_real_estate_image,
+    );
+
+    if (!realEstateImage) {
+      res
+        .status(400)
+        .send(
+          `Nie udało się zedytować zdjęć do oferty nieruchomości o id ${realEstate.id_real_estate_image}`
+        );
+    }
+
+    let address = Address.editAddressById(
+      realEstate.id_address,
+      address_country,
+      address_city,
+      address_street,
+      address_zip_code,
+      address_apartment,
+    );
+
+    if (!address) {
+      res
+        .status(400)
+        .send(
+          `Nie udało się zedytować adresu o id ${realEstate.id_address}`
+        );
     }
 
     let category = await Category.getCategoryById(id_category);
@@ -214,13 +294,8 @@ module.exports = {
       res.status(400).send(`Nie znaleziono użytkownika o id ${id_broker}!`);
     }
 
-    let address = await Address.getAddressById(id_address);
-    if (!address) {
-      res.status(400).send(`Nie znaleziono adresu o id ${id_address}!`);
-    }
-
     const real_estate = await RealEstate.editById(
-      id_real_estate_image,
+      realEstateImage.id,
       id_category,
       id_broker,
       title,
@@ -230,7 +305,7 @@ module.exports = {
       status,
       total_rates,
       no_of_reviews,
-      id_address,
+      address.id,
       created_at,
       no_of_rooms,
       no_of_floors,
@@ -257,6 +332,19 @@ module.exports = {
     if (!id) {
       res.status(400).send("Missing ID");
       return;
+    }
+
+    let realEstate = RealEstate.getRealEstateById(id);
+    if (!realEstate) {
+      res.status(400).send(`Nie znaleziono oferty nieruchmości o id ${id}!`);
+    }
+
+    if (!RealEstateImage.deleteById(realEstate.id_real_estate_image)) {
+      res
+        .status(500)
+        .send(
+          `Nie udało się usunąć zdjęć nieruchomości o id ${realEstate.id_real_estate_image}!`
+        );
     }
 
     const success = await RealEstate.deleteRealEstateById(id).catch((e) => {

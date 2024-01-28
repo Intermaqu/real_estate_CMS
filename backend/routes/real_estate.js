@@ -18,7 +18,7 @@ router.get("/getForDataInterfaceById/:id", getForDataInterfaceById);
 router.post("/add", 
 // passport.authenticate("jwt", { session: false }),
  add);
-router.post("/edit/:id", 
+router.post("/editById/:id", 
 // passport.authenticate("jwt", { session: false }), 
 editById);
 router.delete("/delete/:id", 
