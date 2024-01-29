@@ -3,7 +3,41 @@ const db = require("../db/config");
 
 module.exports = {
   getAllRealEstateOffers: async () => {
-    const allRealEstateOffers = await db.query("SELECT * FROM real_estate as re LEFT JOIN address a ON re.id_address = a.id;");
+    const allRealEstateOffers = await db.query(
+      `SELECT 
+      re.id,
+      re.title, 
+      re.price, 
+      re.description, 
+      re.status, 
+      re.total_rates, 
+      re.square_footage, 
+      re.no_of_rooms, 
+      re.no_of_floors, 
+      re.year_of_construction, 
+      re.parking_space, 
+      re.elevator, 
+      re.best_seller, 
+      "user"."firstName" as broker_first_name, 
+      "user"."firstSurname" as broker_first_surname, 
+      "user"."email" as broker_email, 
+      "user".phone_number as broker_phone_number, 
+      c.name as category_name, 
+      a.address_city, 
+      a.address_street, 
+      a.address_apartment, 
+      a.address_zip_code, 
+      a.address_country
+  FROM 
+      real_estate as re 
+  LEFT JOIN 
+      "user" ON re.id_broker = "user".id 
+  LEFT JOIN 
+      category c ON re.id_category = c.id 
+  LEFT JOIN 
+      address a ON re.id_address = a.id;
+  `
+    );
     return allRealEstateOffers.rows;
   },
 

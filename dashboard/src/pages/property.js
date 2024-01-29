@@ -160,7 +160,6 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res);
           // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
           router.push('/properties')
@@ -209,7 +208,6 @@ const Page = () => {
         },
       })
         .then((res) => {
-          // console.log(res);
           // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
           router.push("/properties");

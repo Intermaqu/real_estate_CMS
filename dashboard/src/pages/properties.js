@@ -17,8 +17,6 @@ import axios from "axios";
 import AuthenticationService from "../services/AuthenticationService";
 import { URL } from "../services/URL";
 
-const now = new Date();
-
 const data = [
 ];
 
@@ -47,22 +45,20 @@ const Page = () => {
       },
     })
       .then((res) => {
-        console.log(res.data)
         for (let realEstate of res.data) {
-        
           data.push({
             id: realEstate.id,
             address: {
-              city: realEstate.address_city,
+              city: realEstate.address_city  + ' ' + realEstate.address_zip_code,
               country: realEstate.address_country,
-              state: realEstate.address_street + ' ' + realEstate.address_zip_code,
+              state: realEstate.address_street,
               street: realEstate.address_apartment,
             },
             avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
             createdAt: realEstate.created_at,
-            email: "nasimiyu.danai@devias.io",
+            email: realEstate.broker_email,
             name: realEstate.title,
-            phone: "801-301-7894",
+            phone: realEstate.broker_phone_number,
             status: realEstate.status,
             price: realEstate.price
           });
