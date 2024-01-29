@@ -18,6 +18,16 @@ export const items = [
       </SvgIcon>
     ),
   },
+
+  {
+    title: "Users",
+    path: "/users",
+    icon: (
+      <SvgIcon fontSize="small">
+        <UsersIcon />
+      </SvgIcon>
+    ),
+  },
   {
     title: "Overview",
     path: "/",
@@ -69,24 +79,6 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <LockClosedIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Register",
-    path: "/auth/register",
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserPlusIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Error",
-    path: "/404",
-    icon: (
-      <SvgIcon fontSize="small">
-        <XCircleIcon />
       </SvgIcon>
     ),
   },

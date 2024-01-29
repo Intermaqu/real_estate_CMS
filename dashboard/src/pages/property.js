@@ -49,6 +49,7 @@ const Page = () => {
   const [property, setProperty] = useState(DefaultPropertyData);
   const [errors, setErrors] = useState({}); // { title: "Title is required" }
   const [state, setState] = useState("loading");
+  const [backendError, setBackendError] = useState("");
   const categories = ["House", "Apartment", "Office"];
 
   const init = () => {
@@ -93,7 +94,8 @@ const Page = () => {
           });
         })
         .catch((err) => {
-          console.log(err);
+          console.log("ERROR:", err.response.data);
+          setBackendError(err.response.data);
         });
     } else {
       // ADD
@@ -203,7 +205,7 @@ const Page = () => {
           parking_space: property.parking,
           elevator: property.elevator,
           square_footage: property.squareFootage,
-          best_seller: false,
+          best_seller: false
         },
       })
         .then((res) => {
@@ -289,6 +291,22 @@ const Page = () => {
         }}
       >
         <Typography variant="h4">Loading...</Typography>
+      </Box>
+    );
+  }
+
+  if (backendError !== "") {
+    return (
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <Typography variant="h4">{backendError}</Typography>
       </Box>
     );
   }
