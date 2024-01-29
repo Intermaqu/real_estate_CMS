@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useAuthContext } from 'src/contexts/auth-context';
+import AuthenticationService from "../services/AuthenticationService";
 
 export const AuthGuard = (props) => {
   const { children } = props;
@@ -27,7 +28,7 @@ export const AuthGuard = (props) => {
 
       ignore.current = true;
 
-      if (!isAuthenticated) {
+      if (!AuthenticationService.isUserLoggedIn()) {
         console.log('Not authenticated, redirecting');
         router
           .replace({

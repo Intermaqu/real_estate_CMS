@@ -25,7 +25,7 @@ module.exports = {
       [country, city, street, apartmentNum, zipCode]
     );
 
-    return address.rows[0];
+    return address.rows;
   },
 
   editAddressById: async (id, country, city, street, apartmentNum, zipCode) => {

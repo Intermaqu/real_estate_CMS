@@ -113,7 +113,7 @@ module.exports = {
       return 0;
     }
 
-    let realEstateImage = RealEstateImage.addRealEstateImage(
+    const realEstateImage = await RealEstateImage.add(
       image1,
       image2,
       image3,
@@ -122,8 +122,20 @@ module.exports = {
       null,
       new Date()
     );
+
     if (!realEstateImage) {
       res.status(400).send(`Nie udało się utworzyć zdjęcia!`);
+    }
+
+    const address = await Address.addNewAddress(
+      address_country,
+      address_city,
+      address_street,
+      address_apartment,
+      address_zip_code
+    );
+    if (!address) {
+      res.status(400).send(`Nie udało się utworzyć adresu!`);
     }
 
     let category = await Category.getCategoryById(id_category);
@@ -136,19 +148,8 @@ module.exports = {
       res.status(400).send(`Nie znaleziono użytkownika o id ${id_broker}!`);
     }
 
-    let address = Address.addNewAddress(
-      address_country,
-      address_city,
-      address_street,
-      address_apartment,
-      address_zip_code
-    );
-    if (!address) {
-      res.status(400).send(`Nie udało się utworzyć adresu!`);
-    }
-
     const real_estate = await RealEstate.addNewRealEstate(
-      realEstateImage.id,
+      realEstateImage[realEstateImage.length - 1].id,
       id_category,
       id_broker,
       title,
@@ -158,7 +159,7 @@ module.exports = {
       status,
       total_rates,
       no_of_reviews,
-      address.id,
+      address[address.length - 1].id,
       created_at,
       no_of_rooms,
       no_of_floors,
@@ -256,7 +257,7 @@ module.exports = {
       image4,
       null,
       null,
-      realEstate.id_real_estate_image,
+      realEstate.id_real_estate_image
     );
 
     if (!realEstateImage) {
@@ -273,15 +274,13 @@ module.exports = {
       address_city,
       address_street,
       address_zip_code,
-      address_apartment,
+      address_apartment
     );
 
     if (!address) {
       res
         .status(400)
-        .send(
-          `Nie udało się zedytować adresu o id ${realEstate.id_address}`
-        );
+        .send(`Nie udało się zedytować adresu o id ${realEstate.id_address}`);
     }
 
     let category = await Category.getCategoryById(id_category);

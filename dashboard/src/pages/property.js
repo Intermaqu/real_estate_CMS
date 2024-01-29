@@ -67,8 +67,9 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res.data);
-          setProperty({ ...DefaultPropertyData, 
+          // console.log(res.data);
+          setProperty({
+            ...DefaultPropertyData,
             id: res.data.id,
             image1: res.data.image_1,
             image2: res.data.image_2,
@@ -92,7 +93,7 @@ const Page = () => {
           });
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
         });
     } else {
       // ADD
@@ -100,7 +101,7 @@ const Page = () => {
       setProperty(DefaultPropertyData);
     }
 
-    console.log(newState);
+    // console.log(newState);
   };
 
   const handleValidate = () => {
@@ -117,7 +118,7 @@ const Page = () => {
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    let now = new Date;
+    let now = new Date();
 
     // Add Property
     if (state === "add") {
@@ -146,20 +147,21 @@ const Page = () => {
           address_street: property.addressStreet,
           address_zip_code: property.addressZipCode,
           address_apartment: property.addressAppartment,
-          created_at: new Date,
+          created_at: new Date(),
           no_of_rooms: property.numberOfRooms,
           no_of_floors: property.numberOfFloors,
           year_of_construction: property.yearOfConstruction,
           parking_space: property.parking,
           elevator: property.elevator,
           square_footage: property.squareFootage,
-          best_seller: false
+          best_seller: false,
         },
       })
         .then((res) => {
           console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
+          // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
+          router.push('/properties')
         })
         .catch((err) => {
           console.log(err);
@@ -194,20 +196,21 @@ const Page = () => {
           address_street: property.addressStreet,
           address_zip_code: property.addressZipCode,
           address_apartment: property.addressAppartment,
-          created_at: new Date,
+          created_at: new Date(),
           no_of_rooms: property.numberOfRooms,
           no_of_floors: property.numberOfFloors,
           year_of_construction: property.yearOfConstruction,
           parking_space: property.parking,
           elevator: property.elevator,
           square_footage: property.squareFootage,
-          best_seller: false
+          best_seller: false,
         },
       })
         .then((res) => {
-          console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
+          // console.log(res);
+          // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
+          router.push("/properties");
         })
         .catch((err) => {
           console.log(err);
@@ -218,18 +221,18 @@ const Page = () => {
 
   const handleCheckErrors = (errorsToCheck) => {
     const numberOfErrors = Object.values(errorsToCheck).filter((error) => error === true).length;
-    console.log(numberOfErrors);
+    // console.log(numberOfErrors);
     return numberOfErrors > 0;
   };
 
   const handleChangeCategory = (event) => {
     const category = event.target.value;
-    console.log(category);
+    // console.log(category);
     setProperty({ ...property, category: category });
   };
 
   const handleChangeInput = (event) => {
-    console.log(event);
+    // console.log(event);
 
     const value = event.target.value;
     const name = event.target.name;
@@ -267,7 +270,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log(property);
+    // console.log(property);
   }, [property]);
 
   useEffect(() => {
@@ -307,7 +310,9 @@ const Page = () => {
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  {state === "add" ? `Add New Property` : `Edit property #${id}`}
+                  {state === "add"
+                    ? `Dodaj nową ofertę nieruchomości`
+                    : `Edytuj ofertę nieruchomości #${id}`}
                 </Typography>
               </Stack>
             </Stack>
@@ -325,12 +330,12 @@ const Page = () => {
             }}
           >
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Basic Informations</Typography>
+              <Typography variant="h6">Podstawowe informacje</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Title"
+                label="Tytuł"
                 name="title"
                 variant="filled"
                 onChange={(e) => {
@@ -342,7 +347,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="price"
+                label="Cena"
                 type="number"
                 name="price"
                 variant="filled"
@@ -357,7 +362,7 @@ const Page = () => {
               />
               <TextField
                 select
-                label="Category"
+                label="Kategoria"
                 variant="filled"
                 onChange={handleChangeCategory}
                 value={property.category}
@@ -376,12 +381,12 @@ const Page = () => {
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Description</Typography>
+              <Typography variant="h6">Opis</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Description"
+                label="Opis"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.description}
@@ -393,12 +398,12 @@ const Page = () => {
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Address</Typography>
+              <Typography variant="h6">Adres</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Country"
+                label="Kraj"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressCountry}
@@ -408,7 +413,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="City"
+                label="Miasto"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressCity}
@@ -420,7 +425,7 @@ const Page = () => {
             <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
               <TextField
                 {...inputStyle}
-                label="Street"
+                label="Ulica"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressStreet}
@@ -430,7 +435,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Appartment"
+                label="Numer mieszkania"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressAppartment}
@@ -440,7 +445,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Zip Code"
+                label="Kod pocztowy"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressZipCode}
@@ -451,7 +456,7 @@ const Page = () => {
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Additional Informations</Typography>
+              <Typography variant="h6">Informacje dodatkowe</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
@@ -468,15 +473,15 @@ const Page = () => {
               />
               <FormControlLabel
                 labelPlacement="top"
-                name="elevator"
+                name="Winda"
                 control={<Switch {...inputStyle} label="Filled" variant="filled" />}
-                label={<Typography variant="body2">Elevator</Typography>}
+                label={<Typography variant="body2">Winda</Typography>}
                 onChange={(e) => handleChangeInput(e)}
                 value={property.elevator}
               />
               <TextField
                 {...inputStyle}
-                label="Square Footage"
+                label="Metraż [m²]"
                 variant="filled"
                 name="squareFootage"
                 onChange={(e) => handleChangeInput(e)}
@@ -492,7 +497,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Rooms"
+                label="Liczba pokoi"
                 variant="filled"
                 name="numberOfRooms"
                 onChange={(e) => handleChangeInput(e)}
@@ -506,7 +511,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Floors"
+                label="Liczba pięter"
                 variant="filled"
                 name="numberOfFloors"
                 onChange={(e) => handleChangeInput(e)}
@@ -520,7 +525,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Constructed in"
+                label="Rok powstania"
                 variant="filled"
                 name="yearOfConstruction"
                 onChange={(e) => handleChangeInput(e)}
@@ -537,13 +542,13 @@ const Page = () => {
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Images</Typography>
+              <Typography variant="h6">Zdjęcia</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
                 name="image1"
-                label="First Image"
+                label="Pierwsze zdjęcie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image1}
@@ -552,7 +557,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Second Image"
+                label="Drugie zdjęcie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image2}
@@ -560,7 +565,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Third Image"
+                label="Trzecie zdjęcie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image3}
@@ -568,7 +573,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Fourth Image"
+                label="Czwarte zdjęcie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image4}
@@ -591,7 +596,7 @@ const Page = () => {
               variant="contained"
             >
               <Typography variant="h6">
-                {state === "add" ? "Add New Property" : "Save changes"}
+                {state === "add" ? "Dodaj nową ofertę" : "Zapisz zmiany"}
               </Typography>
             </Button>
           </Box>

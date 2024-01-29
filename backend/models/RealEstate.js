@@ -3,7 +3,7 @@ const db = require("../db/config");
 
 module.exports = {
   getAllRealEstateOffers: async () => {
-    const allRealEstateOffers = await db.query("SELECT * FROM real_estate");
+    const allRealEstateOffers = await db.query("SELECT * FROM real_estate as re LEFT JOIN address a ON re.id_address = a.id;");
     return allRealEstateOffers.rows;
   },
 

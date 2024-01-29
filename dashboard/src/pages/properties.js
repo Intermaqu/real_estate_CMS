@@ -10,156 +10,19 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { PropertiesTable } from "src/sections/properties/properties-table";
 import { PropertiesSearch } from "src/sections/properties/properties-search";
 import { applyPagination } from "src/utils/apply-pagination";
-import propertiesDataJSON from "src/data/properties";
+// import propertiesDataJSON from "src/data/properties";
 import { set } from "nprogress";
 import { Link } from "next/link";
+import axios from "axios";
+import AuthenticationService from "../services/AuthenticationService";
+import { URL } from "../services/URL";
 
 const now = new Date();
 
 const data = [
-  {
-    id: "1",
-    address: {
-      city: "Cleveland",
-      country: "USA",
-      state: "Ohio",
-      street: "2849 Fulton Street",
-    },
-    avatar: "/assets/avatars/avatar-carson-darrin.png",
-    createdAt: subDays(subHours(now, 7), 1).getTime(),
-    email: "carson.darrin@devias.io",
-    name: "Carson Darrin",
-    phone: "304-428-3097",
-  },
-  {
-    id: "2",
-    address: {
-      city: "Atlanta",
-      country: "USA",
-      state: "Georgia",
-      street: "1865  Pleasant Hill Road",
-    },
-    avatar: "/assets/avatars/avatar-fran-perez.png",
-    createdAt: subDays(subHours(now, 1), 2).getTime(),
-    email: "fran.perez@devias.io",
-    name: "Fran Perez",
-    phone: "712-351-5711",
-  },
-  {
-    id: "3",
-    address: {
-      city: "North Canton",
-      country: "USA",
-      state: "Ohio",
-      street: "4894  Lakeland Park Drive",
-    },
-    avatar: "/assets/avatars/avatar-jie-yan-song.png",
-    createdAt: subDays(subHours(now, 4), 2).getTime(),
-    email: "jie.yan.song@devias.io",
-    name: "Jie Yan Song",
-    phone: "770-635-2682",
-  },
-  {
-    id: "4",
-    address: {
-      city: "Madrid",
-      country: "Spain",
-      name: "Anika Visser",
-      street: "4158  Hedge Street",
-    },
-    avatar: "/assets/avatars/avatar-anika-visser.png",
-    createdAt: subDays(subHours(now, 11), 2).getTime(),
-    email: "anika.visser@devias.io",
-    name: "Anika Visser",
-    phone: "908-691-3242",
-  },
-  {
-    id: "5",
-    address: {
-      city: "San Diego",
-      country: "USA",
-      state: "California",
-      street: "75247",
-    },
-    avatar: "/assets/avatars/avatar-miron-vitold.png",
-    createdAt: subDays(subHours(now, 7), 3).getTime(),
-    email: "miron.vitold@devias.io",
-    name: "Miron Vitold",
-    phone: "972-333-4106",
-  },
-  {
-    id: "6",
-    address: {
-      city: "Berkeley",
-      country: "USA",
-      state: "California",
-      street: "317 Angus Road",
-    },
-    avatar: "/assets/avatars/avatar-penjani-inyene.png",
-    createdAt: subDays(subHours(now, 5), 4).getTime(),
-    email: "penjani.inyene@devias.io",
-    name: "Penjani Inyene",
-    phone: "858-602-3409",
-  },
-  {
-    id: "7",
-    address: {
-      city: "Carson City",
-      country: "USA",
-      state: "Nevada",
-      street: "2188  Armbrester Drive",
-    },
-    avatar: "/assets/avatars/avatar-omar-darboe.png",
-    createdAt: subDays(subHours(now, 15), 4).getTime(),
-    email: "omar.darobe@devias.io",
-    name: "Omar Darobe",
-    phone: "415-907-2647",
-  },
-  {
-    id: "8",
-    address: {
-      city: "Los Angeles",
-      country: "USA",
-      state: "California",
-      street: "1798  Hickory Ridge Drive",
-    },
-    avatar: "/assets/avatars/avatar-siegbert-gottfried.png",
-    createdAt: subDays(subHours(now, 2), 5).getTime(),
-    email: "siegbert.gottfried@devias.io",
-    name: "Siegbert Gottfried",
-    phone: "702-661-1654",
-  },
-  {
-    id: "9",
-    address: {
-      city: "Murray",
-      country: "USA",
-      state: "Utah",
-      street: "3934  Wildrose Lane",
-    },
-    avatar: "/assets/avatars/avatar-iulia-albu.png",
-    createdAt: subDays(subHours(now, 8), 6).getTime(),
-    email: "iulia.albu@devias.io",
-    name: "Iulia Albu",
-    phone: "313-812-8947",
-  },
-  {
-    id: "10",
-    address: {
-      city: "Salt Lake City",
-      country: "USA",
-      state: "Utah",
-      street: "368 Lamberts Branch Road",
-    },
-    avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
-    createdAt: subDays(subHours(now, 1), 9).getTime(),
-    email: "nasimiyu.danai@devias.io",
-    name: "Nasimiyu Danai",
-    phone: "801-301-7894",
-  },
 ];
 
-const STATUS = ["SOLD", "FREE", "RESERVED"];
+const STATUS = ["SOLD", "AVAILABLE", "BOOKED"];
 
 const Page = () => {
   const [propertiesData, setPropertiesData] = useState();
@@ -169,13 +32,45 @@ const Page = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filter, setFilter] = useState({
     SOLD: true,
-    FREE: true,
-    RESERVED: true,
+    AVAILABLE: true,
+    BOOKED: true,
   });
 
   const init = () => {
-    const data = propertiesDataJSON.data;
-    //REQUEST TO API
+    const data = [];
+
+    axios({
+      method: "get",
+      url: `${URL}/real-estate`,
+      headers: {
+        authorization: AuthenticationService.getToken(),
+      },
+    })
+      .then((res) => {
+        console.log(res.data)
+        for (let realEstate of res.data) {
+        
+          data.push({
+            id: realEstate.id,
+            address: {
+              city: realEstate.address_city,
+              country: realEstate.address_country,
+              state: realEstate.address_street + ' ' + realEstate.address_zip_code,
+              street: realEstate.address_apartment,
+            },
+            avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
+            createdAt: realEstate.created_at,
+            email: "nasimiyu.danai@devias.io",
+            name: realEstate.title,
+            phone: "801-301-7894",
+            status: realEstate.status,
+            price: realEstate.price
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setIsLoading(false);
     setPropertiesData(data);
     setFilteredData(data);
@@ -206,8 +101,8 @@ const Page = () => {
   const handleClearFilter = () => {
     setFilter({
       SOLD: true,
-      FREE: true,
-      RESERVED: true,
+      AVAILABLE: true,
+      BOOKED: true,
     });
     setFilteredData(propertiesData);
   };
@@ -260,7 +155,7 @@ const Page = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h4">Properties</Typography>
+                <Typography variant="h4">Oferty nieruchomości</Typography>
                 <Button
                   color="primary"
                   startIcon={<PlusIcon fontSize="small" />}
@@ -271,7 +166,7 @@ const Page = () => {
                   component={Link}
                   href={`/property`}
                 >
-                  + New Property
+                  + Dodaj ofertę nieruchomości
                 </Button>
               </Box>
             </Stack>
