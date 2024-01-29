@@ -53,12 +53,12 @@ export const UsersTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Surname</TableCell>
+                <TableCell>Imię</TableCell>
+                <TableCell>Nazwisko</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Role</TableCell>
-                <TableCell>Edit</TableCell>
+                <TableCell>Adres</TableCell>
+                <TableCell>Rola</TableCell>
+                <TableCell>Edytuj</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -124,7 +124,7 @@ export const UsersTable = (props) => {
                               fontWeight: "bold",
                             }}
                           >
-                            Edit
+                            Edytuj
                           </Box>
                         </ButtonBase>
                       </TableCell>

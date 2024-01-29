@@ -23,7 +23,7 @@ export const UsersSearch = ({ handleFilter, handleClearFilter, filter }) => (
         sx={{ marginRight: "1rem", color: "red", borderColor: "red" }}
         onClick={() => handleClearFilter()}
       >
-        Clear Filters
+        Wyczyść filtry
       </Button>
       <ButtonGroup variant="outlined" aria-label="outlined button group">
         <Button

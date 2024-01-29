@@ -10,11 +10,14 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { PropertiesTable } from "src/sections/properties/properties-table";
 import { PropertiesSearch } from "src/sections/properties/properties-search";
 import { applyPagination } from "src/utils/apply-pagination";
-import usersDataJSON from "src/data/users";
+// import usersDataJSON from "src/data/users";
 import { set } from "nprogress";
 import { Link } from "next/link";
 import { UsersSearch } from "src/sections/users/users-search";
 import { UsersTable } from "src/sections/users/users-table";
+import axios from "axios";
+import AuthenticationService from "../services/AuthenticationService";
+import { URL } from "../services/URL";
 
 const Page = () => {
   const [usersData, setUsersData] = useState();
@@ -28,8 +31,43 @@ const Page = () => {
   });
 
   const init = () => {
-    const data = usersDataJSON.data;
-    //REQUEST TO API
+    const data = [];
+
+    axios({
+      method: "get",
+      url: `${URL}/user`,
+      headers: {
+        authorization: AuthenticationService.getToken(),
+      },
+    })
+      .then((res) => {
+        for (let user of res.data) {
+          data.push({
+            "id": user.id,
+            "address": {
+              "country": user.address_country,
+              "city": user.address_city,
+              "street": user.address_street,
+              "apartmentNum": user.address_apartment,
+              "zipCode": user.address_zip_code
+            },
+            "firstName": user.firstName,
+            "firstSurname": user.firstSurname,
+            "secondName": user.secondName,
+            "secondSurname": user.secondSurname,
+            "email": user.email,
+            "password": user.password,
+            "role": user.role,
+            "phoneNumber": user.phone_number,
+            "nip": user.nip,
+            "createdAt": user.created_at,
+            "active": true
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setIsLoading(false);
     setUsersData(data);
     setFilteredData(data);
@@ -96,7 +134,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Users</title>
+        <title>Użytkownicy</title>
       </Head>
       <Box
         component="main"
@@ -115,7 +153,7 @@ const Page = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h4">Users</Typography>
+                <Typography variant="h4">Użytkownicy</Typography>
                 <Button
                   color="primary"
                   startIcon={<PlusIcon fontSize="small" />}
@@ -126,7 +164,7 @@ const Page = () => {
                   component={Link}
                   href={`/user`}
                 >
-                  + New User
+                  + Dodaj nowego użytkownika
                 </Button>
               </Box>
             </Stack>
