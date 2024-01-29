@@ -248,9 +248,8 @@ module.exports = {
       res.status(400).send(`Nie znaleziono oferty nieruchomości o id ${id}!`);
     }
 
-    console.log(realEstate);
 
-    let realEstateImage = RealEstateImage.editById(
+    let realEstateImage = await RealEstateImage.editById(
       image1,
       image2,
       image3,
@@ -268,13 +267,13 @@ module.exports = {
         );
     }
 
-    let address = Address.editAddressById(
+    let address = await Address.editAddressById(
       realEstate.id_address,
       address_country,
       address_city,
       address_street,
+      address_apartment,
       address_zip_code,
-      address_apartment
     );
 
     if (!address) {

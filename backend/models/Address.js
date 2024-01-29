@@ -47,8 +47,6 @@ module.exports = {
         return null;
       }
 
-      console.log(`Zaktualizowano adres o id: ${id}`);
-
       let editedAddress = await db.query(
         `SELECT * FROM address WHERE "id" = $1`,
         [id]
