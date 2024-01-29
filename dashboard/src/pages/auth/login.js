@@ -90,9 +90,11 @@ const Page = () => {
                     value={loginData.password}
                   />
                 </Stack>
-                {<Typography color="error" sx={{ mt: 3 }} variant="body2">
+                {
+                  <Typography color="error" sx={{ mt: 3 }} variant="body2">
                     {error}
-                  </Typography>}
+                  </Typography>
+                }
                 <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
                   Zaloguj
                 </Button>

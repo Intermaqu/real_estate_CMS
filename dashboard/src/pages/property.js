@@ -49,6 +49,7 @@ const Page = () => {
   const [property, setProperty] = useState(DefaultPropertyData);
   const [errors, setErrors] = useState({}); // { title: "Title is required" }
   const [state, setState] = useState("loading");
+  const [backendError, setBackendError] = useState("");
   const categories = ["House", "Apartment", "Office"];
 
   const init = () => {
@@ -68,7 +69,8 @@ const Page = () => {
       })
         .then((res) => {
           console.log(res.data);
-          setProperty({ ...DefaultPropertyData, 
+          setProperty({
+            ...DefaultPropertyData,
             id: res.data.id,
             image1: res.data.image_1,
             image2: res.data.image_2,
@@ -92,7 +94,8 @@ const Page = () => {
           });
         })
         .catch((err) => {
-          console.log(err)
+          console.log("ERROR:", err.response.data);
+          setBackendError(err.response.data);
         });
     } else {
       // ADD
@@ -117,7 +120,7 @@ const Page = () => {
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    let now = new Date;
+    let now = new Date();
 
     // Add Property
     if (state === "add") {
@@ -146,14 +149,14 @@ const Page = () => {
           address_street: property.addressStreet,
           address_zip_code: property.addressZipCode,
           address_apartment: property.addressAppartment,
-          created_at: new Date,
+          created_at: new Date(),
           no_of_rooms: property.numberOfRooms,
           no_of_floors: property.numberOfFloors,
           year_of_construction: property.yearOfConstruction,
           parking_space: property.parking,
           elevator: property.elevator,
           square_footage: property.squareFootage,
-          best_seller: false
+          best_seller: false,
         },
       })
         .then((res) => {
@@ -194,14 +197,14 @@ const Page = () => {
           address_street: property.addressStreet,
           address_zip_code: property.addressZipCode,
           address_apartment: property.addressAppartment,
-          created_at: new Date,
+          created_at: new Date(),
           no_of_rooms: property.numberOfRooms,
           no_of_floors: property.numberOfFloors,
           year_of_construction: property.yearOfConstruction,
           parking_space: property.parking,
           elevator: property.elevator,
           square_footage: property.squareFootage,
-          best_seller: false
+          best_seller: false,
         },
       })
         .then((res) => {
@@ -286,6 +289,22 @@ const Page = () => {
         }}
       >
         <Typography variant="h4">Loading...</Typography>
+      </Box>
+    );
+  }
+
+  if (backendError !== "") {
+    return (
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <Typography variant="h4">{backendError}</Typography>
       </Box>
     );
   }
