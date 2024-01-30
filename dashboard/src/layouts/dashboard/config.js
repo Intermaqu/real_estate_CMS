@@ -30,6 +30,15 @@ export const items = [
     ),
   },
   {
+    title: "Kategorie",
+    path: "/categories",
+    icon: (
+      <SvgIcon fontSize="small">
+        <ShoppingBagIcon />
+      </SvgIcon>
+    ),
+  },
+  {
     title: "Firma",
     path: "/company",
     icon: (
