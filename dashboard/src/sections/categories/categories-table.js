@@ -83,7 +83,7 @@ export const CategoriesTable = (props) => {
                     <TableCell>{category.description.slice(0, 50) + "..."}</TableCell>
                     <TableCell>
                       <Typography sx={{ fontWeight: "bold", color: handleColor(category.status) }}>
-                        {translateStatus(category.status)}
+                        {translateStatus(category.status ? "ACTIVE" : "INACTIVE")}
                       </Typography>
                     </TableCell>
                     <TableCell>

@@ -14,6 +14,7 @@ const realEstateRouter = require("./routes/real_estate");
 const blogPostRouter = require("./routes/blog_post");
 const sectionActiveInfoRouter = require("./routes/section_active_info");
 const testimonialRouter = require("./routes/testimonial");
+const companyInfoRouter = require("./routes/company_info");
 
 const passport = require("passport");
 require("./config/passport")(passport);
@@ -63,5 +64,6 @@ app.use(
   sectionActiveInfoRouter
 );
 app.use("/testimonial", testimonialRouter);
+app.use("/company-info", companyInfoRouter);
 
 module.exports = app;

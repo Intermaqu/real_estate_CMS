@@ -163,7 +163,7 @@ export const AuthProvider = (props) => {
         throw new Error("Uzupełnij wszystkie pola!");
       } else if (error.response.status === 401) {
         throw new Error("Niepoprawny email lub hasło!");
-      } else if (error.response.status === 401) {
+      } else if (error.response.status === 200) {
         AuthenticationService.registerSuccessfulLogin(response.data.userData, response.data.token);
 
         try {

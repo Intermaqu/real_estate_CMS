@@ -41,53 +41,25 @@ const Page = () => {
     setState(newState);
     if (id) {
       // EDIT
-      // axios({
-      //   method: "get",
-      //   url: `${URL}/real-estate/getForDataInterfaceById/${id}`,
-      //   headers: {
-      //     authorization: AuthenticationService.getToken(),
-      //   },
-      //   data: {
-      //     id: id,
-      //   },
-      // })
-      //   .then((res) => {
-      //     // console.log(res.data);
-      //     setProperty({
-      //       ...DefaultPropertyData,
-      //       id: res.data.id,
-      //       image1: res.data.image_1,
-      //       image2: res.data.image_2,
-      //       image3: res.data.image_3,
-      //       image4: res.data.image_4,
-      //       category: res.data.categoryName,
-      //       title: res.data.title,
-      //       price: res.data.price,
-      //       description: res.data.description,
-      //       addressCountry: res.data.address_country,
-      //       addressCity: res.data.address_country,
-      //       addressStreet: res.data.address_street,
-      //       addressAppartment: res.data.address_apartment,
-      //       addressZipCode: res.data.address_zip_code,
-      //       parking: res.data.parking_space,
-      //       elevator: res.data.elevator,
-      //       squareFootage: res.data.square_footage,
-      //       numberOfRooms: res.data.no_of_rooms,
-      //       numberOfFloors: res.data.no_of_floors,
-      //       yearOfConstruction: res.data.year_of_construction,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log("ERROR:", err.response.data);
-      //     setBackendError(err.response.data);
-      //   });
+      axios({
+        method: "get",
+        url: `${URL}/category/get/${id}`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+      })
+        .then((res) => {
+          setCategory(res.data);
+          setState(newState);
+        })
+        .catch((err) => {
+          console.log(err);
+          // setBackendError(err.response);
+        });
     } else {
       // ADD
-
       setCategory(DefaultCategoryData);
     }
-
-    // console.log(newState);
   };
 
   const handleDeleteFromDB = () => {
@@ -114,99 +86,57 @@ const Page = () => {
 
     let now = new Date();
 
-    // Add Property
+    // Add
     if (state === "add") {
-      //   axios({
-      //     method: "post",
-      //     url: `${URL}/real-estate/add`,
-      //     headers: {
-      //       authorization: AuthenticationService.getToken(),
-      //     },
-      //     data: {
-      //       image1: category.image1,
-      //       image2: category.image2,
-      //       image3: category.image3,
-      //       image4: category.image4,
-      //       id_category: 5,
-      //       id_broker: 2,
-      //       title: category.title,
-      //       short_description: ``,
-      //       description: category.description,
-      //       price: category.price,
-      //       status: `AVAILABLE`,
-      //       total_rates: 0,
-      //       no_of_reviews: 0,
-      //       address_country: category.addressCountry,
-      //       address_city: category.addressCity,
-      //       address_street: category.addressStreet,
-      //       address_zip_code: category.addressZipCode,
-      //       address_apartment: category.addressAppartment,
-      //       created_at: new Date(),
-      //       no_of_rooms: category.numberOfRooms,
-      //       no_of_floors: category.numberOfFloors,
-      //       year_of_construction: category.yearOfConstruction,
-      //       parking_space: category.parking,
-      //       elevator: category.elevator,
-      //       square_footage: category.squareFootage,
-      //       best_seller: false,
-      //     },
-      //   })
-      //     .then((res) => {
-      //       // TODO: komunikat o zapisaniu
-      //       // setProperty(res.data.property);
-      //       router.push("/properties");
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      //   return;
-      // }
-      // Edit Property
-      // if (state === "edit") {
-      //   axios({
-      //     method: "post",
-      //     url: `${URL}/real-estate/editById/${id}`,
-      //     headers: {
-      //       authorization: AuthenticationService.getToken(),
-      //     },
-      //     data: {
-      //       image1: category.image1,
-      //       image2: category.image2,
-      //       image3: category.image3,
-      //       image4: category.image4,
-      //       id_category: 5,
-      //       id_broker: 2,
-      //       title: category.title,
-      //       short_description: ``,
-      //       description: category.description,
-      //       price: category.price,
-      //       status: `AVAILABLE`,
-      //       total_rates: 0,
-      //       no_of_reviews: 0,
-      //       address_country: category.addressCountry,
-      //       address_city: category.addressCity,
-      //       address_street: category.addressStreet,
-      //       address_zip_code: category.addressZipCode,
-      //       address_apartment: category.addressAppartment,
-      //       created_at: new Date(),
-      //       no_of_rooms: category.numberOfRooms,
-      //       no_of_floors: category.numberOfFloors,
-      //       year_of_construction: category.yearOfConstruction,
-      //       parking_space: category.parking,
-      //       elevator: category.elevator,
-      //       square_footage: category.squareFootage,
-      //       best_seller: false,
-      //     },
-      //   })
-      //     .then((res) => {
-      //       // TODO: komunikat o zapisaniu
-      //       // setProperty(res.data.property);
-      //       router.push("/properties");
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      //   return;
+      axios({
+        method: "post",
+        url: `${URL}/category/add`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          name: category.name,
+          description: category.description,
+          image: category.image,
+          created_at: new Date(),
+          active: category.active,
+        },
+      })
+        .then((res) => {
+          // TODO: komunikat o zapisaniu
+          // setProperty(res.data.property);
+          router.push("/categories");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return;
+    }
+    // Edit Property
+    if (state === "edit") {
+      axios({
+        method: "post",
+        url: `${URL}/category/edit/${id}`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          name: category.name,
+          description: category.description,
+          image: category.image,
+          created_at: new Date(),
+          active: category.active,
+        },
+      })
+        .then((res) => {
+          // TODO: komunikat o zapisaniu
+          // setProperty(res.data.property);
+          router.push("/categories");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return;
     }
   };
 
