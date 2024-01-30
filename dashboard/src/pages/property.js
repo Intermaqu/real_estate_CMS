@@ -419,7 +419,7 @@ const Page = () => {
                 label="Krótki opis"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={property.description}
+                value={property.shortDescription}
                 name="shortDescription"
                 multiline
                 rows={2}

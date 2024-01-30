@@ -48,6 +48,7 @@ const EmptyUserData = {
   secondSurname: "",
   email: "",
   password: "",
+  passwordConfirm: "",
   country: "",
   city: "",
   street: "",
@@ -140,55 +141,30 @@ const Page = () => {
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    // let now = new Date();
+    let now = new Date();
 
-    // Add Property
-    // if (state === "add") {
-    //   axios({
-    //     method: "post",
-    //     url: `${URL}/real-estate/add`,
-    //     headers: {
-    //       authorization: AuthenticationService.getToken(),
-    //     },
-    //     data: {
-    //       image1: property.image1,
-    //       image2: property.image2,
-    //       image3: property.image3,
-    //       image4: property.image4,
-    //       id_category: 5,
-    //       id_broker: 2,
-    //       title: property.title,
-    //       short_description: ``,
-    //       description: property.description,
-    //       price: property.price,
-    //       status: `AVAILABLE`,
-    //       total_rates: 0,
-    //       no_of_reviews: 0,
-    //       address_country: property.addressCountry,
-    //       address_city: property.addressCity,
-    //       address_street: property.addressStreet,
-    //       address_zip_code: property.addressZipCode,
-    //       address_apartment: property.addressAppartment,
-    //       created_at: new Date(),
-    //       no_of_rooms: property.numberOfRooms,
-    //       no_of_floors: property.numberOfFloors,
-    //       year_of_construction: property.yearOfConstruction,
-    //       parking_space: property.parking,
-    //       elevator: property.elevator,
-    //       square_footage: property.squareFootage,
-    //       best_seller: false,
-    //     },
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //       // TODO: komunikat o zapisaniu + redirect do /properties
-    //       // setProperty(res.data.property);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    //   return;
-    // }
+    //
+    if (state === "add") {
+      axios({
+        method: "post",
+        url: `${URL}/user/register`,
+        headers: {
+          authorization: AuthenticationService.getToken(),
+        },
+        data: {
+          ...user,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          // TODO: komunikat o zapisaniu + redirect do /properties
+          // setProperty(res.data.property);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return;
+    }
 
     // Edit Property
     // if (state === "edit") {
