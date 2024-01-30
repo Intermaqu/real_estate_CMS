@@ -49,7 +49,21 @@ const Page = () => {
   const init = () => {
     setState("edit");
 
-    // AXIOS GET
+    axios({
+      method: "get",
+      url: `${URL}/company-info/getOne`,
+      headers: {
+        authorization: AuthenticationService.getToken(),
+      },
+    })
+      .then((res) => {
+        setCompany(res.data);
+        setState(newState);
+      })
+      .catch((err) => {
+        console.log(err);
+        // setBackendError(err.response);
+      });
 
     setCompany(EmptyCompanyData);
   };
@@ -76,46 +90,18 @@ const Page = () => {
     if (state === "edit") {
       axios({
         method: "post",
-        url: `${URL}/real-estate/editById/${id}`,
+        url: `${URL}/company-info/edit/${company.id}`,
         headers: {
           authorization: AuthenticationService.getToken(),
         },
-        data: {
-          image1: property.image1,
-          image2: property.image2,
-          image3: property.image3,
-          image4: property.image4,
-          id_category: 5,
-          id_broker: 2,
-          title: property.title,
-          short_description: ``,
-          description: property.description,
-          price: property.price,
-          status: `AVAILABLE`,
-          total_rates: 0,
-          no_of_reviews: 0,
-          address_country: property.addressCountry,
-          address_city: property.addressCity,
-          address_street: property.addressStreet,
-          address_zip_code: property.addressZipCode,
-          address_apartment: property.addressAppartment,
-          created_at: new Date(),
-          no_of_rooms: property.numberOfRooms,
-          no_of_floors: property.numberOfFloors,
-          year_of_construction: property.yearOfConstruction,
-          parking_space: property.parking,
-          elevator: property.elevator,
-          square_footage: property.squareFootage,
-          best_seller: false,
-        },
       })
         .then((res) => {
-          console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
-          // setProperty(res.data.property);
+          setCompany(res.data);
+          setState(newState);
         })
         .catch((err) => {
           console.log(err);
+          // setBackendError(err.response);
         });
       return;
     }
@@ -240,9 +226,9 @@ const Page = () => {
                 onChange={(e) => {
                   handleChangeInput(e);
                 }}
-                value={company.phoneNumber}
-                error={errors.phoneNumber}
-                helperText={errors.phoneNumber && "phoneNumber is required"}
+                value={company.phone_number_1}
+                error={errors.phone_number_1}
+                helperText={errors.phone_number_1 && "phoneNumber is required"}
                 type="number"
               />
               <TextField
@@ -253,9 +239,9 @@ const Page = () => {
                 onChange={(e) => {
                   handleChangeInput(e);
                 }}
-                value={company.phoneNumber2}
-                error={errors.phoneNumber2}
-                helperText={errors.phoneNumber2 && "phoneNumber2 is required"}
+                value={company.phone_number_2}
+                error={errors.phone_number_2}
+                helperText={errors.phone_number_2 && "phoneNumber2 is required"}
                 type="number"
               />
             </Box>
@@ -268,20 +254,20 @@ const Page = () => {
                 label="Facebook"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.facebook}
+                value={company.social_facebook_link}
                 name="facebook"
-                error={errors.facebook}
-                helperText={errors.facebook && "facebook is required"}
+                error={errors.social_facebook_link}
+                helperText={errors.social_facebook_link && "facebook is required"}
               />
               <TextField
                 {...inputStyle}
                 label="Instagram"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.instagram}
+                value={company.social_instagram_link}
                 name="instagram"
-                error={errors.instagram}
-                helperText={errors.instagram && "instagram is required"}
+                error={errors.social_instagram_link}
+                helperText={errors.social_instagram_link && "instagram is required"}
               />
             </Box>
             <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
@@ -290,30 +276,30 @@ const Page = () => {
                 label="Twitter"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.twitter}
+                value={company.social_twitter_link}
                 name="twitter"
-                error={errors.twitter}
-                helperText={errors.twitter && "twitter is required"}
+                error={errors.social_twitter_link}
+                helperText={errors.social_twitter_link && "twitter is required"}
               />
               <TextField
                 {...inputStyle}
                 label="Google"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.google}
+                value={company.social_google_link}
                 name="google"
-                error={errors.google}
-                helperText={errors.google && "google is required"}
+                error={errors.social_google_link}
+                helperText={errors.social_google_link && "google is required"}
               />
               <TextField
                 {...inputStyle}
                 label="Linked In"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.linkedin}
+                value={company.social_linked_in_link}
                 name="linkedin"
-                error={errors.linkedin}
-                helperText={errors.linkedin && "linkedin is required"}
+                error={errors.social_linked_in_link}
+                helperText={errors.social_linked_in_link && "linkedin is required"}
               />
             </Box>
             <Box sx={rowTitleStyle}>
@@ -325,10 +311,10 @@ const Page = () => {
                 label="Treści o pracownikach"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.employeesContent}
+                value={company.employees_content}
                 name="employeesContent"
-                error={errors.employeesContent}
-                helperText={errors.employeesContent && "employeesContent is required"}
+                error={errors.employees_content}
+                helperText={errors.employees_content && "employeesContent is required"}
                 multiline
                 rows={4}
               />
@@ -339,10 +325,10 @@ const Page = () => {
                 label="Treści gwarancyjne"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.guaranteedContent}
+                value={company.guaranteed_content}
                 name="guaranteedContent"
-                error={errors.guaranteedContent}
-                helperText={errors.guaranteedContent && "guaranteedContent is required"}
+                error={errors.guaranteed_content}
+                helperText={errors.guaranteed_content && "guaranteedContent is required"}
                 multiline
                 rows={4}
               />
@@ -353,10 +339,10 @@ const Page = () => {
                 label="Treści konsultacyjne"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
-                value={company.consultationContent}
+                value={company.consultation_content}
                 name="consultationContent"
-                error={errors.consultationContent}
-                helperText={errors.consultationContent && "consultationContent is required"}
+                error={errors.consultation_content}
+                helperText={errors.consultation_content && "consultationContent is required"}
                 multiline
                 rows={4}
               />
@@ -376,7 +362,7 @@ const Page = () => {
                 variant="contained"
               >
                 <Typography variant="h6">
-                  {state === "add" ? "Dodaj Nowego Użytkownika" : "Zapisz zmiany"}
+                  {state === "add" ? "Dodaj Nowego Dane" : "Zapisz zmiany"}
                 </Typography>
               </Button>
             </Box>

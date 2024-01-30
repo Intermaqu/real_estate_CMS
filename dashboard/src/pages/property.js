@@ -139,7 +139,6 @@ const Page = () => {
 
     // Add Property
     if (state === "add") {
-      console.log(property);
       axios({
         method: "post",
         url: `${URL}/real-estate/add`,

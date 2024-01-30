@@ -34,80 +34,35 @@ const Page = () => {
   });
 
   const init = () => {
-    const data = [
-      {
-        id: 1,
-        name: "Dom",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        status: "ACTIVE",
-        image: "image",
-      },
-      {
-        id: 2,
-        name: "Mieszkanie",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        status: "ACTIVE",
-        image: "image",
-      },
-      {
-        id: 3,
-        name: "Działka",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        status: "INACTIVE",
-        image: "image",
-      },
-      {
-        id: 4,
-        name: "Penthause",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        status: "INACTIVE",
-        image: "image",
-      },
-    ];
+    const data = [];
 
-    // AXIOS GET CATEGORIES
+    axios({
+      method: "get",
+      url: `${URL}/category`,
+      headers: {
+        authorization: AuthenticationService.getToken(),
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        for (let category of res.data) {
+          console.log(category.active)
+          data.push({
+            id: category.id,
+            name: category.name,
+            description: category.description,
+            status: category.active,
+            image: category.image,
+          });
+        }
 
-    setCategoriesData(data);
-    setFilteredData(data);
-    setIsLoading(false);
-
-    // axios({
-    //   method: "get",
-    //   url: `${URL}/real-estate`,
-    //   headers: {
-    //     authorization: AuthenticationService.getToken(),
-    //   },
-    // })
-    //   .then((res) => {
-    //     for (let realEstate of res.data) {
-    //       data.push({
-    //         id: realEstate.id,
-    //         address: {
-    //           city: realEstate.address_city + " " + realEstate.address_zip_code,
-    //           country: realEstate.address_country,
-    //           state: realEstate.address_street,
-    //           street: realEstate.address_apartment,
-    //         },
-    //         avatar: "/assets/avatars/avatar-nasimiyu-danai.png",
-    //         createdAt: realEstate.created_at,
-    //         email: realEstate.broker_email,
-    //         name: realEstate.title,
-    //         phone: realEstate.broker_phone_number,
-    //         status: realEstate.status,
-    //         price: realEstate.price,
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // setIsLoading(false);
-    // setPropertiesData(data);
-    // setFilteredData(data);
+        setCategoriesData(data);
+        setFilteredData(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handlePageChange = useCallback((event, value) => {
