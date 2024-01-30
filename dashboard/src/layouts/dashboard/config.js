@@ -29,4 +29,13 @@ export const items = [
       </SvgIcon>
     ),
   },
+  {
+    title: "Firma",
+    path: "/company",
+    icon: (
+      <SvgIcon fontSize="small">
+        <CogIcon />
+      </SvgIcon>
+    ),
+  },
 ];

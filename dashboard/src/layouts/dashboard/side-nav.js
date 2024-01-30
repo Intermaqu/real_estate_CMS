@@ -20,6 +20,7 @@ import { Logo } from "src/components/logo";
 import { Scrollbar } from "src/components/scrollbar";
 import { items } from "./config";
 import { SideNavItem } from "./side-nav-item";
+import AuthenticationService from "src/services/AuthenticationService";
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
@@ -31,6 +32,8 @@ export const SideNav = (props) => {
   const handleSignOut = useCallback(() => {
     auth.signOut();
     router.push("/auth/login");
+    window.sessionStorage.clear();
+    window.localStorage.clear();
   }, [onClose, auth, router]);
 
   const content = (
