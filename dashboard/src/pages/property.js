@@ -52,6 +52,7 @@ const Page = () => {
   const [state, setState] = useState("loading");
   const [backendError, setBackendError] = useState("");
   const [categories, setCategories] = useState([]);
+  const optionalFields = ["image2", "image3", "image4"];
 
   const init = () => {
     const newState = id ? "edit" : "add";
@@ -102,7 +103,6 @@ const Page = () => {
       setProperty(DefaultPropertyData);
     }
 
-    
     axios({
       method: "get",
       url: `${URL}/category`,
@@ -113,7 +113,7 @@ const Page = () => {
       for (let category of res.data) {
         if (!categories.includes(category.name)) {
           categories.push(category.name);
-          setProperty({...DefaultPropertyData, 'category': category.name});
+          setProperty({ ...DefaultPropertyData, category: category.name });
         }
       }
     });
@@ -132,12 +132,14 @@ const Page = () => {
 
     for (let key of Object.keys(property)) if (property[key] === "") newErrors[key] = true;
 
+    for (let key of optionalFields) if (property[key] === "") newErrors[key] = false;
+
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
     // Add Property
     if (state === "add") {
-      console.log(property)
+      console.log(property);
       axios({
         method: "post",
         url: `${URL}/real-estate/add`,
