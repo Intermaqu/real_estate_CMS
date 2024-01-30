@@ -25,7 +25,7 @@ const DefaultPropertyData = {
   image2: "",
   image3: "",
   image4: "",
-  category: "House",
+  category: "",
   title: "",
   price: 0,
   shortDescription: "",
@@ -51,7 +51,7 @@ const Page = () => {
   const [errors, setErrors] = useState({}); // { title: "Title is required" }
   const [state, setState] = useState("loading");
   const [backendError, setBackendError] = useState("");
-  const categories = ["House", "Apartment", "Office"];
+  const [categories, setCategories] = useState([]);
 
   const init = () => {
     const newState = id ? "edit" : "add";
@@ -69,7 +69,6 @@ const Page = () => {
         },
       })
         .then((res) => {
-          // console.log(res.data);
           setProperty({
             ...DefaultPropertyData,
             id: res.data.id,
@@ -100,11 +99,24 @@ const Page = () => {
         });
     } else {
       // ADD
-
       setProperty(DefaultPropertyData);
     }
 
-    // console.log(newState);
+    
+    axios({
+      method: "get",
+      url: `${URL}/category`,
+      headers: {
+        authorization: AuthenticationService.getToken(),
+      },
+    }).then((res) => {
+      for (let category of res.data) {
+        if (!categories.includes(category.name)) {
+          categories.push(category.name);
+          setProperty({...DefaultPropertyData, 'category': category.name});
+        }
+      }
+    });
   };
 
   const handleValidate = () => {
@@ -123,10 +135,9 @@ const Page = () => {
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    let now = new Date();
-
     // Add Property
     if (state === "add") {
+      console.log(property)
       axios({
         method: "post",
         url: `${URL}/real-estate/add`,
@@ -138,10 +149,10 @@ const Page = () => {
           image2: property.image2,
           image3: property.image3,
           image4: property.image4,
-          id_category: 5,
-          id_broker: 2,
+          category_name: property.category,
+          id_broker: AuthenticationService.getUserData().id,
           title: property.title,
-          short_description: ``,
+          short_description: property.shortDescription,
           description: property.description,
           price: property.price,
           status: `AVAILABLE`,
@@ -186,10 +197,10 @@ const Page = () => {
           image2: property.image2,
           image3: property.image3,
           image4: property.image4,
-          id_category: 5,
-          id_broker: 2,
+          category_name: property.category,
+          id_broker: AuthenticationService.getUserData().id,
           title: property.title,
-          short_description: ``,
+          short_description: property.shortDescription,
           description: property.description,
           price: property.price,
           status: `AVAILABLE`,
@@ -272,18 +283,18 @@ const Page = () => {
     setProperty({ ...property, [name]: value });
   };
 
-  const translateCategory = (category) => {
-    switch (category) {
-      case "House":
-        return "Dom";
-      case "Apartment":
-        return "Mieszkanie";
-      case "Office":
-        return "Biuro";
-      default:
-        return "Dom";
-    }
-  };
+  // const translateCategory = (category) => {
+  //   switch (category) {
+  //     case "House":
+  //       return "Dom";
+  //     case "Apartment":
+  //       return "Mieszkanie";
+  //     case "Office":
+  //       return "Biuro";
+  //     default:
+  //       return "Dom";
+  //   }
+  // };
 
   useEffect(() => {
     // console.log(property);
@@ -404,7 +415,7 @@ const Page = () => {
                     value={category}
                     sx={{ cursor: "pointer", padding: "0.5rem 1rem " }}
                   >
-                    {translateCategory(category)}
+                    {category}
                   </MenuItem>
                 ))}
               </TextField>
@@ -526,7 +537,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Metrarz"
+                label="Metraż [m²]"
                 variant="filled"
                 name="squareFootage"
                 onChange={(e) => handleChangeInput(e)}
@@ -570,7 +581,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Wybudowany w"
+                label="Rok powstania"
                 variant="filled"
                 name="yearOfConstruction"
                 onChange={(e) => handleChangeInput(e)}

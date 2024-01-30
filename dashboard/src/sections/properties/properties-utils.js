@@ -1,13 +1,16 @@
 export const translateStatus = (status) => {
   switch (status) {
-    case "FREE":
+    case "AVAILABLE":
       return "Wolne";
 
-    case "RESERVED":
+    case "BOOKED":
       return "Zarezerwowane";
 
     case "SOLD":
       return "Sprzedane";
+
+    case "INACTIVE":
+      return "Nieaktwne";
 
     default:
       return "Nieznany";

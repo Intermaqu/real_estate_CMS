@@ -62,13 +62,14 @@ const Page = () => {
             price: realEstate.price,
           });
         }
+        
+        setIsLoading(false);
+        setPropertiesData(data);
+        setFilteredData(data);
       })
       .catch((err) => {
         console.log(err);
       });
-    setIsLoading(false);
-    setPropertiesData(data);
-    setFilteredData(data);
   };
 
   const handlePageChange = useCallback((event, value) => {
@@ -110,6 +111,7 @@ const Page = () => {
 
   useEffect(() => {
     console.log(filter);
+    console.log(filteredData);
   }, [filter]);
 
   if (isLoading) {
