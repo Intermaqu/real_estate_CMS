@@ -64,13 +64,15 @@ const Page = () => {
             active: true,
           });
         }
+
+        setIsLoading(false);
+        setUsersData(data);
+        setFilteredData(data);
+        
       })
       .catch((err) => {
         console.log(err);
       });
-    setIsLoading(false);
-    setUsersData(data);
-    setFilteredData(data);
   };
 
   const handlePageChange = useCallback((event, value) => {

@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   load: async (id) => {
-    let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [id]);
+    let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [
+      id,
+    ]);
     if (user.rowCount !== 1) {
       return false;
     } else {
@@ -37,13 +39,39 @@ module.exports = {
     LEFT JOIN  
       address a 
     ON 
-      public."user".id_address = a.id;`);
+      public."user".id_address = a.id
+    ORDER BY "created_at";`);
     return allUsers.rows;
   },
 
   getUserByEmail: async (email) => {
     let user = await db.query(
-      `SELECT * FROM public."user" WHERE "email" = $1`,
+      `    
+    SELECT     
+      public."user".id,    
+      "firstName",
+      "firstSurname",
+      "secondName",
+      "secondSurname",
+      "email",
+      "password",
+      "role",
+      "phone_number",
+      "nip",
+      "created_at",
+      "active",
+      a.address_city, 
+      a.address_street, 
+      a.address_apartment, 
+      a.address_zip_code, 
+      a.address_country
+    FROM 
+      public."user"
+    LEFT JOIN  
+      address a 
+    ON 
+      public."user".id_address = a.id
+    WHERE "email" = $1`,
       [email]
     );
     if (user.rowCount !== 1) {
@@ -54,9 +82,34 @@ module.exports = {
   },
 
   getUserById: async (id) => {
-    let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [
-      id,
-    ]);
+    let user = await db.query(
+      ` SELECT     
+    public."user".id,    
+    "firstName",
+    "firstSurname",
+    "secondName",
+    "secondSurname",
+    "email",
+    "password",
+    "role",
+    "phone_number",
+    "nip",
+    "created_at",
+    "active",
+    a.address_city, 
+    a.address_street, 
+    a.address_apartment, 
+    a.address_zip_code, 
+    a.address_country
+  FROM 
+    public."user"
+  LEFT JOIN  
+    address a 
+  ON 
+    public."user".id_address = a.id
+  WHERE public."user".id = $1`,
+      [id]
+    );
     if (user.rowCount !== 1) {
       return false;
     } else {
@@ -71,13 +124,14 @@ module.exports = {
     secondSurname,
     email,
     password,
-    address,
+    id_address,
     role,
     phoneNumber,
     nip,
     createdAt,
     active
   ) => {
+    console.log(id_address);
     let user = await db.query(
       `INSERT INTO public."user" (
         "firstName",
@@ -100,7 +154,7 @@ module.exports = {
         secondSurname,
         email,
         password,
-        address,
+        id_address,
         role,
         phoneNumber,
         nip,

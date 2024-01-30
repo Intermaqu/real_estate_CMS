@@ -103,6 +103,11 @@ module.exports = {
       zipCode
     );
 
+    if (!address) {
+      res.status(500).send("Nie udało się utworzyć nowego adresu.");
+      return 0;
+    }
+
     await User.addNewUser(
       firstName,
       firstSurname,
@@ -110,7 +115,7 @@ module.exports = {
       secondSurname,
       email,
       password,
-      address.ID_ADDRESS,
+      address[address.length - 1].id,
       role,
       phoneNumber,
       nip,
@@ -230,7 +235,7 @@ module.exports = {
         phoneNumber,
         nip,
         createdAt,
-        active,
+        active
       );
 
       if (editedUser) {
@@ -283,4 +288,3 @@ module.exports = {
 //     "apartmentNum": "12",
 //     "zipCode": "61-125"
 // }
-

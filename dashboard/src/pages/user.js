@@ -49,52 +49,48 @@ const Page = () => {
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
   const roles = ["BROKER", "USER"];
-  const optionalFields = ["secondName", "secondSurname", "NIP"];
+  const optionalFields = ["secondName", "secondSurname", "nip"];
   const init = () => {
     const newState = id ? "edit" : "add";
     setState(newState);
     if (id) {
       // EDIT
-      //   axios({
-      //     method: "get",
-      //     url: `${URL}/real-estate/getForDataInterfaceById/${id}`,
-      //     headers: {
-      //       authorization: AuthenticationService.getToken(),
-      //     },
-      //     data: {
-      //       id: id,
-      //     },
-      //   })
-      //     .then((res) => {
-      //       console.log(res.data);
-      //       setProperty({
-      //         ...DefaultPropertyData,
-      //         id: res.data.id,
-      //         image1: res.data.image_1,
-      //         image2: res.data.image_2,
-      //         image3: res.data.image_3,
-      //         image4: res.data.image_4,
-      //         category: res.data.categoryName,
-      //         title: res.data.title,
-      //         price: res.data.price,
-      //         description: res.data.description,
-      //         addressCountry: res.data.address_country,
-      //         addressCity: res.data.address_country,
-      //         addressStreet: res.data.address_street,
-      //         addressAppartment: res.data.address_apartment,
-      //         addressZipCode: res.data.address_zip_code,
-      //         parking: res.data.parking_space,
-      //         elevator: res.data.elevator,
-      //         squareFootage: res.data.square_footage,
-      //         numberOfRooms: res.data.no_of_rooms,
-      //         numberOfFloors: res.data.no_of_floors,
-      //         yearOfConstruction: res.data.year_of_construction,
-      //       });
-      //     })
-      //     .catch((err) => {
-      //       console.log("ERROR:", err.response.data.message);
-      //       setBackendError(err.response.data.message);
-      //     });
+        axios({
+          method: "get",
+          url: `${URL}/user/getById/${id}`,
+          headers: {
+            authorization: AuthenticationService.getToken(),
+          },
+          data: {
+            id: id,
+          },
+        })
+          .then((res) => {
+            console.log(res.data);
+            setUser({
+                active: res.data.active,
+                firstName: res.data.firstName,
+                firstSurname: res.data.firstSurname,
+                secondName: res.data.secondName,
+                secondSurname: res.data.secondSurname,
+                email: res.data.email,
+                password: res.data.password,
+                passwordConfirm: res.data.passwordConfirm,
+                country: res.data.address_country,
+                city: res.data.address_city,
+                street: res.data.address_street,
+                apartmentNum: res.data.address_apartmentNum,
+                zipCode: res.data.address_zipCode,
+                role: res.data.role,
+                phoneNumber: res.data.phone_number,
+                nip: res.data.nip,
+                createdAt: res.data.createdAt,
+            });
+          })
+          .catch((err) => {
+            console.log("ERROR:", err.response.data.message);
+            setBackendError(err.response.data.message);
+          });
 
       setUser({ ...EmptyUserData, passwordConfirm: EmptyUserData.password });
     } else {
@@ -118,11 +114,9 @@ const Page = () => {
 
     newErrors.createdAt = false;
     if (user.password !== user.passwordConfirm) newErrors.passwordConfirm = true;
-    console.log('dupa');
+
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
-
-    console.log('dupa');
 
     if (state === "add") {
       console.log(user);
@@ -134,6 +128,8 @@ const Page = () => {
         },
         data: {
           ...user,
+          'createdAt': new Date,
+          'active': true
         },
       })
         .then((res) => {
@@ -143,6 +139,7 @@ const Page = () => {
         })
         .catch((err) => {
           console.log(err);
+          // TODO: dodać error na polu email, że konto z podanym mailem już istnieje
         });
       return;
     }
