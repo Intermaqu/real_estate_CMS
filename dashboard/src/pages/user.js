@@ -69,7 +69,7 @@ const Page = () => {
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
   const roles = ["BROKER", "USER"];
-
+  const optionalFields = ["secondName", "secondSurname", "NIP"];
   const init = () => {
     const newState = id ? "edit" : "add";
     setState(newState);
@@ -130,8 +130,13 @@ const Page = () => {
     const newErrors = {
       ...errors,
     };
+
     for (let key of Object.keys(user)) {
       if (user[key] === "") newErrors[key] = true;
+    }
+
+    for (let key of optionalFields) {
+      newErrors[key] = false;
     }
 
     newErrors.createdAt = false;
