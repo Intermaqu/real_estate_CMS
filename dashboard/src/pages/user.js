@@ -524,7 +524,7 @@ const Page = () => {
                 variant="contained"
                 color="error"
               >
-                <Typography variant="h6">Usuń kategorię</Typography>
+                <Typography variant="h6">Usuń</Typography>
               </Button>
             )}
             <Button

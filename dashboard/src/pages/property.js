@@ -70,6 +70,7 @@ const Page = () => {
         },
       })
         .then((res) => {
+          console.log(res.data)
           setProperty({
             ...DefaultPropertyData,
             id: res.data.id,
@@ -77,9 +78,10 @@ const Page = () => {
             image2: res.data.image_2,
             image3: res.data.image_3,
             image4: res.data.image_4,
-            category: res.data.categoryName,
+            category: res.data.category_name,
             title: res.data.title,
             price: res.data.price,
+            shortDescription: res.data.short_description,
             description: res.data.description,
             addressCountry: res.data.address_country,
             addressCity: res.data.address_country,
@@ -675,7 +677,7 @@ const Page = () => {
                 variant="contained"
                 color="error"
               >
-                <Typography variant="h6">Usuń kategorię</Typography>
+                <Typography variant="h6">Usuń</Typography>
               </Button>
             )}
             <Button

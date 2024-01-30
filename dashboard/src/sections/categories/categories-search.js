@@ -29,7 +29,7 @@ export const CategoriesSearch = ({ handleFilter, handleClearFilter, filter }) =>
           handleFilter("ACTIVE");
         }}
       >
-        AKTYWNE
+        AKTYWNA
       </Button>
       <Button
         variant={filter["INACTIVE"] ? "contained" : "outlined"}
@@ -42,7 +42,7 @@ export const CategoriesSearch = ({ handleFilter, handleClearFilter, filter }) =>
           handleFilter("INACTIVE");
         }}
       >
-        NIEAKTYWNE
+        NIEAKTYWNA
       </Button>
     </ButtonGroup>
   </Card>

@@ -8,6 +8,7 @@ module.exports = {
       re.id,
       re.title, 
       re.price, 
+      re.short_description,
       re.description, 
       re.status, 
       re.total_rates, 
@@ -55,6 +56,7 @@ module.exports = {
       `SELECT 
         re.title, 
         re.price, 
+        re.short_description, 
         re.description, 
         re.status, 
         re.total_rates, 

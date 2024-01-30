@@ -100,7 +100,7 @@ const RealEstatePage = () => {
     <div className="page" style={{ maxWidth: "100%", overflowX: "hidden" }}>
       <main className="RealEstatePage">
         <Container component="section" maxWidth={"lg"}>
-          <section className="core">
+          <section className="core" style={{alignItems: "flex-start"}}>
             <Gallery />
             <Description propertyData={propertyData} />
           </section>

@@ -88,9 +88,9 @@ export const TestimonialsTable = (props) => {
                     </TableCell>
                     <TableCell>
                       <Typography
-                        sx={{ fontWeight: "bold", color: handleColor(testimonial.active) }}
+                        sx={{ fontWeight: "bold", color: handleColor(testimonial.active ? 'ACTIVE' : 'INACTIVE') }}
                       >
-                        {translateStatus(testimonial.active)}
+                        {translateStatus(testimonial.active ? 'ACTIVE' : 'INACTIVE')}
                       </Typography>
                     </TableCell>
                     <TableCell>
