@@ -69,7 +69,7 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setProperty({
             ...DefaultPropertyData,
             id: res.data.id,
@@ -104,7 +104,7 @@ const Page = () => {
       setProperty(DefaultPropertyData);
     }
 
-    console.log(newState);
+    // console.log(newState);
   };
 
   const handleValidate = () => {
@@ -163,9 +163,9 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
+          // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
+          router.push("/properties");
         })
         .catch((err) => {
           console.log(err);
@@ -211,9 +211,9 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
+          // TODO: komunikat o zapisaniu
           // setProperty(res.data.property);
+          router.push("/properties");
         })
         .catch((err) => {
           console.log(err);
@@ -224,18 +224,18 @@ const Page = () => {
 
   const handleCheckErrors = (errorsToCheck) => {
     const numberOfErrors = Object.values(errorsToCheck).filter((error) => error === true).length;
-    console.log(numberOfErrors);
+    // console.log(numberOfErrors);
     return numberOfErrors > 0;
   };
 
   const handleChangeCategory = (event) => {
     const category = event.target.value;
-    console.log(category);
+    // console.log(category);
     setProperty({ ...property, category: category });
   };
 
   const handleChangeInput = (event) => {
-    console.log(event);
+    // console.log(event);
 
     const value = event.target.value;
     const name = event.target.name;
@@ -286,7 +286,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log(property);
+    // console.log(property);
   }, [property]);
 
   useEffect(() => {
@@ -518,7 +518,7 @@ const Page = () => {
               />
               <FormControlLabel
                 labelPlacement="top"
-                name="elevator"
+                name="Winda"
                 control={<Switch {...inputStyle} label="Filled" variant="filled" />}
                 label={<Typography variant="body2">Winda</Typography>}
                 onChange={(e) => handleChangeInput(e)}

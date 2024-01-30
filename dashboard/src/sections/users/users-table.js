@@ -54,12 +54,12 @@ export const UsersTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell>Imie</TableCell>
+                <TableCell>Imię</TableCell>
                 <TableCell>Nazwisko</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Adres</TableCell>
                 <TableCell>Rola</TableCell>
-                <TableCell>Edycja</TableCell>
+                <TableCell>Edytuj</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

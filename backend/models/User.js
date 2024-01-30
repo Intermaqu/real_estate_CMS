@@ -13,7 +13,31 @@ module.exports = {
   },
 
   getAllUsers: async () => {
-    const allUsers = await db.query(`SELECT * FROM public."user"`);
+    const allUsers = await db.query(`
+    SELECT     
+      public."user".id,    
+      "firstName",
+      "firstSurname",
+      "secondName",
+      "secondSurname",
+      "email",
+      "password",
+      "role",
+      "phone_number",
+      "nip",
+      "created_at",
+      "active",
+      a.address_city, 
+      a.address_street, 
+      a.address_apartment, 
+      a.address_zip_code, 
+      a.address_country
+    FROM 
+      public."user"
+    LEFT JOIN  
+      address a 
+    ON 
+      public."user".id_address = a.id;`);
     return allUsers.rows;
   },
 

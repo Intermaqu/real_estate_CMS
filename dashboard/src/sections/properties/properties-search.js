@@ -8,7 +8,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
     <OutlinedInput
       defaultValue=""
       fullWidth
-      placeholder="Szukaj Posiadłości"
+      placeholder="Szukaj"
       startAdornment={
         <InputAdornment position="start">
           <SvgIcon color="action" fontSize="small">
@@ -24,31 +24,31 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
         sx={{ marginRight: "1rem", color: "red", borderColor: "red" }}
         onClick={() => handleClearFilter()}
       >
-        Wyczyść Filtry
+        Wyczyść filtry
       </Button>
       <ButtonGroup variant="outlined" aria-label="outlined button group">
         <Button
-          variant={filter["FREE"] ? "contained" : "outlined"}
+          variant={filter["AVAILABLE"] ? "contained" : "outlined"}
           sx={
-            filter["FREE"]
+            filter["AVAILABLE"]
               ? { color: "white", background: "green" }
               : { color: "green", borderColor: "green" }
           }
           onClick={() => {
-            handleFilter("FREE");
+            handleFilter("AVAILABLE");
           }}
         >
           {translateStatus("FREE")}
         </Button>
         <Button
-          variant={filter["RESERVED"] ? "contained" : "outlined"}
+          variant={filter["BOOKED"] ? "contained" : "outlined"}
           sx={
-            filter["RESERVED"]
+            filter["BOOKED"]
               ? { color: "white", background: "orange" }
               : { color: "orange", borderColor: "orange" }
           }
           onClick={() => {
-            handleFilter("RESERVED");
+            handleFilter("BOOKED");
           }}
         >
           {translateStatus("RESERVED")}

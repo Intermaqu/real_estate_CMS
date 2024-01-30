@@ -25,7 +25,7 @@ module.exports = {
       [country, city, street, apartmentNum, zipCode]
     );
 
-    return address.rows[0];
+    return address.rows;
   },
 
   editAddressById: async (id, country, city, street, apartmentNum, zipCode) => {
@@ -46,8 +46,6 @@ module.exports = {
         console.log(`Nie znaleziono adresu o id: ${id}`);
         return null;
       }
-
-      console.log(`Zaktualizowano adres o id: ${id}`);
 
       let editedAddress = await db.query(
         `SELECT * FROM address WHERE "id" = $1`,

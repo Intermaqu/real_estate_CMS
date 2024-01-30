@@ -11,7 +11,7 @@ import { SvgIcon } from "@mui/material";
 
 export const items = [
   {
-    title: "Posiadłości",
+    title: "Oferty nieruchomości",
     path: "/properties",
     icon: (
       <SvgIcon fontSize="small">

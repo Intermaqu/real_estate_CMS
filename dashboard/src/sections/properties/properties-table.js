@@ -35,10 +35,10 @@ export const PropertiesTable = (props) => {
 
   const handleColor = (status) => {
     switch (status) {
-      case "FREE":
+      case "AVAILABLE":
         return "green";
 
-      case "RESERVED":
+      case "BOOKED":
         return "orange";
 
       case "SOLD":
@@ -57,10 +57,10 @@ export const PropertiesTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell>Adres</TableCell>
+                <TableCell>Lokalizacja</TableCell>
                 <TableCell>Cena</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Wystawione</TableCell>
+                <TableCell>Data dodania</TableCell>
                 <TableCell>Edytuj</TableCell>
               </TableRow>
             </TableHead>

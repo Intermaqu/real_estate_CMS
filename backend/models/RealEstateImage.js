@@ -18,11 +18,21 @@ module.exports = {
     image_6,
     created_at
   ) => {
-    let realEstateImage = await db.query(
+    await db.query(
       `INSERT INTO real_estate_image ("image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "created_at") VALUES ($1, $2, $3, $4, $5, $6, $7)`,
       [image_1, image_2, image_3, image_4, image_5, image_6, created_at]
     );
-    return realEstateImage;
+
+    let realEstateImage = await db.query(
+      `SELECT * FROM real_estate_image 
+      WHERE "image_1" = $1 
+      AND "image_2" = $2 
+      AND "image_3" = $3 
+      AND "image_4" = $4`,
+      [image_1, image_2, image_3, image_4]
+    );
+
+    return realEstateImage.rows;
   },
 
   editById: async (
@@ -34,7 +44,7 @@ module.exports = {
     image_6,
     id
   ) => {
-    let realEstate = await db.query(
+    await db.query(
       `UPDATE real_estate_image SET
       "image_1" = $1, 
       "image_2" = $2, 
@@ -46,7 +56,13 @@ module.exports = {
       [image_1, image_2, image_3, image_4, image_5, image_6, id]
     );
 
-    return realEstate;
+    let realEstate = await db.query(
+      `SELECT * FROM real_estate_image 
+      WHERE "id" = $1`,
+      [id]
+    );
+
+    return realEstate.rows[0];
   },
 
   deleteById: async (id) => {
