@@ -1,13 +1,14 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import { Card, InputAdornment, OutlinedInput, SvgIcon, Button, ButtonGroup } from "@mui/material";
 import { ClearIcon } from "@mui/x-date-pickers";
+import { translateStatus } from "./properties-utils";
 
 export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) => (
   <Card sx={{ p: 2, justifyContent: "space-between", display: "flex", alignItems: "center" }}>
     <OutlinedInput
       defaultValue=""
       fullWidth
-      placeholder="Search properties"
+      placeholder="Szukaj Posiadłości"
       startAdornment={
         <InputAdornment position="start">
           <SvgIcon color="action" fontSize="small">
@@ -23,7 +24,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
         sx={{ marginRight: "1rem", color: "red", borderColor: "red" }}
         onClick={() => handleClearFilter()}
       >
-        Clear Filters
+        Wyczyść Filtry
       </Button>
       <ButtonGroup variant="outlined" aria-label="outlined button group">
         <Button
@@ -37,7 +38,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
             handleFilter("FREE");
           }}
         >
-          FREE
+          {translateStatus("FREE")}
         </Button>
         <Button
           variant={filter["RESERVED"] ? "contained" : "outlined"}
@@ -50,7 +51,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
             handleFilter("RESERVED");
           }}
         >
-          RESERVED
+          {translateStatus("RESERVED")}
         </Button>
         <Button
           variant={filter["SOLD"] ? "contained" : "outlined"}
@@ -63,7 +64,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
             handleFilter("SOLD");
           }}
         >
-          SOLD
+          {translateStatus("SOLD")}
         </Button>
       </ButtonGroup>
     </div>

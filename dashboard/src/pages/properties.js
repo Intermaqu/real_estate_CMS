@@ -233,7 +233,7 @@ const Page = () => {
           display: "flex",
         }}
       >
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h4">Ładowanie...</Typography>
       </Box>
     );
   }
@@ -241,7 +241,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Properties</title>
+        <title>Posiadłości</title>
       </Head>
       <Box
         component="main"
@@ -271,7 +271,7 @@ const Page = () => {
                   component={Link}
                   href={`/property`}
                 >
-                  + New Property
+                  + Nowa Posiadłość
                 </Button>
               </Box>
             </Stack>
@@ -281,7 +281,7 @@ const Page = () => {
               filter={filter}
             />
             <PropertiesTable
-              count={data.length}
+              count={filteredData.length}
               items={handlePagination(filteredData)}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}

@@ -21,7 +21,6 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
 
 const DefaultPropertyData = {
-  id: "",
   image1: "",
   image2: "",
   image3: "",
@@ -29,6 +28,7 @@ const DefaultPropertyData = {
   category: "House",
   title: "",
   price: 0,
+  shortDescription: "",
   description: "",
   addressCountry: "",
   addressCity: "",
@@ -41,6 +41,7 @@ const DefaultPropertyData = {
   numberOfRooms: 0,
   numberOfFloors: 0,
   yearOfConstruction: 0,
+  bestSeller: false,
 };
 
 const Page = () => {
@@ -116,6 +117,8 @@ const Page = () => {
     newErrors.numberOfRooms = property.numberOfRooms === 0 || errors.numberOfRooms;
     newErrors.numberOfFloors = property.numberOfFloors === 0 || errors.numberOfFloors;
     newErrors.yearOfConstruction = property.yearOfConstruction === 0 || errors.yearOfConstruction;
+
+    for (let key of Object.keys(property)) if (property[key] === "") newErrors[key] = true;
 
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
@@ -269,6 +272,19 @@ const Page = () => {
     setProperty({ ...property, [name]: value });
   };
 
+  const translateCategory = (category) => {
+    switch (category) {
+      case "House":
+        return "Dom";
+      case "Apartment":
+        return "Mieszkanie";
+      case "Office":
+        return "Biuro";
+      default:
+        return "Dom";
+    }
+  };
+
   useEffect(() => {
     console.log(property);
   }, [property]);
@@ -293,21 +309,21 @@ const Page = () => {
     );
   }
 
-  if (backendError !== "") {
-    return (
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-        }}
-      >
-        <Typography variant="h4">{backendError}</Typography>
-      </Box>
-    );
-  }
+  // if (backendError !== "") {
+  //   return (
+  //     <Box
+  //       component="main"
+  //       sx={{
+  //         flexGrow: 1,
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         display: "flex",
+  //       }}
+  //     >
+  //       <Typography variant="h4">{backendError}</Typography>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <>
@@ -326,7 +342,7 @@ const Page = () => {
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  {state === "add" ? `Add New Property` : `Edit property #${id}`}
+                  {state === "add" ? `Nowa posiadłość` : `Edycja posiadłości #${id}`}
                 </Typography>
               </Stack>
             </Stack>
@@ -344,12 +360,12 @@ const Page = () => {
             }}
           >
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Basic Informations</Typography>
+              <Typography variant="h6">Informacje Podstawowe</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Title"
+                label="Tytuł"
                 name="title"
                 variant="filled"
                 onChange={(e) => {
@@ -361,7 +377,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="price"
+                label="Cena"
                 type="number"
                 name="price"
                 variant="filled"
@@ -376,7 +392,7 @@ const Page = () => {
               />
               <TextField
                 select
-                label="Category"
+                label="Kategoria"
                 variant="filled"
                 onChange={handleChangeCategory}
                 value={property.category}
@@ -388,36 +404,51 @@ const Page = () => {
                     value={category}
                     sx={{ cursor: "pointer", padding: "0.5rem 1rem " }}
                   >
-                    {category}
+                    {translateCategory(category)}
                   </MenuItem>
                 ))}
               </TextField>
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Description</Typography>
+              <Typography variant="h6">Opis</Typography>
+            </Box>
+            <Box sx={{ ...rowStyle, marginBottom: "1rem" }}>
+              <TextField
+                {...inputStyle}
+                label="Krótki opis"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={property.description}
+                name="shortDescription"
+                multiline
+                rows={2}
+                error={errors.shortDescription}
+                helperText={errors.shortDescription && "Description is required"}
+              />
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Description"
+                label="Długi opis"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.description}
                 name="description"
                 multiline
+                rows={4}
                 error={errors.description}
                 helperText={errors.description && "Description is required"}
               />
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Address</Typography>
+              <Typography variant="h6">Adres</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Country"
+                label="Kraj"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressCountry}
@@ -427,7 +458,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="City"
+                label="Miasto"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressCity}
@@ -439,7 +470,7 @@ const Page = () => {
             <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
               <TextField
                 {...inputStyle}
-                label="Street"
+                label="Ulica"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressStreet}
@@ -449,7 +480,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Appartment"
+                label="Numer Mieszkania"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressAppartment}
@@ -459,7 +490,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Zip Code"
+                label="Kod pocztowy"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.addressZipCode}
@@ -470,7 +501,7 @@ const Page = () => {
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Additional Informations</Typography>
+              <Typography variant="h6">Informacje dodatkowe</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
@@ -489,13 +520,13 @@ const Page = () => {
                 labelPlacement="top"
                 name="elevator"
                 control={<Switch {...inputStyle} label="Filled" variant="filled" />}
-                label={<Typography variant="body2">Elevator</Typography>}
+                label={<Typography variant="body2">Winda</Typography>}
                 onChange={(e) => handleChangeInput(e)}
                 value={property.elevator}
               />
               <TextField
                 {...inputStyle}
-                label="Square Footage"
+                label="Metrarz"
                 variant="filled"
                 name="squareFootage"
                 onChange={(e) => handleChangeInput(e)}
@@ -511,7 +542,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Rooms"
+                label="Ilość Pokoi"
                 variant="filled"
                 name="numberOfRooms"
                 onChange={(e) => handleChangeInput(e)}
@@ -525,7 +556,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Floors"
+                label="Ilość Pieter"
                 variant="filled"
                 name="numberOfFloors"
                 onChange={(e) => handleChangeInput(e)}
@@ -539,7 +570,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Constructed in"
+                label="Wybudowany w"
                 variant="filled"
                 name="yearOfConstruction"
                 onChange={(e) => handleChangeInput(e)}
@@ -553,16 +584,24 @@ const Page = () => {
                     : "Construction year is required")
                 }
               />
+              <FormControlLabel
+                labelPlacement="top"
+                name="bestSeller"
+                control={<Switch {...inputStyle} label="Filled" variant="filled" />}
+                label={<Typography variant="body2">Bestseller</Typography>}
+                onChange={(e) => handleChangeInput(e)}
+                value={property.bestSeller}
+              />
             </Box>
 
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Images</Typography>
+              <Typography variant="h6">Zdjęcia</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
                 name="image1"
-                label="First Image"
+                label="Zdjęcie pierwsze"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image1}
@@ -571,7 +610,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Second Image"
+                label="Zdjęcie drugie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image2}
@@ -579,7 +618,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Third Image"
+                label="Zdjęcie trzecie"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image3}
@@ -587,7 +626,7 @@ const Page = () => {
               />
               <TextField
                 {...inputStyle}
-                label="Fourth Image"
+                label="Zdjęcie czwarte"
                 variant="filled"
                 onChange={(e) => handleChangeInput(e)}
                 value={property.image4}
@@ -610,7 +649,7 @@ const Page = () => {
               variant="contained"
             >
               <Typography variant="h6">
-                {state === "add" ? "Add New Property" : "Save changes"}
+                {state === "add" ? "Dodaj nową posiadłość" : "Zapisz zmiany"}
               </Typography>
             </Button>
           </Box>

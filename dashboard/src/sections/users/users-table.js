@@ -21,6 +21,7 @@ import {
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
+import { translateRole } from "./users-utils";
 
 export const UsersTable = (props) => {
   const {
@@ -53,12 +54,12 @@ export const UsersTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Surname</TableCell>
+                <TableCell>Imie</TableCell>
+                <TableCell>Nazwisko</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Role</TableCell>
-                <TableCell>Edit</TableCell>
+                <TableCell>Adres</TableCell>
+                <TableCell>Rola</TableCell>
+                <TableCell>Edycja</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -70,7 +71,8 @@ export const UsersTable = (props) => {
                   firstSurname,
                   secondSurname,
                   email,
-                  address: { country, city },
+                  country,
+                  city,
                   role,
                 }) => {
                   return (
@@ -88,7 +90,7 @@ export const UsersTable = (props) => {
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ fontWeight: "bold", color: handleColor(role) }}>
-                          {role}
+                          {translateRole(role)}
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -124,7 +126,7 @@ export const UsersTable = (props) => {
                               fontWeight: "bold",
                             }}
                           >
-                            Edit
+                            Edytuj
                           </Box>
                         </ButtonBase>
                       </TableCell>

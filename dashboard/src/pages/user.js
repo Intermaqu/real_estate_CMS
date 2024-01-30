@@ -19,8 +19,10 @@ import {
 } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
+import { translateRole } from "src/sections/users/users-utils";
 
 const DefaultUserData = {
+  id: 1,
   firstName: "Jan",
   firstSurname: "Kowalski",
   secondName: "Adam",
@@ -33,19 +35,39 @@ const DefaultUserData = {
   apartmentNum: "10",
   zipCode: "00-001",
   role: "BROKER",
-  phoneNumber: "123-456-789",
+  phoneNumber: "123456789",
   nip: "1234567890",
   createdAt: "2022-02-01T12:34:56Z",
+  active: true,
+};
+
+const EmptyUserData = {
+  firstName: "",
+  firstSurname: "",
+  secondName: "",
+  secondSurname: "",
+  email: "",
+  password: "",
+  country: "",
+  city: "",
+  street: "",
+  apartmentNum: "",
+  zipCode: "",
+  role: "BROKER",
+  phoneNumber: "",
+  nip: "",
+  createdAt: "",
   active: true,
 };
 
 const Page = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [user, setUser] = useState(DefaultUserData);
+  const [user, setUser] = useState();
   const [errors, setErrors] = useState({}); // { title: "Title is required" }
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
+  const roles = ["BROKER", "USER"];
 
   const init = () => {
     const newState = id ? "edit" : "add";
@@ -93,27 +115,28 @@ const Page = () => {
       //       setBackendError(err.response.data.message);
       //     });
 
-      setUser(DefaultUserData);
+      setUser({ ...DefaultUserData, passwordConfirm: DefaultUserData.password });
     } else {
       // ADD
 
-      setUser(DefaultUserData);
+      setUser(EmptyUserData);
     }
 
-    console.log(newState);
+    console.log("Init data:", newState);
   };
 
   const handleValidate = () => {
     const newErrors = {
       ...errors,
     };
+    for (let key of Object.keys(user)) {
+      if (user[key] === "") newErrors[key] = true;
+    }
 
-    newErrors.price = user.price === 0 || errors.price;
-    newErrors.squareFootage = user.squareFootage === 0 || errors.squareFootage;
-    newErrors.numberOfRooms = user.numberOfRooms === 0 || errors.numberOfRooms;
-    newErrors.numberOfFloors = user.numberOfFloors === 0 || errors.numberOfFloors;
-    newErrors.yearOfConstruction = user.yearOfConstruction === 0 || errors.yearOfConstruction;
+    newErrors.createdAt = false;
+    if (user.password !== user.passwordConfirm) newErrors.passwordConfirm = true;
 
+    console.log("newErrors:", newErrors);
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
@@ -223,24 +246,28 @@ const Page = () => {
   };
 
   const handleChangeInput = (event) => {
-    console.log(event);
-
     const value = event.target.value;
     const name = event.target.name;
 
+    if (name === "active") {
+      setUser({ ...user, active: event.target.checked });
+      return;
+    }
+
+    setErrors({ ...errors, [name]: value === "" });
     setUser({ ...user, [name]: value });
   };
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
-    console.log(state);
+    console.log("user:", user);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("state:", state);
   }, [state]);
 
   if (state === "loading") {
@@ -278,7 +305,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Property</title>
+        <title>User</title>
       </Head>
       <Box
         component="main"
@@ -292,7 +319,7 @@ const Page = () => {
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  {state === "add" ? `Add New Property` : `Edit property #${id}`}
+                  {state === "add" ? `Nowy Użytkownik` : `Edycja Użytkownika #${id}`}
                 </Typography>
               </Stack>
             </Stack>
@@ -310,35 +337,210 @@ const Page = () => {
             }}
           >
             <Box sx={rowTitleStyle}>
-              <Typography variant="h6">Basic Informations</Typography>
+              <Typography variant="h6">Dane Osobowe</Typography>
             </Box>
             <Box sx={rowStyle}>
               <TextField
                 {...inputStyle}
-                label="Title"
-                name="title"
+                label="Imie"
+                name="firstName"
                 variant="filled"
                 onChange={(e) => {
                   handleChangeInput(e);
                 }}
-                value={user.title}
-                error={errors.title}
-                helperText={errors.title && "Title is required"}
+                value={user.firstName}
+                error={errors.firstName}
+                helperText={errors.firstName && "First Name is required"}
               />
               <TextField
                 {...inputStyle}
-                label="price"
-                type="number"
-                name="price"
+                label="Drugie Imie"
+                name="secondName"
                 variant="filled"
-                onChange={(event) => {
-                  handleChangeInput(event);
+                onChange={(e) => {
+                  handleChangeInput(e);
                 }}
-                value={user.price}
-                error={errors.price}
+                value={user.secondName}
+              />
+              <TextField
+                {...inputStyle}
+                label="Nazwisko"
+                name="firstSurname"
+                variant="filled"
+                onChange={(e) => {
+                  handleChangeInput(e);
+                }}
+                value={user.firstSurname}
+                error={errors.firstSurname}
+                helperText={errors.firstSurname && "Surname is required"}
+              />
+              <TextField
+                {...inputStyle}
+                label="Drugie Nazwisko"
+                name="secondSurname"
+                variant="filled"
+                onChange={(e) => {
+                  handleChangeInput(e);
+                }}
+                value={user.secondSurname}
+              />
+            </Box>
+            <Box sx={rowTitleStyle}>
+              <Typography variant="h6">Adres Zamieszkania</Typography>
+            </Box>
+            <Box sx={rowStyle}>
+              <TextField
+                {...inputStyle}
+                label="Kraj"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.country}
+                name="country"
+                error={errors.country}
+                helperText={errors.country && "Country is required"}
+              />
+              <TextField
+                {...inputStyle}
+                label="Miasto"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.city}
+                name="city"
+                error={errors.city}
+                helperText={errors.city && "City is required"}
+              />
+            </Box>
+            <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
+              <TextField
+                {...inputStyle}
+                label="Ulica"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.street}
+                name="street"
+                error={errors.street}
+                helperText={errors.street && "Street is required"}
+              />
+              <TextField
+                {...inputStyle}
+                label="Numer Mieszkania"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.apartmentNum}
+                name="apartmentNum"
+                error={errors.apartmentNum}
+                helperText={errors.apartmentNum && "Appartment is required"}
+              />
+              <TextField
+                {...inputStyle}
+                label="Kod Pocztowy"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.zipCode}
+                name="zipCode"
+                error={errors.zipCode}
+                helperText={errors.zipCode && "Zip Code is required"}
+              />
+            </Box>
+            <Box sx={rowTitleStyle}>
+              <Typography variant="h6">Kontakt</Typography>
+            </Box>
+            <Box sx={rowStyle}>
+              <TextField
+                {...inputStyle}
+                label="Email"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.email}
+                name="email"
+                error={errors.email}
+                helperText={errors.email && "Email is required"}
+                type="email"
+              />
+              <TextField
+                {...inputStyle}
+                label="Numer Telefonu"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.phoneNumber}
+                name="phoneNumber"
+                error={errors.phoneNumber}
+                helperText={errors.phoneNumber && "Phone Number is required"}
+                type="number"
+              />
+              <TextField
+                {...inputStyle}
+                label="NIP"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.nip}
+                name="nip"
+                error={errors.nip}
+                helperText={errors.nip && "NIP is required"}
+                type="number"
+              />
+            </Box>
+            <Box sx={rowTitleStyle}>
+              <Typography variant="h6">Dane Logowania</Typography>
+            </Box>
+            <Box sx={rowStyle}>
+              <TextField
+                {...inputStyle}
+                label="Hasło"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.password}
+                name="password"
+                error={errors.password}
+                helperText={errors.password && "Password is required"}
+                type="password"
+              />
+              <TextField
+                {...inputStyle}
+                label="Potwierdzenie Hasła"
+                variant="filled"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.passwordConfirm}
+                name="passwordConfirm"
+                error={errors.passwordConfirm}
                 helperText={
-                  errors.price && (user.price === 0 ? "Price cannot be 0" : "Price is required")
+                  user.password !== user.passwordConfirm && errors.passwordConfirm
+                    ? "Passwords must match"
+                    : errors.passwordConfirm && "Password Confirmation is required"
                 }
+                type="password"
+              />
+            </Box>
+            <Box sx={rowTitleStyle}>
+              <Typography variant="h6">Status</Typography>
+            </Box>
+            <Box sx={{ ...rowStyle, justifyContent: "space-between" }}>
+              <TextField
+                select
+                label="Rola"
+                variant="filled"
+                name="role"
+                onChange={(e) => handleChangeInput(e)}
+                value={user.role}
+                style={{ width: "10rem" }}
+              >
+                {roles.map((role) => (
+                  <MenuItem
+                    key={role}
+                    value={role}
+                    sx={{ cursor: "pointer", padding: "0.5rem 1rem " }}
+                  >
+                    {translateRole(role)}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <FormControlLabel
+                labelPlacement="top"
+                name="active"
+                control={<Switch label="Filled" variant="filled" />}
+                label={<Typography variant="body2">Aktywny</Typography>}
+                onChange={(e) => handleChangeInput(e)}
+                checked={user.active}
               />
             </Box>
           </Box>
@@ -357,7 +559,7 @@ const Page = () => {
               variant="contained"
             >
               <Typography variant="h6">
-                {state === "add" ? "Add New Property" : "Save changes"}
+                {state === "add" ? "Dodaj Nowego Użytkownika" : "Zapisz zmiany"}
               </Typography>
             </Button>
           </Box>

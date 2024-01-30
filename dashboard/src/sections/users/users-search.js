@@ -1,13 +1,14 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import { Card, InputAdornment, OutlinedInput, SvgIcon, Button, ButtonGroup } from "@mui/material";
 import { ClearIcon } from "@mui/x-date-pickers";
+import { translateRole } from "./users-utils";
 
 export const UsersSearch = ({ handleFilter, handleClearFilter, filter }) => (
   <Card sx={{ p: 2, justifyContent: "space-between", display: "flex", alignItems: "center" }}>
     <OutlinedInput
       defaultValue=""
       fullWidth
-      placeholder="Search users"
+      placeholder="Szukaj Użytkownika"
       startAdornment={
         <InputAdornment position="start">
           <SvgIcon color="action" fontSize="small">
@@ -23,7 +24,7 @@ export const UsersSearch = ({ handleFilter, handleClearFilter, filter }) => (
         sx={{ marginRight: "1rem", color: "red", borderColor: "red" }}
         onClick={() => handleClearFilter()}
       >
-        Clear Filters
+        Wyczyść Filtry
       </Button>
       <ButtonGroup variant="outlined" aria-label="outlined button group">
         <Button
@@ -37,7 +38,7 @@ export const UsersSearch = ({ handleFilter, handleClearFilter, filter }) => (
             handleFilter("USER");
           }}
         >
-          USER
+          {translateRole("USER").toUpperCase()}
         </Button>
         <Button
           variant={filter["BROKER"] ? "contained" : "outlined"}
@@ -50,7 +51,7 @@ export const UsersSearch = ({ handleFilter, handleClearFilter, filter }) => (
             handleFilter("BROKER");
           }}
         >
-          BROKER
+          {translateRole("BROKER").toUpperCase()}
         </Button>
       </ButtonGroup>
     </div>

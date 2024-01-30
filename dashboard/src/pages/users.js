@@ -88,7 +88,7 @@ const Page = () => {
           display: "flex",
         }}
       >
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h4">Ładowanie...</Typography>
       </Box>
     );
   }
@@ -96,7 +96,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Users</title>
+        <title>Użytkownicy</title>
       </Head>
       <Box
         component="main"
@@ -115,7 +115,7 @@ const Page = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h4">Users</Typography>
+                <Typography variant="h4">Użytkownicy</Typography>
                 <Button
                   color="primary"
                   startIcon={<PlusIcon fontSize="small" />}
@@ -126,7 +126,7 @@ const Page = () => {
                   component={Link}
                   href={`/user`}
                 >
-                  + New User
+                  + Nowy Użytkownik
                 </Button>
               </Box>
             </Stack>

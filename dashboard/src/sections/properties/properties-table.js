@@ -21,6 +21,7 @@ import {
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Scrollbar } from "src/components/scrollbar";
 import { getInitials } from "src/utils/get-initials";
+import { translateStatus } from "./properties-utils";
 
 export const PropertiesTable = (props) => {
   const {
@@ -56,11 +57,11 @@ export const PropertiesTable = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>Id</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Price</TableCell>
+                <TableCell>Adres</TableCell>
+                <TableCell>Cena</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Posted</TableCell>
-                <TableCell>Edit</TableCell>
+                <TableCell>Wystawione</TableCell>
+                <TableCell>Edytuj</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -81,7 +82,7 @@ export const PropertiesTable = (props) => {
                     </TableCell>
                     <TableCell>
                       <Typography sx={{ fontWeight: "bold", color: handleColor(property.status) }}>
-                        {property.status}
+                        {translateStatus(property.status)}
                       </Typography>
                     </TableCell>
                     <TableCell>{property.createdAt}</TableCell>
@@ -118,7 +119,7 @@ export const PropertiesTable = (props) => {
                             fontWeight: "bold",
                           }}
                         >
-                          Edit
+                          Edytuj
                         </Box>
                       </ButtonBase>
                     </TableCell>
