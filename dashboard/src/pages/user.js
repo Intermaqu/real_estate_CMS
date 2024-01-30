@@ -49,7 +49,7 @@ const Page = () => {
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
   const roles = ["BROKER", "USER"];
-  const optionalFields = ["secondName", "secondSurname", "NIP"];
+  const optionalFields = ["secondName", "secondSurname", "nip"];
   const init = () => {
     const newState = id ? "edit" : "add";
     setState(newState);
@@ -118,11 +118,11 @@ const Page = () => {
 
     newErrors.createdAt = false;
     if (user.password !== user.passwordConfirm) newErrors.passwordConfirm = true;
-    console.log('dupa');
+    console.log("dupa");
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    console.log('dupa');
+    console.log("dupa");
 
     if (state === "add") {
       console.log(user);
