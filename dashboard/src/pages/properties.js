@@ -62,7 +62,7 @@ const Page = () => {
             price: realEstate.price,
           });
         }
-        
+
         setIsLoading(false);
         setPropertiesData(data);
         setFilteredData(data);
