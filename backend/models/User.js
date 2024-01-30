@@ -4,9 +4,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   load: async (id) => {
-    let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [
-      id,
-    ]);
+    let user = await db.query(`SELECT * FROM public."user" WHERE "id" = $1`, [id]);
+    
     if (user.rowCount !== 1) {
       return false;
     } else {
