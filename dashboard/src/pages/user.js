@@ -21,26 +21,6 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
 import { translateRole } from "src/sections/users/users-utils";
 
-const DefaultUserData = {
-  id: 1,
-  firstName: "Jan",
-  firstSurname: "Kowalski",
-  secondName: "Adam",
-  secondSurname: "Nowak",
-  email: "ldsvsc@example.com",
-  password: "haslo12345vdsv",
-  country: "Polska",
-  city: "Warszawa",
-  street: "Aleje Jerozolimskie",
-  apartmentNum: "10",
-  zipCode: "00-001",
-  role: "BROKER",
-  phoneNumber: "123456789",
-  nip: "1234567890",
-  createdAt: "2022-02-01T12:34:56Z",
-  active: true,
-};
-
 const EmptyUserData = {
   firstName: "",
   firstSurname: "",
@@ -116,14 +96,11 @@ const Page = () => {
       //       setBackendError(err.response.data.message);
       //     });
 
-      setUser({ ...DefaultUserData, passwordConfirm: DefaultUserData.password });
+      setUser({ ...EmptyUserData, passwordConfirm: EmptyUserData.password });
     } else {
       // ADD
-
       setUser(EmptyUserData);
     }
-
-    console.log("Init data:", newState);
   };
 
   const handleValidate = () => {
@@ -136,15 +113,14 @@ const Page = () => {
 
     newErrors.createdAt = false;
     if (user.password !== user.passwordConfirm) newErrors.passwordConfirm = true;
-
-    console.log("newErrors:", newErrors);
+    console.log('dupa');
     setErrors(newErrors);
     if (handleCheckErrors(newErrors)) return;
 
-    let now = new Date();
+    console.log('dupa');
 
-    //
     if (state === "add") {
+      console.log(user);
       axios({
         method: "post",
         url: `${URL}/user/register`,
@@ -157,8 +133,8 @@ const Page = () => {
       })
         .then((res) => {
           console.log(res);
-          // TODO: komunikat o zapisaniu + redirect do /properties
-          // setProperty(res.data.property);
+          // TODO: komunikat o zapisaniu
+          router.push(`/users`);
         })
         .catch((err) => {
           console.log(err);
@@ -217,7 +193,6 @@ const Page = () => {
 
   const handleCheckErrors = (errorsToCheck) => {
     const numberOfErrors = Object.values(errorsToCheck).filter((error) => error === true).length;
-    console.log(numberOfErrors);
     return numberOfErrors > 0;
   };
 
@@ -239,11 +214,11 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    console.log("user:", user);
+    // console.log("user:", user);
   }, [user]);
 
   useEffect(() => {
-    console.log("state:", state);
+    // console.log("state:", state);
   }, [state]);
 
   if (state === "loading") {
@@ -451,8 +426,6 @@ const Page = () => {
                 onChange={(e) => handleChangeInput(e)}
                 value={user.nip}
                 name="nip"
-                error={errors.nip}
-                helperText={errors.nip && "NIP is required"}
                 type="number"
               />
             </Box>

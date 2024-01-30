@@ -45,6 +45,7 @@ const Page = () => {
     })
       .then((res) => {
         for (let realEstate of res.data) {
+        
           data.push({
             id: realEstate.id,
             address: {
@@ -70,6 +71,7 @@ const Page = () => {
       .catch((err) => {
         console.log(err);
       });
+      console.log(propertiesData)
   };
 
   const handlePageChange = useCallback((event, value) => {
