@@ -62,7 +62,7 @@ module.exports = {
       image2,
       image3,
       image4,
-      id_category,
+      category_name,
       id_broker,
       title,
       short_description,
@@ -88,10 +88,7 @@ module.exports = {
 
     if (
       !image1 ||
-      !image2 ||
-      !image3 ||
-      !image4 ||
-      !id_category ||
+      !category_name ||
       !id_broker ||
       !title ||
       !description ||
@@ -138,9 +135,9 @@ module.exports = {
       res.status(400).send(`Nie udało się utworzyć adresu!`);
     }
 
-    let category = await Category.getCategoryById(id_category);
+    let category = await Category.getCategoryByName(category_name);
     if (!category) {
-      res.status(400).send(`Nie znaleziono kategorii o id ${id_category}!`);
+      res.status(400).send(`Nie znaleziono kategorii o nazwie ${category_name}!`);
     }
 
     let broker = await User.getUserById(id_broker);
@@ -150,7 +147,7 @@ module.exports = {
 
     const real_estate = await RealEstate.addNewRealEstate(
       realEstateImage[realEstateImage.length - 1].id,
-      id_category,
+      category.id,
       id_broker,
       title,
       short_description,
@@ -192,7 +189,7 @@ module.exports = {
       image2,
       image3,
       image4,
-      id_category,
+      category_name,
       id_broker,
       title,
       short_description,
@@ -218,10 +215,7 @@ module.exports = {
 
     if (
       !image1 ||
-      !image2 ||
-      !image3 ||
-      !image4 ||
-      !id_category ||
+      !category_name ||
       !id_broker ||
       !title ||
       !description ||
@@ -282,9 +276,9 @@ module.exports = {
         .send(`Nie udało się zedytować adresu o id ${realEstate.id_address}`);
     }
 
-    let category = await Category.getCategoryById(id_category);
+    let category = await Category.getCategoryByName(category_name);
     if (!category) {
-      res.status(400).send(`Nie znaleziono kategorii o id ${id_category}!`);
+      res.status(400).send(`Nie znaleziono kategorii o nazwie ${category_name}!`);
     }
 
     let broker = await User.getUserById(id_broker);
@@ -294,7 +288,7 @@ module.exports = {
 
     const real_estate = await RealEstate.editById(
       realEstateImage.id,
-      id_category,
+      category.id,
       id_broker,
       title,
       short_description,

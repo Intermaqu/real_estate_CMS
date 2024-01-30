@@ -13,6 +13,13 @@ module.exports = {
     return category.rows[0];
   },
 
+  getCategoryByName: async (category_name) => {
+    let category = await db.query(`SELECT * FROM category WHERE "name" = $1`, [
+      category_name
+    ]);
+    return category.rows[0];
+  },
+
   addNewCategory: async (name, description, image, created_at, active) => {
     let category = await db.query(
       `INSERT INTO category ("name", "description", "image", "created_at", "active") VALUES ($1, $2, $3, $4, $5)`,

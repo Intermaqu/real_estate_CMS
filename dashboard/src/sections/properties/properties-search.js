@@ -38,7 +38,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
             handleFilter("AVAILABLE");
           }}
         >
-          {translateStatus("FREE")}
+          {translateStatus("AVAILABLE")}
         </Button>
         <Button
           variant={filter["BOOKED"] ? "contained" : "outlined"}
@@ -51,7 +51,7 @@ export const PropertiesSearch = ({ handleFilter, handleClearFilter, filter }) =>
             handleFilter("BOOKED");
           }}
         >
-          {translateStatus("RESERVED")}
+          {translateStatus("BOOKED")}
         </Button>
         <Button
           variant={filter["SOLD"] ? "contained" : "outlined"}

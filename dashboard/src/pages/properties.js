@@ -110,6 +110,7 @@ const Page = () => {
 
   useEffect(() => {
     console.log(filter);
+    console.log(filteredData);
   }, [filter]);
 
   if (isLoading) {
