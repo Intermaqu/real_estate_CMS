@@ -69,6 +69,8 @@ const Page = () => {
       },
     ];
 
+    // AXIOS GET CATEGORIES
+
     setCategoriesData(data);
     setFilteredData(data);
     setIsLoading(false);
@@ -196,7 +198,7 @@ const Page = () => {
                     width: "fit-content",
                   }}
                   component={Link}
-                  href={`/property`}
+                  href={`/category`}
                 >
                   + Nowa Kategoria
                 </Button>

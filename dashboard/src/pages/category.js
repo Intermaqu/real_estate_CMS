@@ -90,6 +90,18 @@ const Page = () => {
     // console.log(newState);
   };
 
+  const handleDeleteFromDB = () => {
+    console.log("Delete category:", id);
+    // axios({
+    //   method: "delete",
+    //   url: `${URL}/real-estate/deleteById/${id}`,
+    //   headers: {
+    //     authorization: AuthenticationService.getToken(),
+    //   },
+    // })
+    //   .then((res) => {
+  };
+
   const handleValidate = () => {
     const newErrors = {
       ...errors,
@@ -362,12 +374,22 @@ const Page = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: `${state === "add" ? "flex-end" : "space-between"}`,
               alignItems: "flex-end",
               width: "90%",
               padding: "2rem",
             }}
           >
+            {state === "edit" && (
+              <Button
+                sx={{ padding: "1rem 2rem" }}
+                onClick={() => handleDeleteFromDB()}
+                variant="contained"
+                color="error"
+              >
+                <Typography variant="h6">Usuń kategorię</Typography>
+              </Button>
+            )}
             <Button
               sx={{ padding: "1rem 2rem" }}
               onClick={() => handleValidate()}

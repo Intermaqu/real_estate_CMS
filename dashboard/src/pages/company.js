@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import Head from "next/head";
-import { translateRole } from "src/sections/users/users-utils";
 
 const EmptyCompanyData = {
   email: "",
@@ -42,13 +41,10 @@ const EmptyCompanyData = {
 };
 
 const Page = () => {
-  const router = useRouter();
-  const { id } = router.query;
   const [company, setCompany] = useState();
   const [errors, setErrors] = useState({}); // { title: "Title is required" }
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
-  const roles = ["BROKER", "USER"];
 
   const init = () => {
     setState("edit");
@@ -62,6 +58,7 @@ const Page = () => {
     const newErrors = {
       ...errors,
     };
+
     for (let key of Object.keys(company)) {
       if (company[key] === "") newErrors[key] = true;
     }
@@ -75,16 +72,41 @@ const Page = () => {
 
     let now = new Date();
 
-    //
-    if (state === "add") {
+    // Edit Property
+    if (state === "edit") {
       axios({
         method: "post",
-        url: `${URL}/user/register`,
+        url: `${URL}/real-estate/editById/${id}`,
         headers: {
           authorization: AuthenticationService.getToken(),
         },
         data: {
-          ...company,
+          image1: property.image1,
+          image2: property.image2,
+          image3: property.image3,
+          image4: property.image4,
+          id_category: 5,
+          id_broker: 2,
+          title: property.title,
+          short_description: ``,
+          description: property.description,
+          price: property.price,
+          status: `AVAILABLE`,
+          total_rates: 0,
+          no_of_reviews: 0,
+          address_country: property.addressCountry,
+          address_city: property.addressCity,
+          address_street: property.addressStreet,
+          address_zip_code: property.addressZipCode,
+          address_apartment: property.addressAppartment,
+          created_at: new Date(),
+          no_of_rooms: property.numberOfRooms,
+          no_of_floors: property.numberOfFloors,
+          year_of_construction: property.yearOfConstruction,
+          parking_space: property.parking,
+          elevator: property.elevator,
+          square_footage: property.squareFootage,
+          best_seller: false,
         },
       })
         .then((res) => {
@@ -97,54 +119,6 @@ const Page = () => {
         });
       return;
     }
-
-    // Edit Property
-    // if (state === "edit") {
-    //   axios({
-    //     method: "post",
-    //     url: `${URL}/real-estate/editById/${id}`,
-    //     headers: {
-    //       authorization: AuthenticationService.getToken(),
-    //     },
-    //     data: {
-    //       image1: property.image1,
-    //       image2: property.image2,
-    //       image3: property.image3,
-    //       image4: property.image4,
-    //       id_category: 5,
-    //       id_broker: 2,
-    //       title: property.title,
-    //       short_description: ``,
-    //       description: property.description,
-    //       price: property.price,
-    //       status: `AVAILABLE`,
-    //       total_rates: 0,
-    //       no_of_reviews: 0,
-    //       address_country: property.addressCountry,
-    //       address_city: property.addressCity,
-    //       address_street: property.addressStreet,
-    //       address_zip_code: property.addressZipCode,
-    //       address_apartment: property.addressAppartment,
-    //       created_at: new Date(),
-    //       no_of_rooms: property.numberOfRooms,
-    //       no_of_floors: property.numberOfFloors,
-    //       year_of_construction: property.yearOfConstruction,
-    //       parking_space: property.parking,
-    //       elevator: property.elevator,
-    //       square_footage: property.squareFootage,
-    //       best_seller: false,
-    //     },
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //       // TODO: komunikat o zapisaniu + redirect do /properties
-    //       // setProperty(res.data.property);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    //   return;
-    // }
   };
 
   const handleCheckErrors = (errorsToCheck) => {
@@ -171,7 +145,7 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
-    console.log("user:", company);
+    console.log("company:", company);
   }, [company]);
 
   useEffect(() => {
@@ -359,7 +333,7 @@ const Page = () => {
                 rows={4}
               />
             </Box>
-            <Box sx={rowStyle}>
+            <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
               <TextField
                 {...inputStyle}
                 label="Treści gwarancyjne"
@@ -373,7 +347,7 @@ const Page = () => {
                 rows={4}
               />
             </Box>
-            <Box sx={rowStyle}>
+            <Box sx={{ ...rowStyle, marginTop: "1rem" }}>
               <TextField
                 {...inputStyle}
                 label="Treści konsultacyjne"

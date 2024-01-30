@@ -49,7 +49,7 @@ const Page = () => {
   //   const [backendError, setBackendError] = useState(""); // "Title is required" || "Server error" || [
   const [state, setState] = useState("loading");
   const roles = ["BROKER", "USER"];
-
+  const optionalFields = ["secondName", "secondSurname", "NIP"];
   const init = () => {
     const newState = id ? "edit" : "add";
     setState(newState);
@@ -107,8 +107,13 @@ const Page = () => {
     const newErrors = {
       ...errors,
     };
+
     for (let key of Object.keys(user)) {
       if (user[key] === "") newErrors[key] = true;
+    }
+
+    for (let key of optionalFields) {
+      newErrors[key] = false;
     }
 
     newErrors.createdAt = false;
@@ -189,6 +194,19 @@ const Page = () => {
     //     });
     //   return;
     // }
+  };
+
+  const handleDeleteFromDB = () => {
+    console.log("Delete user:", id);
+
+    // axios({
+    //   method: "delete",
+    //   url: `${URL}/real-estate/deleteById/${id}`,
+    //   headers: {
+    //     authorization: AuthenticationService.getToken(),
+    //   },
+    // })
+    //   .then((res) => {
   };
 
   const handleCheckErrors = (errorsToCheck) => {
@@ -496,12 +514,22 @@ const Page = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: `${state === "add" ? "flex-end" : "space-between"}`,
               alignItems: "flex-end",
               width: "90%",
               padding: "2rem",
             }}
           >
+            {state === "edit" && (
+              <Button
+                sx={{ padding: "1rem 2rem" }}
+                onClick={() => handleDeleteFromDB()}
+                variant="contained"
+                color="error"
+              >
+                <Typography variant="h6">Usuń kategorię</Typography>
+              </Button>
+            )}
             <Button
               sx={{ padding: "1rem 2rem" }}
               onClick={() => handleValidate()}
