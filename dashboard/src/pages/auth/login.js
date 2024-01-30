@@ -29,8 +29,10 @@ const Page = () => {
     console.log("Logowanie:", loginData);
     try {
       await auth.signIn(loginData.email, loginData.password);
+      console.log("AFTER SING IN");
       router.push("/");
     } catch (error) {
+      console.log("ERROR: ", error);
       setError(error.message);
     }
   };

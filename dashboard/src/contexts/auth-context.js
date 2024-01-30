@@ -158,25 +158,28 @@ export const AuthProvider = (props) => {
 
     try {
       response = await axios.post(`${URL}/user/login`, loginData);
+      console.log(response);
     } catch (error) {
       if (error.response.status === 400) {
         throw new Error("Uzupełnij wszystkie pola!");
       } else if (error.response.status === 401) {
         throw new Error("Niepoprawny email lub hasło!");
-      } else if (error.response.status === 401) {
-        AuthenticationService.registerSuccessfulLogin(response.data.userData, response.data.token);
-
-        try {
-          window.sessionStorage.setItem("authenticated", "true");
-        } catch (err) {
-          console.error(err);
-        }
-
-        console.log("Logowanie udane!", response.data);
+      } else if (error.response.status === 404) {
+        console.log("O KURWA XD");
       } else {
         throw new Error(error);
       }
     }
+    AuthenticationService.registerSuccessfulLogin(response.data.userData, response.data.token);
+
+    try {
+      window.sessionStorage.setItem("authenticated", "true");
+    } catch (err) {
+      console.log("ERROR: ", err);
+      console.error(err);
+    }
+
+    console.log("Logowanie udane!", response.data);
 
     const user = {
       id: "5e86809283e28b96d2d38537",
